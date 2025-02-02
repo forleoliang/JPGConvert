@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- 加载Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com/4.0.0"></script>
+  <title>PNG转换神器 by lensclear</title>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+  <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">🖼️ PNG转换工具</h1>
+    
+    <!-- 上传区域 -->
+    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6 text-center">
+      <input type="file" id="upload" accept=".png" class="hidden" />
+      <label for="upload" class="cursor-pointer">
+        <div class="text-6xl mb-4">📤</div>
+        <p class="text-gray-600">点击上传PNG文件</p>
+      </label>
+    </div>
+
+    <!-- 设置区域 -->
+    <div class="space-y-4 mb-6">
+      <div>
+        <label class="block text-gray-700 mb-2">输出格式</label>
+        <select id="format" class="w-full p-2 border rounded-lg">
+          <option value="avif">AVIF（超小体积）</option>
+          <option value="webp">WebP（兼容性好）</option>
+        </select>
+      </div>
+      
+      <div>
+        <label class="block text-gray-700 mb-2">质量等级</label>
+        <input type="range" id="quality" min="1" max="100" value="80" 
+               class="w-full bg-gray-200 rounded-lg">
+      </div>
+    </div>
+
+    <!-- 转换按钮 -->
+    <button onclick="convert()" 
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition">
+      开始转换
+    </button>
+
+    <!-- 结果展示 -->
+    <div id="output" class="mt-6 hidden">
+      <div class="bg-green-100 p-4 rounded-lg">
+        <p class="text-green-700">✅ 转换成功！</p>
+        <a id="downloadLink" class="text-blue-500 underline mt-2 inline-block">点击下载</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 转换脚本 -->
+  <script>
+    // async function loadCodec(format) {
+  const cdnURL = "https://esm.sh/@squoosh/";
+  const { default: codec } = await import(`${cdnURL}${format === 'avif' ? 'avif-enc' : 'webp-enc'}`);
+  return codec;
+}
+
+async function convert() {
+  const file = document.getElementById('upload').files[0];
+  const format = document.getElementById('format').value;
+  const quality = document.getElementById('quality').value;
+
+  // 加载编解码器
+  const codec = await loadCodec(format);
+
+  // 显示加载状态
+  const outputDiv = document.getElementById('output');
+  outputDiv.classList.add('hidden');
+
+  // 读取文件
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const imageData = new Uint8Array(e.target.result);
+
+    // 使用Web Worker处理
+    const worker = new Worker(new URL('worker.js', import.meta.url));
+    
+    worker.postMessage({
+      imageData,
+      format,
+      options: { 
+        quality: parseInt(quality),
+        chromaSubsampling: '4:2:0'
+      }
+    });
+
+    worker.onmessage = async ({ data }) => {
+      const blob = new Blob([data], { type: `image/${format}` });
+      const url = URL.createObjectURL(blob);
+      
+      // 显示下载链接
+      const downloadLink = document.getElementById('downloadLink');
+      downloadLink.href = url;
+      downloadLink.download = `converted.${format}`;
+      outputDiv.classList.remove('hidden');
+    };
+  };
+  reader.readAsArrayBuffer(file);
+}
+  </script>
+</body>
+</html>
