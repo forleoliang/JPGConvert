@@ -6,26 +6,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
-    const compressionInfo = document.getElementById('compressionInfo'); // 获取压缩信息显示元素
+    const compressionInfo = document.getElementById('compressionInfo');
 
     let uploadedFile = null;
 
-    // 引入 browser-image-compression 库 (通过 CDN 引入，在 index.html 中已引入)
     const imageCompression = window.imageCompression;
 
-    // 检查 imageCompression 库是否成功加载 (调试用)
     if (typeof imageCompression === 'undefined') {
         console.error('Error: browser-image-compression library not loaded! Please check the CDN link in index.html.');
-        alert('图片转换功能依赖的库加载失败，请检查网络连接和 index.html 中的 CDN 引入。');
-        return; // 停止执行后续代码
+        alert('Image conversion library failed to load. Please check your network connection and the CDN link in index.html.'); // 英文错误提示
+        return;
     } else {
-        console.log('browser-image-compression library loaded successfully.'); // 调试信息
+        console.log('browser-image-compression library loaded successfully.');
     }
 
-    // 文件选择事件
     fileInput.addEventListener('change', handleFile);
 
-    // 拖拽事件
     dropArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropArea.classList.add('hover:border-blue-500', 'hover:bg-gray-50');
@@ -46,90 +42,84 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 处理文件上传和拖拽
     function handleFile(event) {
-        const file = event.target.files[0] || uploadedFile; //优先使用 input file 选择的文件，其次使用拖拽上传的文件
+        const file = event.target.files[0] || uploadedFile;
         if (file && file.type.startsWith('image/png')) {
             uploadedFile = file;
-            console.log('PNG file uploaded:', uploadedFile); // 调试信息
+            console.log('PNG file uploaded:', uploadedFile);
             displayPreview(file);
         } else {
-            alert('请选择 PNG 图片文件');
-            console.warn('Invalid file type selected. Please select a PNG image.'); // 调试信息
+            alert('Please select a PNG image file.'); // 英文提示
+            console.warn('Invalid file type selected. Please select a PNG image.');
             resetUI();
         }
     }
 
-    // 显示图片预览
     function displayPreview(file) {
         const reader = new FileReader();
         reader.onload = (e) => {
             previewImage.src = e.target.result;
             previewArea.classList.remove('hidden');
             convertButton.classList.remove('hidden');
-            convertButton.disabled = false; // 上传图片后启用转换按钮
-            compressionInfo.classList.add('hidden'); // 隐藏压缩信息，等待转换完成后显示
+            convertButton.disabled = false;
+            compressionInfo.classList.add('hidden');
         };
         reader.readAsDataURL(file);
     }
 
-    // 转换按钮点击事件
     convertButton.addEventListener('click', async () => {
         if (!uploadedFile) {
-            alert('请先选择或拖拽 PNG 图片');
+            alert('Please select or drag and drop a PNG image first.'); // 英文提示
             return;
         }
 
-        convertButton.textContent = '转换中...'; // 按钮显示 "转换中..."
-        convertButton.disabled = true; // 禁用按钮
-        downloadLinkArea.classList.add('hidden'); // 转换前先隐藏下载链接区域
-        compressionInfo.classList.add('hidden'); // 转换前隐藏压缩信息
+        convertButton.textContent = 'Converting...'; // 英文转换中按钮文字
+        convertButton.disabled = true;
+        downloadLinkArea.classList.add('hidden');
+        compressionInfo.classList.add('hidden');
 
         try {
-            console.log('Starting image compression...'); // 调试信息
-            const originalFileSize = uploadedFile.size; // 获取原始文件大小
+            console.log('Starting image compression...');
+            const originalFileSize = uploadedFile.size;
             const compressedFile = await imageCompression(uploadedFile, {
-                maxSizeMB: 2,          // (可选) 最大文件大小 MB，根据需要调整，这里设置为 2MB
-                maxWidthOrHeight: 2000, // (可选) 图片最大宽度或高度，根据需要调整，这里设置为 2000px
-                useWebWorker: true,     // 使用 Web Worker，避免阻塞主线程
-                fileType: 'webp',       // 强制输出为 webp 格式
-                // quality: 0.8          // (可选) WebP 图片质量，0-1 之间，默认 0.8，可以尝试调整
+                maxSizeMB: 2,
+                maxWidthOrHeight: 2000,
+                useWebWorker: true,
+                fileType: 'webp',
             });
-            console.log('Image compression completed successfully.'); // 调试信息
-            console.log('Compressed image file:', compressedFile); // 调试信息
-            const compressedFileSize = compressedFile.size; // 获取压缩后文件大小
-            const compressionPercentage = ((originalFileSize - compressedFileSize) / originalFileSize) * 100; // 计算压缩百分比
-            const formattedPercentage = compressionPercentage.toFixed(2); // 保留两位小数
-            console.log(`Compression percentage: ${formattedPercentage}%`); // 调试信息
+            console.log('Image compression completed successfully.');
+            console.log('Compressed image file:', compressedFile);
+            const compressedFileSize = compressedFile.size;
+            const compressionPercentage = ((originalFileSize - compressedFileSize) / originalFileSize) * 100;
+            const formattedPercentage = compressionPercentage.toFixed(2);
+            console.log(`Compression percentage: ${formattedPercentage}%`);
 
-            compressionInfo.textContent = `压缩率: ${formattedPercentage}% (原始大小: ${(originalFileSize / 1024).toFixed(2)}KB, 压缩后大小: ${(compressedFileSize / 1024).toFixed(2)}KB)`; // 显示压缩信息
-            compressionInfo.classList.remove('hidden'); // 显示压缩信息
+            compressionInfo.textContent = `Compression Ratio: ${formattedPercentage}% (Original Size: ${(originalFileSize / 1024).toFixed(2)}KB, Compressed Size: ${(compressedFileSize / 1024).toFixed(2)}KB)`; // 英文压缩信息
+            compressionInfo.classList.remove('hidden');
 
-            // 创建下载链接
             const downloadUrl = URL.createObjectURL(compressedFile);
             downloadLink.href = downloadUrl;
-            downloadLink.download = uploadedFile.name.replace('.png', '.webp'); // 下载的文件名
+            downloadLink.download = uploadedFile.name.replace('.png', '.webp');
             downloadLinkArea.classList.remove('hidden');
 
         } catch (error) {
-            console.error('图片压缩/转换失败:', error);
-            console.error('Error details:', error); // 打印更详细的错误信息
-            alert('图片转换失败，请稍后重试，并查看控制台错误信息。');
+            console.error('Image compression/conversion failed:', error);
+            console.error('Error details:', error);
+            alert('Image conversion failed. Please try again later and check the console for error details.'); // 英文错误提示
         } finally {
-            convertButton.textContent = '转换为 WebP 并下载'; // 按钮恢复文字
-            convertButton.disabled = false; // 启用按钮 (允许用户再次转换，虽然通常用户只会转换一次)
+            convertButton.textContent = 'Convert to WebP & Download'; // 英文转换按钮文字
+            convertButton.disabled = false;
         }
     });
 
-    // 重置 UI 状态
     function resetUI() {
         uploadedFile = null;
         previewImage.src = '#';
         previewArea.classList.add('hidden');
         convertButton.classList.add('hidden');
-        convertButton.disabled = true; // 重置后禁用转换按钮
+        convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
-        compressionInfo.classList.add('hidden'); // 重置时隐藏压缩信息
-        fileInput.value = ''; // 清空文件 input 的值
+        compressionInfo.classList.add('hidden');
+        fileInput.value = '';
     }
 });
