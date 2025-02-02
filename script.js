@@ -2,13 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
-    const previewImage = document.getElementById('previewImage');
+    const previewImage = document.getElementById('previewImage'); // Reusing previewImage for "Before"
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
     const compressionInfo = document.getElementById('compressionInfo');
     const removeImageButton = document.getElementById('removeImageButton');
     const noFileSelectedText = document.getElementById('noFileSelectedText');
+    const comparisonArea = document.getElementById('comparisonArea'); // Get comparison area
+    const beforeImage = document.getElementById('beforeImage');       // Get before image element
+    const afterImage = document.getElementById('afterImage');         // Get after image element
+
 
     let uploadedFile = null;
 
@@ -62,12 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayPreview(file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-            previewImage.src = e.target.result;
+            previewImage.src = e.target.result; // Preview image is now "Before" image visually
+            beforeImage.src = e.target.result; // Set "Before" image in comparison
             previewArea.classList.remove('hidden');
             convertButton.classList.remove('hidden');
             convertButton.disabled = false;
             compressionInfo.classList.add('hidden');
             removeImageButton.classList.remove('hidden');
+            comparisonArea.classList.add('hidden'); // Hide comparison area initially on new preview
         };
         reader.readAsDataURL(file);
     }
@@ -83,24 +89,23 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
         removeImageButton.classList.add('hidden');
+        comparisonArea.classList.add('hidden'); // Hide comparison area before new conversion
 
         try {
             console.log('Starting image compression...');
             const originalFileSize = uploadedFile.size;
-            console.log('Original File Size (bytes):', originalFileSize); // Debugging: Log original file size
+            console.log('Original File Size (bytes):', originalFileSize);
 
             const compressedFile = await imageCompression(uploadedFile, {
                 maxSizeMB: 2,
                 maxWidthOrHeight: 2000,
                 useWebWorker: true,
                 fileType: 'webp',
-                quality: 0.6, // Set a default quality value to encourage compression
-                // You can experiment with different quality values (0 to 1)
-                // Lower quality means smaller file size but potentially lower image quality.
+                quality: 0.6,
             });
             console.log('Image compression completed successfully.');
             const compressedFileSize = compressedFile.size;
-            console.log('Compressed File Size (bytes):', compressedFileSize); // Debugging: Log compressed file size
+            console.log('Compressed File Size (bytes):', compressedFileSize);
 
             const compressionPercentage = ((originalFileSize - compressedFileSize) / originalFileSize) * 100;
             const formattedPercentage = compressionPercentage.toFixed(2);
@@ -115,6 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadLink.download = fileName;
             downloadLinkArea.classList.remove('hidden');
 
+            afterImage.src = downloadUrl; // Set "After" image in comparison
+            comparisonArea.classList.remove('hidden'); // Show comparison area after conversion
+
         } catch (error) {
             console.error('Image conversion failed:', error);
             console.error('Error details:', error);
@@ -128,13 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetUI() {
         uploadedFile = null;
-        previewImage.src = '#';
+        previewImage.src = '#'; // Clear preview/before image
+        beforeImage.src = '#';    // Clear before image explicitly
+        afterImage.src = '#';     // Clear after image
         previewArea.classList.add('hidden');
         convertButton.classList.add('hidden');
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
         removeImageButton.classList.add('hidden');
+        comparisonArea.classList.add('hidden'); // Hide comparison area on reset
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
     }
