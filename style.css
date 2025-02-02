@@ -28,36 +28,18 @@
         @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200;
     }
 
-    /* Thumbnail Styles - Stacked Book Effect */
-    .thumbnail-area-container { /* Container to manage stacking context */
-        @apply relative; /* To establish stacking context */
-    }
-
+    /* Simplified Thumbnail Styles - No 3D Effect */
     .thumbnail-container {
-        @apply absolute w-24 h-24 rounded-md overflow-hidden shadow-md bg-white; /* Absolute positioning for stacking, adjust size as needed */
-        /* 3D Stacked Book Effect */
-        transform-style: preserve-3d;
-        perspective: 500px;
-        transition: all 0.3s ease; /* Smooth transition for stacking and hover */
+        @apply relative w-24 h-24 rounded-md overflow-hidden shadow-md bg-white; /* Adjust w-24 h-24 for thumbnail size */
     }
 
     .thumbnail-image {
-        @apply block w-full h-full object-cover;
-        transform: rotateX(15deg) rotateY(10deg) translateZ(10px); /* More pronounced 3D effect */
-        transition: transform 0.3s ease;
+        @apply block w-full h-full object-cover; /* Basic image display */
     }
 
-    .thumbnail-container:hover {
-        transform: translateY(-10px) scale(1.05); /* Slight lift and scale on hover */
-        z-index: 10; /* Bring hovered thumbnail to front */
-    }
-
-    .thumbnail-container:hover .thumbnail-image {
-        transform: rotateX(0deg) rotateY(0deg) translateZ(0px); /* Reset image transform on hover */
-    }
 
     .thumbnail-remove-button {
-        @apply absolute top-1 right-1 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200;
+        @apply absolute top-1 right-1 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200; /* Adjust w-8 h-8 for button size = 32px */
         font-size: 0.8rem;
         opacity: 0.7;
     }
