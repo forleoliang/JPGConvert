@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
-    const thumbnailArea = document.getElementById('thumbnailArea'); // Updated to thumbnailArea
+    const thumbnailArea = document.getElementById('thumbnailArea');
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
     const compressionInfo = document.getElementById('compressionInfo');
-    const removeAllImagesButton = document.getElementById('removeAllImagesButton'); // Updated ID
+    const removeAllImagesButton = document.getElementById('removeAllImagesButton');
     const noFileSelectedText = document.getElementById('noFileSelectedText');
 
     let uploadedFiles = [];
@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadedFiles = [...files];
             console.log('Files selected:', uploadedFiles);
 
-            thumbnailArea.innerHTML = ''; // Clear previous thumbnails
+            thumbnailArea.innerHTML = '';
             previewArea.classList.remove('hidden');
             convertButton.classList.remove('hidden');
             convertButton.disabled = false;
             noFileSelectedText.classList.add('hidden');
-            removeAllImagesButton.classList.remove('hidden'); // Show "Remove All" button
+            removeAllImagesButton.classList.remove('hidden');
 
             let allValid = true;
             for (const file of uploadedFiles) {
@@ -73,11 +73,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (allValid) {
-                uploadedFiles.forEach((file, index) => { // Iterate with index for remove function
+                uploadedFiles.forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         const thumbnailContainer = document.createElement('div');
                         thumbnailContainer.classList.add('thumbnail-container');
+                        thumbnailContainer.style.left = `${index * 10}px`; /* Offset each thumbnail */
+                        thumbnailContainer.style.top = `${index * 5}px`;  /* Slight vertical offset too */
+
 
                         const img = document.createElement('img');
                         img.src = e.target.result;
@@ -85,11 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         img.classList.add('thumbnail-image');
 
                         const removeButton = document.createElement('button');
-                        removeButton.innerHTML = '×'; // 'X' icon
+                        removeButton.innerHTML = '×';
                         removeButton.classList.add('thumbnail-remove-button');
                         removeButton.ariaLabel = 'Remove Image';
                         removeButton.addEventListener('click', () => {
-                            removeThumbnail(index); // Call removeThumbnail with index
+                            removeThumbnail(index);
                         });
 
 
@@ -117,15 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function removeThumbnail(indexToRemove) {
         console.log('Removing thumbnail at index:', indexToRemove);
-        uploadedFiles = uploadedFiles.filter((_, index) => index !== indexToRemove); // Remove file from array
+        uploadedFiles = uploadedFiles.filter((_, index) => index !== indexToRemove);
         console.log('Remaining files:', uploadedFiles);
-        thumbnailArea.innerHTML = ''; // Clear all thumbnails
+        thumbnailArea.innerHTML = '';
         if (uploadedFiles.length > 0) {
-             uploadedFiles.forEach((file, index) => { // Re-render thumbnails for remaining files
+             uploadedFiles.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const thumbnailContainer = document.createElement('div');
                     thumbnailContainer.classList.add('thumbnail-container');
+                    thumbnailContainer.style.left = `${index * 10}px`; /* Offset each thumbnail - important to re-apply on re-render */
+                    thumbnailContainer.style.top = `${index * 5}px`;   /* Slight vertical offset too */
+
 
                     const img = document.createElement('img');
                     img.src = e.target.result;
@@ -133,11 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.classList.add('thumbnail-image');
 
                     const removeButton = document.createElement('button');
-                    removeButton.innerHTML = '×'; // 'X' icon
+                    removeButton.innerHTML = '×';
                     removeButton.classList.add('thumbnail-remove-button');
                     removeButton.ariaLabel = 'Remove Image';
                     removeButton.addEventListener('click', () => {
-                        removeThumbnail(index); // Call removeThumbnail with updated index
+                        removeThumbnail(index);
                     });
 
                     thumbnailContainer.appendChild(img);
@@ -147,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 reader.readAsDataURL(file);
             });
         } else {
-            resetUI(); // Reset UI if no files left
+            resetUI();
         }
     }
 
@@ -163,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadLinkArea.classList.add('hidden');
         previewArea.classList.remove('hidden');
         compressionInfo.classList.add('hidden');
-        removeAllImagesButton.classList.add('hidden'); // Hide remove all button during conversion
+        removeAllImagesButton.classList.add('hidden');
 
 
         const zip = new JSZip();
@@ -223,14 +229,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } finally {
             convertButton.textContent = 'Convert Images';
             convertButton.disabled = false;
-            removeAllImagesButton.classList.remove('hidden'); // Show remove all button after conversion
+            removeAllImagesButton.classList.remove('hidden');
         }
     });
 
 
     function resetUI() {
         uploadedFiles = [];
-        thumbnailArea.innerHTML = ''; // Clear thumbnails on reset
+        thumbnailArea.innerHTML = '';
         previewArea.classList.add('hidden');
         convertButton.classList.add('hidden');
         convertButton.disabled = true;
