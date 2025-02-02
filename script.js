@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
     const compressionInfo = document.getElementById('compressionInfo');
-    const removeImageButton = document.getElementById('removeImageButton'); // 获取移除图片按钮
-    const noFileSelectedText = document.getElementById('noFileSelectedText'); // 获取 "No file selected." 提示文字
+    const removeImageIcon = document.getElementById('removeImageIcon'); // Get Remove Image Icon Element (DIV now)
+    const noFileSelectedText = document.getElementById('noFileSelectedText');
 
     let uploadedFile = null;
 
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadedFile = file;
             console.log('PNG file uploaded:', uploadedFile); // 调试信息
             displayPreview(file);
-            noFileSelectedText.classList.add('hidden'); // 隐藏 "No file selected." 提示
+            noFileSelectedText.classList.add('hidden');
         } else if (file) { // 选择了文件，但不是 PNG
             alert('Please select a PNG image file.'); // 英文提示
             console.warn('Invalid file type selected. Please select a PNG image.'); // 调试信息
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else { // 没有选择文件 (例如，点击取消)
             uploadedFile = null; // 确保 uploadedFile 为 null
             resetUI();
-            noFileSelectedText.classList.remove('hidden'); // 显示 "No file selected." 提示
+            noFileSelectedText.classList.remove('hidden');
         }
     }
 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             convertButton.classList.remove('hidden');
             convertButton.disabled = false; // 上传图片后启用转换按钮
             compressionInfo.classList.add('hidden');
-            removeImageButton.classList.remove('hidden'); // 显示移除图片按钮
+            removeImageIcon.classList.remove('hidden'); // Show Remove Image Icon
         };
         reader.readAsDataURL(file);
     }
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.disabled = true; // 禁用按钮
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
-        removeImageButton.classList.add('hidden'); // 转换时隐藏移除图片按钮
+        removeImageIcon.classList.add('hidden'); // Hide Remove Image Icon during conversion
 
         try {
             console.log('Starting image compression...'); // 调试信息
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } finally {
             convertButton.textContent = 'Convert'; // 按钮恢复文字 "Convert"
             convertButton.disabled = false; // 启用按钮 (允许用户再次转换)
-            removeImageButton.classList.remove('hidden'); // 转换完成后显示移除图片按钮
+            removeImageIcon.classList.remove('hidden'); // Show Remove Image Icon after conversion
         }
     });
 
@@ -140,15 +140,15 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
-        removeImageButton.classList.add('hidden'); // 重置时隐藏移除图片按钮
+        removeImageIcon.classList.add('hidden'); // Hide Remove Image Icon on reset
         fileInput.value = ''; // 清空文件 input 的值
-        noFileSelectedText.classList.add('hidden'); // 重置时隐藏 "No file selected." 提示
+        noFileSelectedText.classList.add('hidden');
     }
 
-    // 移除图片按钮点击事件
-    removeImageButton.addEventListener('click', () => {
-        console.log('Remove Image button clicked.'); // 调试信息
+    // Remove Image Icon Click Event (Now for the DIV)
+    removeImageIcon.addEventListener('click', () => {
+        console.log('Remove Image Icon clicked.'); // 调试信息
         resetUI();
-        noFileSelectedText.classList.remove('hidden'); // 显示 "No file selected." 提示
+        noFileSelectedText.classList.remove('hidden');
     });
 });
