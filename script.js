@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const compressionInfo = document.getElementById('compressionInfo');
     const removeAllImagesButton = document.getElementById('removeAllImagesButton');
     const noFileSelectedText = document.getElementById('noFileSelectedText');
-    const qualitySlider = document.getElementById('qualitySlider'); // 获取质量滑块
-    const qualityValueDisplay = document.getElementById('qualityValue'); // 获取质量值显示 span
-    const originalPreviewImage = document.getElementById('originalPreviewImage'); // 获取原始预览图 img 元素
-    const webpPreviewImage = document.getElementById('webpPreviewImage'); // 获取 WebP 预览图 img 元素
+    const qualitySlider = document.getElementById('qualitySlider');
+    const qualityValueDisplay = document.getElementById('qualityValue');
+    const originalPreviewImage = document.getElementById('originalPreviewImage');
+    const webpPreviewImage = document.getElementById('webpPreviewImage');
 
 
     let uploadedFiles = [];
-    let currentQuality = 75; // 初始质量值，与滑块初始值一致
+    let currentQuality = 75;
 
 
     const imageCompression = window.imageCompression;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dropArea.addEventListener('dragover', dragOverHandler);
     dropArea.addEventListener('dragleave', dragLeaveHandler);
     dropArea.addEventListener('drop', dropHandler);
-    qualitySlider.addEventListener('input', handleQualityChange); // 监听质量滑块 input 事件
+    qualitySlider.addEventListener('input', handleQualityChange);
 
 
     function dragOverHandler(e) {
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadedFiles = [...files];
             console.log('Files selected:', uploadedFiles);
 
-            thumbnailArea.innerHTML = ''; // Clear previous thumbnails
+            thumbnailArea.innerHTML = '';
             previewArea.classList.remove('hidden');
             convertButton.classList.remove('hidden');
             convertButton.disabled = false;
@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (allValid) {
-                // Limit to max 20 thumbnails for display
                 const filesToPreview = uploadedFiles.slice(0, 20);
                 filesToPreview.forEach((file, index) => {
                     console.log("Processing file for thumbnail:", file.name);
@@ -114,13 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                     reader.readAsDataURL(file);
 
-                    // 显示第一张上传的图片作为原始预览图 (只显示一次)
                     if (index === 0) {
                         originalPreviewImage.src = e.target.result;
                     }
                 });
 
-                // 初始时，用默认质量值压缩并预览第一张图片
+
                 if (uploadedFiles.length > 0) {
                     previewFirstImageWithQuality(uploadedFiles[0], currentQuality);
                 }
@@ -144,10 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Removing thumbnail at index:', indexToRemove);
         uploadedFiles = uploadedFiles.filter((_, index) => index !== indexToRemove);
         console.log('Remaining files:', uploadedFiles);
-        thumbnailArea.innerHTML = ''; // Clear all thumbnails
+        thumbnailArea.innerHTML = '';
         if (uploadedFiles.length > 0) {
-             // Limit to max 20 thumbnails for re-render as well
-            const filesToPreview = uploadedFiles.slice(0, 20);
+             const filesToPreview = uploadedFiles.slice(0, 20);
              filesToPreview.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -173,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 reader.readAsDataURL(file);
             });
-            // 移除图片后，如果还有图片，重新预览第一张
             previewFirstImageWithQuality(uploadedFiles[0], currentQuality);
         } else {
             resetUI();
@@ -182,11 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     async function previewFirstImageWithQuality(imageFile, quality) {
-        if (!imageFile) return; // 如果没有图片，则返回
+        if (!imageFile) return;
 
         console.log(`Previewing first image: ${imageFile.name} with quality: ${quality}`);
-        previewArea.classList.remove('hidden'); // 确保预览区域显示
-        webpPreviewImage.src = '#'; // 清空 WebP 预览图，显示加载状态
+        previewArea.classList.remove('hidden');
+        webpPreviewImage.src = '#';
 
         try {
             const compressedFile = await imageCompression(imageFile, {
@@ -194,10 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 maxWidthOrHeight: 2000,
                 useWebWorker: true,
                 fileType: 'webp',
-                quality: quality / 100, // 质量值从 0-100 转换为 0-1 范围
+                quality: quality / 100,
             });
             const webpURL = URL.createObjectURL(compressedFile);
-            webpPreviewImage.src = webpURL; // 显示 WebP 预览图
+            webpPreviewImage.src = webpURL;
 
             const originalFileSize = imageFile.size;
             const compressedFileSize = compressedFile.size;
@@ -210,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Preview generation failed:', error);
-            webpPreviewImage.src = '#'; // 预览失败时，清空 WebP 预览图
+            webpPreviewImage.src = '#';
             compressionInfo.textContent = 'Preview generation failed.';
             compressionInfo.classList.remove('hidden');
         }
@@ -218,11 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function handleQualityChange(event) {
-        currentQuality = parseInt(event.target.value); // 获取滑块的整数值
-        qualityValueDisplay.textContent = currentQuality; // 更新显示的质量值
+        currentQuality = parseInt(event.target.value);
+        qualityValueDisplay.textContent = currentQuality;
 
         if (uploadedFiles.length > 0) {
-            previewFirstImageWithQuality(uploadedFiles[0], currentQuality); // 使用新的质量值重新预览第一张图片
+            previewFirstImageWithQuality(uploadedFiles[0], currentQuality);
         }
     }
 
@@ -237,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.textContent = 'Converting Images...';
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
-        previewArea.classList.remove('hidden'); // 确保预览区域显示
+        previewArea.classList.remove('hidden');
         compressionInfo.classList.add('hidden');
         removeAllImagesButton.classList.add('hidden');
 
@@ -248,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalCompressedSize = 0;
 
         try {
-            console.log('Starting batch image conversion with quality:', currentQuality); // 记录当前质量值
+            console.log('Starting batch image conversion with quality:', currentQuality);
 
             for (let i = 0; i < uploadedFiles.length; i++) {
                 const file = uploadedFiles[i];
@@ -257,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     maxWidthOrHeight: 2000,
                     useWebWorker: true,
                     fileType: 'webp',
-                    quality: currentQuality / 100, // 使用当前的质量值
+                    quality: currentQuality / 100,
                 };
                 console.log(`Processing file ${i + 1} of ${uploadedFiles.length}:`, file.name, file.type, file.size);
                 console.log("Compression options:", options);
@@ -283,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formattedPercentage = totalCompressionPercentage.toFixed(2);
             console.log(`Total Compression percentage for all files: ${formattedPercentage}%`);
 
-            compressionInfo.textContent = `Total Compression Ratio (Quality: ${currentQuality}): ${formattedPercentage}% (Original Total Size: ${(totalOriginalSize / 1024).toFixed(2)}KB, Compressed Total Size: ${(totalCompressedSize / 1024).toFixed(2)}KB)`; // 显示当前质量值
+            compressionInfo.textContent = `Total Compression Ratio (Quality: ${currentQuality}): ${formattedPercentage}% (Original Total Size: ${(totalOriginalSize / 1024).toFixed(2)}KB, Compressed Total Size: ${(totalCompressedSize / 1024).toFixed(2)}KB)`;
             compressionInfo.classList.remove('hidden');
 
 
@@ -323,8 +319,8 @@ document.addEventListener('DOMContentLoaded', () => {
         removeAllImagesButton.classList.add('hidden');
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
-        originalPreviewImage.src = '#'; // 清空原始预览图
-        webpPreviewImage.src = '#';    // 清空 WebP 预览图
+        originalPreviewImage.src = '#';
+        webpPreviewImage.src = '#';
     }
 
 
