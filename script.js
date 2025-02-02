@@ -1,177 +1,185 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("DOMContentLoaded event fired. Script execution started."); // DEBUG: Script start
-
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
-    const previewImage = document.getElementById('previewImage'); // Reusing previewImage for "Before"
+    const previewImageArea = document.getElementById('previewImageArea'); // Get preview image area container - will likely remain empty
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
-    const compressionInfo = document.getElementById('compressionInfo');
-    const removeImageButton = document.getElementById('removeImageButton');
+    const compressionInfo = document.getElementById('compressionInfo'); // Likely hidden in multi-file mode
+    const removeImageButton = document.getElementById('removeImageButton'); // Likely hidden in multi-file mode
     const noFileSelectedText = document.getElementById('noFileSelectedText');
-    const comparisonArea = document.getElementById('comparisonArea');
-    const beforeImage = document.getElementById('beforeImage');
-    const afterImage = document.getElementById('afterImage');
 
-
-    let uploadedFile = null;
+    let uploadedFiles = []; // Use an array to store multiple uploaded files
 
     const imageCompression = window.imageCompression;
+    const JSZip = window.JSZip; // Access JSZip library
 
-    if (typeof imageCompression === 'undefined') {
-        console.error('Error: browser-image-compression library not loaded!');
-        alert('Image conversion library failed to load.');
+    if (typeof imageCompression === 'undefined' || typeof JSZip === 'undefined') {
+        console.error('Error: Required libraries not loaded! Check CDN links.');
+        alert('Libraries failed to load. Check network and CDN links.');
         return;
     } else {
-        console.log('browser-image-compression library loaded successfully.');
+        console.log('Required libraries loaded successfully.');
     }
 
-    console.log("Adding event listener to fileInput 'change' event."); // DEBUG: Event listener setup
     fileInput.addEventListener('change', handleFile);
+    dropArea.addEventListener('dragover', dragOverHandler);
+    dropArea.addEventListener('dragleave', dragLeaveHandler);
+    dropArea.addEventListener('drop', dropHandler);
 
-    dropArea.addEventListener('dragover', (e) => {
+
+    function dragOverHandler(e) {
         e.preventDefault();
         dropArea.classList.add('hover:border-blue-500', 'hover:bg-gray-50');
-    });
-    dropArea.addEventListener('dragleave', () => {
+    }
+
+    function dragLeaveHandler() {
         dropArea.classList.remove('hover:border-blue-500', 'hover:bg-gray-50');
-    });
-    dropArea.addEventListener('drop', (e) => {
+    }
+
+    function dropHandler(e) {
         e.preventDefault();
         dropArea.classList.remove('hover:border-blue-500', 'hover:bg-gray-50');
 
-        const files = e.dataTransfer.files;
-        if (files && files.length > 0) {
-            uploadedFile = files[0];
-            displayPreview(uploadedFile);
-        }
-    });
+        const files = Array.from(e.dataTransfer.files); // Convert FileList to Array
+        handleFilesSelection(files); // Call the new handler for file list
+    }
 
     function handleFile(event) {
-        console.log("handleFile function START"); // DEBUG: handleFile start
-        console.log("Event object received by handleFile:", event); // DEBUG: Event object
+        const files = Array.from(event.target.files); // Convert FileList to Array
+        handleFilesSelection(files); // Call the new handler for file list
+    }
 
-        const file = event.target.files[0] || uploadedFile;
-        console.log("File object obtained in handleFile:", file); // DEBUG: File object
 
-        if (file && (file.type.startsWith('image/png') || file.type.startsWith('image/jpeg'))) {
-            uploadedFile = file;
-            console.log('PNG/JPG file uploaded:', uploadedFile);
-            displayPreview(uploadedFile);
-            noFileSelectedText.classList.add('hidden');
-        } else if (file) {
-            alert('Please select a PNG or JPG image file.');
-            console.warn('Invalid file type selected.');
-            resetUI();
+    function handleFilesSelection(files) {
+        if (files && files.length > 0) {
+            uploadedFiles = [...files]; // Store all selected files
+            console.log('Files selected:', uploadedFiles);
+
+            // Basic file type check and update UI (no previews for multi-file initially)
+            let allValid = true;
+            for (const file of uploadedFiles) {
+                if (!file.type.startsWith('image/png') && !file.type.startsWith('image/jpeg')) {
+                    allValid = false;
+                    break;
+                }
+            }
+
+            if (allValid) {
+                previewArea.classList.remove('hidden');
+                convertButton.classList.remove('hidden');
+                convertButton.disabled = false;
+                noFileSelectedText.classList.add('hidden');
+                removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
+                compressionInfo.classList.add('hidden'); // Hide compression info initially
+            } else {
+                alert('Please select only PNG or JPG image files.');
+                console.warn('Invalid file types selected.');
+                resetUI();
+            }
+
+
         } else {
-            uploadedFile = null;
+            uploadedFiles = [];
             resetUI();
             noFileSelectedText.classList.remove('hidden');
         }
-        console.log("handleFile function END"); // DEBUG: handleFile end
     }
 
-    function displayPreview(file) {
-        console.log("displayPreview function START"); // DEBUG: displayPreview start
-        console.log("File object received by displayPreview:", file); // DEBUG: File object in displayPreview
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            console.log("FileReader onload function START"); // DEBUG: FileReader onload start
-            // Simplified displayPreview for debugging - just log success for now
-            console.log("FileReader onload: Image loaded by FileReader");
-            // previewImage.src = e.target.result;
-            // beforeImage.src = e.target.result;
-            // previewArea.classList.remove('hidden');
-            // convertButton.classList.remove('hidden');
-            // convertButton.disabled = false;
-            // compressionInfo.classList.add('hidden');
-            // removeImageButton.classList.remove('hidden');
-            // comparisonArea.classList.add('hidden');
-            console.log("FileReader onload function END"); // DEBUG: FileReader onload end
-        };
-        console.log("FileReader readAsDataURL START"); // DEBUG: readAsDataURL start
-        reader.readAsDataURL(file);
-        console.log("FileReader readAsDataURL END"); // DEBUG: readAsDataURL end
-        console.log("displayPreview function END"); // DEBUG: displayPreview end
-    }
 
     convertButton.addEventListener('click', async () => {
-        if (!uploadedFile) {
-            alert('Please select or drag and drop a PNG or JPG image first.');
+        if (!uploadedFiles || uploadedFiles.length === 0) {
+            alert('Please select or drag and drop PNG or JPG images first.');
             return;
         }
 
-        convertButton.textContent = 'Converting...';
+        convertButton.textContent = 'Converting Images...'; // Updated button text during conversion
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
-        compressionInfo.classList.add('hidden');
-        removeImageButton.classList.add('hidden');
-        comparisonArea.classList.add('hidden');
+        previewArea.classList.remove('hidden'); // Ensure processing area is visible
+        compressionInfo.classList.add('hidden'); // Ensure compression info is hidden
+        removeImageButton.classList.add('hidden'); // Hide remove button during conversion
+
+
+        const zip = new JSZip(); // Create a new JSZip instance
+        const webpFiles = []; // Array to store converted WebP files for zipping
+        let totalOriginalSize = 0;
+        let totalCompressedSize = 0;
 
         try {
-            console.log('Starting image compression...');
-            const originalFileSize = uploadedFile.size;
-            console.log('Original File Size (bytes):', originalFileSize);
+            console.log('Starting batch image conversion...');
 
-            const compressedFile = await imageCompression(uploadedFile, {
-                maxSizeMB: 2,
-                maxWidthOrHeight: 2000,
-                useWebWorker: true,
-                fileType: 'webp',
-                quality: 0.6,
-            });
-            console.log('Image compression completed successfully.');
-            const compressedFileSize = compressedFile.size;
-            console.log('Compressed File Size (bytes):', compressedFileSize);
+            for (let i = 0; i < uploadedFiles.length; i++) {
+                const file = uploadedFiles[i];
+                console.log(`Processing file ${i + 1} of ${uploadedFiles.length}:`, file.name);
+                totalOriginalSize += file.size; // Accumulate original sizes
 
-            const compressionPercentage = ((originalFileSize - compressedFileSize) / originalFileSize) * 100;
-            const formattedPercentage = compressionPercentage.toFixed(2);
-            console.log(`Compression percentage: ${formattedPercentage}%`);
+                const compressedFile = await imageCompression(file, {
+                    maxSizeMB: 2,
+                    maxWidthOrHeight: 2000,
+                    useWebWorker: true,
+                    fileType: 'webp',
+                    quality: 0.6, // Or your desired default quality
+                });
 
-            compressionInfo.textContent = `Compression Ratio: ${formattedPercentage}% (Original Size: ${(originalFileSize / 1024).toFixed(2)}KB, Compressed Size: ${(compressedFileSize / 1024).toFixed(2)}KB)`;
+                totalCompressedSize += compressedFile.size; // Accumulate compressed sizes
+                webpFiles.push({ file: compressedFile, originalName: file.name }); // Store converted file and original name
+                console.log(`File ${i + 1} converted:`, file.name, '->', compressedFile.name);
+            }
+
+
+            console.log('Batch image conversion completed successfully.');
+
+            const totalCompressionPercentage = ((totalOriginalSize - totalCompressedSize) / totalOriginalSize) * 100;
+            const formattedPercentage = totalCompressionPercentage.toFixed(2);
+            console.log(`Total Compression percentage for all files: ${formattedPercentage}%`);
+
+            compressionInfo.textContent = `Total Compression Ratio: ${formattedPercentage}% (Original Total Size: ${(totalOriginalSize / 1024).toFixed(2)}KB, Compressed Total Size: ${(totalCompressedSize / 1024).toFixed(2)}KB)`;
             compressionInfo.classList.remove('hidden');
 
-            const downloadUrl = URL.createObjectURL(compressedFile);
-            downloadLink.href = downloadUrl;
-            const fileName = uploadedFile.name.replace(/\.(png|jpg)$/i, '.webp');
-            downloadLink.download = fileName;
+
+            // Create ZIP archive
+            webpFiles.forEach(webpFile => {
+                zip.file(webpFile.originalName.replace(/\.(png|jpg)$/i, '.webp'), webpFile.file); // Add each WebP file to zip
+            });
+            const zipBlob = await zip.generateAsync({ type: "blob" }); // Generate zip as Blob
+
+
+            // Create download link for ZIP
+            const downloadUrlZip = URL.createObjectURL(zipBlob);
+            downloadLink.href = downloadUrlZip;
             downloadLinkArea.classList.remove('hidden');
 
-            afterImage.src = downloadUrl;
-            comparisonArea.classList.remove('hidden');
 
         } catch (error) {
-            console.error('Image conversion failed:', error);
+            console.error('Batch image conversion failed:', error);
             console.error('Error details:', error);
-            alert('Image conversion failed. Please try again and check the console.');
+            alert('Batch image conversion failed. See console for details.');
         } finally {
-            convertButton.textContent = 'Convert';
+            convertButton.textContent = 'Convert Images'; // Reset button text
             convertButton.disabled = false;
-            removeImageButton.classList.remove('hidden');
+            removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
         }
     });
 
+
     function resetUI() {
-        uploadedFile = null;
-        previewImage.src = '#';
-        beforeImage.src = '#';
-        afterImage.src = '#';
+        uploadedFiles = []; // Reset the array of files
+        previewImageArea.innerHTML = ''; // Clear any previews (if you add them later)
         previewArea.classList.add('hidden');
         convertButton.classList.add('hidden');
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
-        removeImageButton.classList.add('hidden');
-        comparisonArea.classList.add('hidden');
+        removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
     }
 
+
     removeImageButton.addEventListener('click', () => {
-        console.log('Remove Image button clicked.');
+        console.log('Remove Images button clicked.');
         resetUI();
         noFileSelectedText.classList.remove('hidden');
     });
