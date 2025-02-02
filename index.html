@@ -1,107 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PNG/JPG to WebP Converter</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
-    <style>
-        /* Custom Tailwind configurations for SwiftUI style */
-        @layer utilities {
-            .btn-swiftui {
-                @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-200;
-            }
-            .btn-swiftui:disabled {
-                @apply bg-gray-400 cursor-not-allowed hover:bg-gray-400;
-            }
-            .btn-swiftui-pill { /* Pill shape button style */
-                @apply rounded-full px-6 py-2;
-            }
-            .input-file-swiftui {
-                @apply border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500;
-            }
-            .drop-area-swiftui {
-                @apply border-2 border-dashed border-gray-400 rounded-md p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition-colors duration-200;
-            }
-            .card-title { /* Card title style */
-                @apply text-xl font-bold text-gray-700 mb-4 font-bold text-[28px]; /* Make card titles bold and 28px */
-            }
-            .card-header { /* Card header to position title and remove button */
-                @apply flex justify-between items-center mb-4; /* Align items vertically in center */
-            }
-            .remove-image-btn { /* Remove image 'X' button style (for card header - not used on thumbnails now) */
-                @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200; /* Make 'X' red */
-            }
-            .thumbnail-container { /* Container for each thumbnail image */
-                @apply relative inline-block shadow-md rounded-md overflow-hidden m-1;
-                width: 100px; /* Adjust thumbnail size as needed */
-                height: 100px;
-            }
-            .thumbnail-container:nth-child(2) { transform: rotate(2deg) translate(-5px, -5px); z-index: 2; } /* Example stack effect */
-            .thumbnail-container:nth-child(3) { transform: rotate(-3deg) translate(5px, -10px); z-index: 3; } /* Example stack effect */
-            .thumbnail-container:nth-child(4) { transform: rotate(1deg) translate(-2px, -15px); z-index: 4; } /* Example stack effect */
-            .thumbnail-container:nth-child(n+5) { transform: rotate(0deg) translate(0, -20px); z-index: 5; } /* Stack effect for more than 4 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-            .thumbnail-img { /* Style for the image itself in thumbnail */
-                @apply block w-full h-full object-cover;
-            }
-            .thumbnail-remove-btn { /* Remove button on thumbnail */
-                @apply absolute top-0 right-0 p-1 text-white bg-red-500 rounded-full cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-200;
-                transform: translate(25%, -25%); /* Position in top right corner */
-            }
-            .thumbnail-container:hover .thumbnail-remove-btn { /* Show remove button on hover */
-                opacity: 100%;
-            }
-            .thumbnail-remove-btn svg { /* Style for the X icon inside button */
-                @apply block h-3 w-3; /* Adjust icon size */
-            }
+@layer utilities {
+    .btn-swiftui {
+        @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-200;
+    }
+    .btn-swiftui:disabled {
+        @apply bg-gray-400 cursor-not-allowed hover:bg-gray-400;
+    }
+    .btn-swiftui-pill {
+        @apply rounded-full px-6 py-2;
+    }
+    .input-file-swiftui {
+        @apply border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500;
+    }
+    .drop-area-swiftui {
+        @apply border-2 border-dashed border-gray-400 rounded-md p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition-colors duration-200;
+    }
+    .card-title {
+        @apply text-xl font-bold text-gray-700 mb-4 text-3xl; /* Increased font-size to 32px (text-3xl from Tailwind) */
+    }
+    .card-header {
+        @apply flex justify-between items-center mb-4;
+    }
+    .remove-image-btn {
+        @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200;
+    }
+
+    /* Thumbnail Styles */
+    .thumbnail-container {
+        @apply relative w-24 h-24 rounded-md overflow-hidden shadow-md bg-white; /* Adjust w-24 h-24 for thumbnail size */
+        /* 3D Stacked Book Effect */
+        transform-style: preserve-3d; /* Important for 3D transforms on children */
+        perspective: 500px; /* Adjust perspective as needed */
+    }
+
+    .thumbnail-image {
+        @apply block w-full h-full object-cover;
+        /* 3D Effect - slightly rotate and translate */
+        transform: rotateX(10deg) rotateY(10deg) translateZ(5px); /* Adjust rotation and translation values */
+        transition: transform 0.3s ease; /* Smooth transition for hover effect if you add one */
+    }
+
+    .thumbnail-container:hover .thumbnail-image {
+        transform: rotateX(0deg) rotateY(0deg) translateZ(0px); /* Reset transform on hover for a slight pop-out effect */
+    }
 
 
-        }
-    </style>
-</head>
-<body class="bg-gray-100 font-sans antialiased">
-    <div class="container mx-auto p-8 max-w-xl">
-        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">PNG/JPG to WebP Converter</h1>
-         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="card-header">
-                <h2 class="card-title">Select Images</h2>
-            </div>
-            <div class="mb-4">
-                <label for="imageUpload" class="block text-gray-700 text-sm font-bold mb-2">Choose PNG or JPG files (up to 18)</label>
-                <input type="file" id="imageUpload" accept="image/png, image/jpeg" class="input-file-swiftui" multiple />
-                <p id="noFileSelectedText" class="text-gray-500 text-sm italic mt-1 hidden">No files selected.</p>
-            </div>
-            <div id="dropArea" class="drop-area-swiftui">
-                <p class="text-gray-600">Or drag and drop PNG/JPG images here (up to 18)</p>
-            </div>
-        </div>
+    .thumbnail-remove-button {
+        @apply absolute top-1 right-1 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200; /* Adjust w-8 h-8 for button size = 32px */
+        font-size: 0.8rem; /* Adjust font size if needed */
+        opacity: 0.7; /* Slightly transparent by default */
+    }
 
-        <div id="previewArea" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-             <div class="card-header">
-                <h2 class="card-title">Processing</h2>
-                 <button id="removeCardButton" class="remove-image-btn hidden" type="button" aria-label="Remove All Images">×</button> <!-- Consider a general card remove button if needed -->
-            </div>
-            <div id="thumbnailArea" class="flex flex-wrap justify-center"> <!-- Container for thumbnails, flex and wrap -->
-                <!-- Thumbnails will be dynamically added here -->
-            </div>
-            <div id="compressionInfo" class="text-sm text-gray-600 mb-4 hidden"></div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md p-6 text-center">
-           <div class="card-header">
-               <h2 class="card-title">Convert</h2>
-           </div>
-            <button id="convertButton" class="btn-swiftui btn-swiftui-pill hidden" disabled>Convert Images</button>
-            <div id="downloadLinkArea" class="hidden">
-                <a id="downloadLink" href="#" download="converted-images.zip" class="btn-swiftui">Download WebP Images (ZIP)</a>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    .thumbnail-container:hover .thumbnail-remove-button {
+        opacity: 1; /* Fully opaque on thumbnail hover */
+    }
+}
