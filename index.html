@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> <!-- Add JSZip CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <style>
         /* Custom Tailwind configurations for SwiftUI style */
         @layer utilities {
@@ -35,6 +35,13 @@
              .remove-image-btn { /* Remove image 'X' button style */
                 @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200; /* Make 'X' red */
             }
+            .preview-image-thumbnail { /* Style for preview thumbnails */
+                @apply max-w-full h-auto rounded-md shadow-md inline-block mb-2 mr-2; /* Adjust margins and display as needed */
+                max-height: 100px; /* Limit thumbnail height */
+            }
+             .preview-image-area-grid { /* Grid layout for thumbnails */
+                @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2; /* Responsive grid */
+            }
         }
     </style>
 </head>
@@ -43,36 +50,36 @@
         <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">PNG/JPG to WebP Converter</h1>
          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
             <div class="card-header">
-                <h2 class="card-title">Select Images</h2>  <!-- Updated title to "Select Images" -->
+                <h2 class="card-title">Select Images</h2>
             </div>
             <div class="mb-4">
-                <label for="imageUpload" class="block text-gray-700 text-sm font-bold mb-2">Choose PNG or JPG files (up to 18)</label> <!-- Updated label to indicate multiple files -->
-                <input type="file" id="imageUpload" accept="image/png, image/jpeg" class="input-file-swiftui" multiple /> <!-- Added 'multiple' attribute -->
-                <p id="noFileSelectedText" class="text-gray-500 text-sm italic mt-1 hidden">No files selected.</p> <!-- Updated text -->
+                <label for="imageUpload" class="block text-gray-700 text-sm font-bold mb-2">Choose PNG or JPG files (up to 18)</label>
+                <input type="file" id="imageUpload" accept="image/png, image/jpeg" class="input-file-swiftui" multiple />
+                <p id="noFileSelectedText" class="text-gray-500 text-sm italic mt-1 hidden">No files selected.</p>
             </div>
             <div id="dropArea" class="drop-area-swiftui">
-                <p class="text-gray-600">Or drag and drop PNG/JPG images here (up to 18)</p> <!-- Updated text -->
+                <p class="text-gray-600">Or drag and drop PNG/JPG images here (up to 18)</p>
             </div>
         </div>
 
         <div id="previewArea" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
              <div class="card-header">
-                <h2 class="card-title">Processing</h2> <!-- Changed "Preview" to "Processing" as no single preview anymore -->
-                 <button id="removeImageButton" class="remove-image-btn" type="button" aria-label="Remove Images" hidden>×</button> <!-- Hide remove button in multi-file mode initially-->
+                <h2 class="card-title">Processing</h2>
+                 <button id="removeImageButton" class="remove-image-btn" type="button" aria-label="Remove Images" hidden>×</button>
             </div>
-            <div id="previewImageArea">
-                <!-- Preview images will be removed for multi-file, consider adding back later if needed -->
+            <div id="previewImageArea" class="preview-image-area-grid"> <!-- Added grid class here -->
+                <!-- Preview images will be displayed here -->
             </div>
-            <div id="compressionInfo" class="text-sm text-gray-600 mb-4 hidden"></div> <!-- Hide compression info for multi-file initially -->
+            <div id="compressionInfo" class="text-sm text-gray-600 mb-4 hidden"></div>
         </div>
 
         <div class="bg-white rounded-lg shadow-md p-6 text-center">
            <div class="card-header">
                <h2 class="card-title">Convert</h2>
            </div>
-            <button id="convertButton" class="btn-swiftui btn-swiftui-pill hidden" disabled>Convert Images</button> <!-- Button text updated -->
+            <button id="convertButton" class="btn-swiftui btn-swiftui-pill hidden" disabled>Convert Images</button>
             <div id="downloadLinkArea" class="hidden">
-                <a id="downloadLink" href="#" download="converted-images.zip" class="btn-swiftui">Download WebP Images (ZIP)</a> <!-- Download link text updated -->
+                <a id="downloadLink" href="#" download="converted-images.zip" class="btn-swiftui">Download WebP Images (ZIP)</a>
             </div>
         </div>
     </div>
