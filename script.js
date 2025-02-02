@@ -51,14 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 处理文件上传和拖拽
     function handleFile(event) {
         const file = event.target.files[0] || uploadedFile; //优先使用 input file 选择的文件，其次使用拖拽上传的文件
-        if (file && file.type.startsWith('image/png')) {
+        if (file && (file.type.startsWith('image/png') || file.type.startsWith('image/jpeg'))) {
             uploadedFile = file;
-            console.log('PNG file uploaded:', uploadedFile); // 调试信息
+            console.log('PNG/JPG file uploaded:', uploadedFile); // 调试信息
             displayPreview(file);
             noFileSelectedText.classList.add('hidden'); // 隐藏 "No file selected." 提示
-        } else if (file) { // 选择了文件，但不是 PNG
-            alert('Please select a PNG image file.'); // 英文提示
-            console.warn('Invalid file type selected. Please select a PNG image.'); // 调试信息
+        } else if (file) { // 选择了文件，但不是 PNG/JPG
+            alert('Please select a PNG or JPG image file.'); // 英文提示
+            console.warn('Invalid file type selected. Please select a PNG or JPG image.'); // 调试信息
             resetUI();
         } else { // 没有选择文件 (例如，点击取消)
             uploadedFile = null; // 确保 uploadedFile 为 null
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 转换按钮点击事件
     convertButton.addEventListener('click', async () => {
         if (!uploadedFile) {
-            alert('Please select or drag and drop a PNG image first.'); // 英文提示
+            alert('Please select or drag and drop a PNG or JPG image first.'); // 英文提示
             return;
         }
 
@@ -111,13 +111,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const formattedPercentage = compressionPercentage.toFixed(2);
             console.log(`Compression percentage: ${formattedPercentage}%`); // 调试信息
 
-            compressionInfo.textContent = `Compression Ratio: ${formattedPercentage}% (Original Size: ${(originalFileSize / 1024).toFixed(2)}KB, Compressed Size: ${(compressedFileSize / 1024).toFixed(2)}KB)`; // 英文压缩信息
+           compressionInfo.textContent = `Compression Ratio: ${formattedPercentage}% (Original Size: ${(originalFileSize / 1024).toFixed(2)}KB, Compressed Size: ${(compressedFileSize / 1024).toFixed(2)}KB)`; // 英文压缩信息
             compressionInfo.classList.remove('hidden');
 
             // 创建下载链接
             const downloadUrl = URL.createObjectURL(compressedFile);
             downloadLink.href = downloadUrl;
-            downloadLink.download = uploadedFile.name.replace('.png', '.webp');
+            const fileName = uploadedFile.name.replace(/\.(png|jpg)$/i, '.webp'); // 使用正则表达式同时替换 .png 和 .jpg，忽略大小写
+            downloadLink.download = fileName;
             downloadLinkArea.classList.remove('hidden');
 
         } catch (error) {
