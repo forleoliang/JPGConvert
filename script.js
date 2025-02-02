@@ -2,18 +2,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
-    const previewImageArea = document.getElementById('previewImageArea'); // Get preview image area container - will likely remain empty
+    const previewImageArea = document.getElementById('previewImageArea'); // Get preview image area container
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
-    const compressionInfo = document.getElementById('compressionInfo'); // Likely hidden in multi-file mode
-    const removeImageButton = document.getElementById('removeImageButton'); // Likely hidden in multi-file mode
+    const compressionInfo = document.getElementById('compressionInfo');
+    const removeImageButton = document.getElementById('removeImageButton');
     const noFileSelectedText = document.getElementById('noFileSelectedText');
 
-    let uploadedFiles = []; // Use an array to store multiple uploaded files
+    let uploadedFiles = [];
 
     const imageCompression = window.imageCompression;
-    const JSZip = window.JSZip; // Access JSZip library
+    const JSZip = window.JSZip;
 
     if (typeof imageCompression === 'undefined' || typeof JSZip === 'undefined') {
         console.error('Error: Required libraries not loaded! Check CDN links.');
@@ -42,22 +42,24 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         dropArea.classList.remove('hover:border-blue-500', 'hover:bg-gray-50');
 
-        const files = Array.from(e.dataTransfer.files); // Convert FileList to Array
-        handleFilesSelection(files); // Call the new handler for file list
+        const files = Array.from(e.dataTransfer.files);
+        handleFilesSelection(files);
     }
 
     function handleFile(event) {
-        const files = Array.from(event.target.files); // Convert FileList to Array
-        handleFilesSelection(files); // Call the new handler for file list
+        const files = Array.from(event.target.files);
+        handleFilesSelection(files);
     }
 
 
     function handleFilesSelection(files) {
         if (files && files.length > 0) {
-            uploadedFiles = [...files]; // Store all selected files
+            uploadedFiles = [...files];
             console.log('Files selected:', uploadedFiles);
 
-            // Basic file type check and update UI (no previews for multi-file initially)
+            // Clear any existing previews
+            previewImageArea.innerHTML = '';
+
             let allValid = true;
             for (const file of uploadedFiles) {
                 if (!file.type.startsWith('image/png') && !file.type.startsWith('image/jpeg')) {
@@ -71,8 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 convertButton.classList.remove('hidden');
                 convertButton.disabled = false;
                 noFileSelectedText.classList.add('hidden');
-                removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
-                compressionInfo.classList.add('hidden'); // Hide compression info initially
+                removeImageButton.classList.add('hidden');
+                compressionInfo.classList.add('hidden');
+
+                // Display image thumbnails
+                displayThumbnails(uploadedFiles); // Call new function to display thumbnails
+
             } else {
                 alert('Please select only PNG or JPG image files.');
                 console.warn('Invalid file types selected.');
@@ -87,6 +93,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function displayThumbnails(files) {
+        previewImageArea.innerHTML = ''; // Clear existing thumbnails
+
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = file.name;
+                img.classList.add('preview-image-thumbnail'); // Apply thumbnail class
+                previewImageArea.appendChild(img); // Append thumbnail to preview area
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+
 
     convertButton.addEventListener('click', async () => {
         if (!uploadedFiles || uploadedFiles.length === 0) {
@@ -94,16 +116,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        convertButton.textContent = 'Converting Images...'; // Updated button text during conversion
+        convertButton.textContent = 'Converting Images...';
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
-        previewArea.classList.remove('hidden'); // Ensure processing area is visible
-        compressionInfo.classList.add('hidden'); // Ensure compression info is hidden
-        removeImageButton.classList.add('hidden'); // Hide remove button during conversion
+        previewArea.classList.remove('hidden');
+        compressionInfo.classList.add('hidden');
+        removeImageButton.classList.add('hidden');
 
 
-        const zip = new JSZip(); // Create a new JSZip instance
-        const webpFiles = []; // Array to store converted WebP files for zipping
+        const zip = new JSZip();
+        const webpFiles = [];
         let totalOriginalSize = 0;
         let totalCompressedSize = 0;
 
@@ -113,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < uploadedFiles.length; i++) {
                 const file = uploadedFiles[i];
                 console.log(`Processing file ${i + 1} of ${uploadedFiles.length}:`, file.name);
-                totalOriginalSize += file.size; // Accumulate original sizes
+                totalOriginalSize += file.size;
 
                 const compressedFile = await imageCompression(file, {
                     maxSizeMB: 2,
@@ -123,8 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     quality: 0.6, // Or your desired default quality
                 });
 
-                totalCompressedSize += compressedFile.size; // Accumulate compressed sizes
-                webpFiles.push({ file: compressedFile, originalName: file.name }); // Store converted file and original name
+                totalCompressedSize += compressedFile.size;
+                webpFiles.push({ file: compressedFile, originalName: file.name });
                 console.log(`File ${i + 1} converted:`, file.name, '->', compressedFile.name);
             }
 
@@ -141,9 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Create ZIP archive
             webpFiles.forEach(webpFile => {
-                zip.file(webpFile.originalName.replace(/\.(png|jpg)$/i, '.webp'), webpFile.file); // Add each WebP file to zip
+                zip.file(webpFile.originalName.replace(/\.(png|jpg)$/i, '.webp'), webpFile.file);
             });
-            const zipBlob = await zip.generateAsync({ type: "blob" }); // Generate zip as Blob
+            const zipBlob = await zip.generateAsync({ type: "blob" });
 
 
             // Create download link for ZIP
@@ -157,22 +179,22 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error details:', error);
             alert('Batch image conversion failed. See console for details.');
         } finally {
-            convertButton.textContent = 'Convert Images'; // Reset button text
+            convertButton.textContent = 'Convert Images';
             convertButton.disabled = false;
-            removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
+            removeImageButton.classList.add('hidden');
         }
     });
 
 
     function resetUI() {
-        uploadedFiles = []; // Reset the array of files
-        previewImageArea.innerHTML = ''; // Clear any previews (if you add them later)
+        uploadedFiles = [];
+        previewImageArea.innerHTML = ''; // Clear thumbnails on reset
         previewArea.classList.add('hidden');
         convertButton.classList.add('hidden');
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
-        removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
+        removeImageButton.classList.add('hidden');
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
     }
