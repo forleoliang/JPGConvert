@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> <!-- Add JSZip CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <style>
         /* Custom Tailwind configurations for SwiftUI style */
         @layer utilities {
@@ -32,14 +32,27 @@
             .card-header { /* Card header to position title and remove button */
                 @apply flex justify-between items-center mb-4; /* Align items vertically in center */
             }
-             .remove-image-btn { /* Remove image 'X' button style */
+             .remove-image-btn { /* General remove image 'X' button style (header button - not used now) */
                 @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200; /* Make 'X' red */
             }
-            .preview-image-container { /* Container for each preview image */
-                @apply mb-4 relative shadow-md rounded-md overflow-hidden; /* Add margin, shadow, rounded corners */
+            .image-stack-container {
+                @apply relative; /* Container for stacked images */
             }
-            .preview-image-container img {
-                @apply block w-full h-auto; /* Ensure image is responsive within container */
+            .image-preview-stacked {
+                @apply max-w-full h-auto rounded-md shadow-md absolute; /* Stacked image style, absolute positioning for stacking */
+                @apply w-48 h-48 object-cover; /* Fixed size for preview images */
+            }
+            .image-preview-stacked:nth-child(2) { transform: translate(10px, 10px) rotate(2deg); } /* Example stack offset and rotation */
+            .image-preview-stacked:nth-child(3) { transform: translate(20px, 20px) rotate(-3deg); }
+            .image-preview-stacked:nth-child(4) { transform: translate(30px, 30px) rotate(1deg); }
+            .image-preview-stacked:nth-child(5) { transform: translate(40px, 40px) rotate(2deg); }
+            .image-preview-stacked:nth-child(6) { transform: translate(50px, 50px) rotate(-1deg); }
+            .image-preview-stacked:nth-child(7) { transform: translate(60px, 60px) rotate(1deg); }
+            .image-preview-stacked:nth-child(8) { transform: translate(70px, 70px) rotate(-2deg); }
+            .image-preview-stacked:nth-child(9) { transform: translate(80px, 80px) rotate(2deg); }
+            .image-preview-stacked:nth-child(10) { transform: translate(90px, 90px) rotate(-1deg); }
+            .remove-preview-btn { /* Remove image 'X' button on each preview */
+                @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200 absolute top-1 right-1 bg-white rounded-full p-1 opacity-70 hover:opacity-100; /* Positioned on image corner */
             }
         }
     </style>
@@ -64,10 +77,9 @@
         <div id="previewArea" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
              <div class="card-header">
                 <h2 class="card-title">Processing</h2>
-                 <button id="removeImageButton" class="remove-image-btn" type="button" aria-label="Remove Images" hidden>×</button>
             </div>
-            <div id="previewImageArea" class="mt-4"> <!-- Added mt-4 for some top margin -->
-                <!-- Preview images will be dynamically added here -->
+            <div id="imageStackContainer" class="image-stack-container"> <!-- Container for stacked previews -->
+                <!-- Image previews will be added here by JavaScript -->
             </div>
             <div id="compressionInfo" class="text-sm text-gray-600 mb-4 hidden"></div>
         </div>
