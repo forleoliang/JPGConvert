@@ -73,10 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (allValid) {
-                uploadedFiles.forEach((file, index) => {
+                // Limit to max 20 thumbnails for display
+                const filesToPreview = uploadedFiles.slice(0, 20); // Take only the first 20 files
+                filesToPreview.forEach((file, index) => {
+                    console.log("Processing file for thumbnail:", file.name); // DEBUG
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        console.log('FileReader onload triggered for:', file.name); // Debugging log
+                        console.log("FileReader onload triggered for:", file.name, e.target.result); // DEBUG
                         const thumbnailContainer = document.createElement('div');
                         thumbnailContainer.classList.add('thumbnail-container');
 
@@ -96,12 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         thumbnailContainer.appendChild(img);
                         thumbnailContainer.appendChild(removeButton);
                         thumbnailArea.appendChild(thumbnailContainer);
-                        console.log('Thumbnail appended for:', file.name); // Debugging log
+                    }
+                    reader.onerror = (error) => { // Add error handling for FileReader
+                        console.error("FileReader error for:", file.name, error);
+                        alert(`Error reading file: ${file.name}. Please check console for details.`); // User friendly error message
                     };
-                    reader.onerror = (error) => { // Add error handler for FileReader
-                        console.error('FileReader error for:', file.name, error); // Debugging log
-                    };
-                    console.log('FileReader started for:', file.name); // Debugging log
                     reader.readAsDataURL(file);
                 });
 
@@ -124,9 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Removing thumbnail at index:', indexToRemove);
         uploadedFiles = uploadedFiles.filter((_, index) => index !== indexToRemove);
         console.log('Remaining files:', uploadedFiles);
-        thumbnailArea.innerHTML = '';
+        thumbnailArea.innerHTML = ''; // Clear all thumbnails
         if (uploadedFiles.length > 0) {
-             uploadedFiles.forEach((file, index) => {
+             // Limit to max 20 thumbnails for re-render as well
+            const filesToPreview = uploadedFiles.slice(0, 20);
+             filesToPreview.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const thumbnailContainer = document.createElement('div');
