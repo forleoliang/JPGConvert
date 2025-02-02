@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOMContentLoaded event fired. Script execution started."); // DEBUG: Script start
+
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
@@ -9,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const compressionInfo = document.getElementById('compressionInfo');
     const removeImageButton = document.getElementById('removeImageButton');
     const noFileSelectedText = document.getElementById('noFileSelectedText');
-    const comparisonArea = document.getElementById('comparisonArea'); // Get comparison area
-    const beforeImage = document.getElementById('beforeImage');       // Get before image element
-    const afterImage = document.getElementById('afterImage');         // Get after image element
+    const comparisonArea = document.getElementById('comparisonArea');
+    const beforeImage = document.getElementById('beforeImage');
+    const afterImage = document.getElementById('afterImage');
 
 
     let uploadedFile = null;
@@ -26,7 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('browser-image-compression library loaded successfully.');
     }
 
+    console.log("Adding event listener to fileInput 'change' event."); // DEBUG: Event listener setup
     fileInput.addEventListener('change', handleFile);
+
     dropArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropArea.classList.add('hover:border-blue-500', 'hover:bg-gray-50');
@@ -46,11 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function handleFile(event) {
+        console.log("handleFile function START"); // DEBUG: handleFile start
+        console.log("Event object received by handleFile:", event); // DEBUG: Event object
+
         const file = event.target.files[0] || uploadedFile;
+        console.log("File object obtained in handleFile:", file); // DEBUG: File object
+
         if (file && (file.type.startsWith('image/png') || file.type.startsWith('image/jpeg'))) {
             uploadedFile = file;
             console.log('PNG/JPG file uploaded:', uploadedFile);
-            displayPreview(file);
+            displayPreview(uploadedFile);
             noFileSelectedText.classList.add('hidden');
         } else if (file) {
             alert('Please select a PNG or JPG image file.');
@@ -61,21 +70,32 @@ document.addEventListener('DOMContentLoaded', () => {
             resetUI();
             noFileSelectedText.classList.remove('hidden');
         }
+        console.log("handleFile function END"); // DEBUG: handleFile end
     }
 
     function displayPreview(file) {
+        console.log("displayPreview function START"); // DEBUG: displayPreview start
+        console.log("File object received by displayPreview:", file); // DEBUG: File object in displayPreview
+
         const reader = new FileReader();
         reader.onload = (e) => {
-            previewImage.src = e.target.result; // Preview image is now "Before" image visually
-            beforeImage.src = e.target.result; // Set "Before" image in comparison
-            previewArea.classList.remove('hidden');
-            convertButton.classList.remove('hidden');
-            convertButton.disabled = false;
-            compressionInfo.classList.add('hidden');
-            removeImageButton.classList.remove('hidden');
-            comparisonArea.classList.add('hidden'); // Hide comparison area initially on new preview
+            console.log("FileReader onload function START"); // DEBUG: FileReader onload start
+            // Simplified displayPreview for debugging - just log success for now
+            console.log("FileReader onload: Image loaded by FileReader");
+            // previewImage.src = e.target.result;
+            // beforeImage.src = e.target.result;
+            // previewArea.classList.remove('hidden');
+            // convertButton.classList.remove('hidden');
+            // convertButton.disabled = false;
+            // compressionInfo.classList.add('hidden');
+            // removeImageButton.classList.remove('hidden');
+            // comparisonArea.classList.add('hidden');
+            console.log("FileReader onload function END"); // DEBUG: FileReader onload end
         };
+        console.log("FileReader readAsDataURL START"); // DEBUG: readAsDataURL start
         reader.readAsDataURL(file);
+        console.log("FileReader readAsDataURL END"); // DEBUG: readAsDataURL end
+        console.log("displayPreview function END"); // DEBUG: displayPreview end
     }
 
     convertButton.addEventListener('click', async () => {
@@ -89,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
         removeImageButton.classList.add('hidden');
-        comparisonArea.classList.add('hidden'); // Hide comparison area before new conversion
+        comparisonArea.classList.add('hidden');
 
         try {
             console.log('Starting image compression...');
@@ -120,8 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadLink.download = fileName;
             downloadLinkArea.classList.remove('hidden');
 
-            afterImage.src = downloadUrl; // Set "After" image in comparison
-            comparisonArea.classList.remove('hidden'); // Show comparison area after conversion
+            afterImage.src = downloadUrl;
+            comparisonArea.classList.remove('hidden');
 
         } catch (error) {
             console.error('Image conversion failed:', error);
@@ -136,16 +156,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetUI() {
         uploadedFile = null;
-        previewImage.src = '#'; // Clear preview/before image
-        beforeImage.src = '#';    // Clear before image explicitly
-        afterImage.src = '#';     // Clear after image
+        previewImage.src = '#';
+        beforeImage.src = '#';
+        afterImage.src = '#';
         previewArea.classList.add('hidden');
         convertButton.classList.add('hidden');
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
         removeImageButton.classList.add('hidden');
-        comparisonArea.classList.add('hidden'); // Hide comparison area on reset
+        comparisonArea.classList.add('hidden');
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
     }
