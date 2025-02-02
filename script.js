@@ -9,9 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let uploadedFile = null;
 
-    // 引入 browser-image-compression 库 (通过 CDN 引入，无需额外安装)
-    // 也可以下载库文件到本地，然后本地引入
-    const imageCompression = window.imageCompression; // 假设 browser-image-compression 库已经通过 CDN 引入，并挂载到 window.imageCompression
+    // 引入 browser-image-compression 库 (通过 CDN 引入)
+    const imageCompression = window.imageCompression; // 确保 browser-image-compression 库已通过 CDN 在 index.html 中引入
+
+    // 检查 imageCompression 库是否成功加载 (调试用)
+    if (typeof imageCompression === 'undefined') {
+        console.error('Error: browser-image-compression library not loaded! Please check the CDN link in index.html.');
+        alert('图片转换功能依赖的库加载失败，请检查网络连接和 CDN 链接。');
+        return; // 停止执行后续代码
+    }
 
     // 文件选择事件
     fileInput.addEventListener('change', handleFile);
