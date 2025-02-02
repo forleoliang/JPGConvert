@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en"> <!--  lang 属性改为 "en" -->
+<html lang="en"> <!-- 将 lang="zh-CN" 改为 lang="en" -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PNG to WebP Converter</title> <!--  英文标题 -->
+    <title>PNG to WebP Converter</title> <!-- 英文标题 -->
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
     <style>
-        /* Custom Tailwind configuration for SwiftUI style */
+        /* Custom Tailwind configurations for SwiftUI style */
         @layer utilities {
             .btn-swiftui {
                 @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-200;
@@ -27,29 +27,31 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased">
     <div class="container mx-auto p-8 max-w-xl">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">PNG to WebP Converter</h1> <!-- 英文主标题 -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">PNG to WebP Converter</h1> <!-- 英文标题，增加 mb-8 间距 -->
 
-        <div class="mb-6">
-            <label for="imageUpload" class="block text-gray-700 text-sm font-bold mb-2">Choose a PNG Image</label> <!-- 英文标签 -->
-            <input type="file" id="imageUpload" accept="image/png" class="input-file-swiftui" />
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6"> <!-- 文件选择 Card -->
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">1. Select PNG Image</h2> <!-- 英文标题 -->
+            <div class="mb-4">
+                <label for="imageUpload" class="block text-gray-700 text-sm font-bold mb-2">Choose PNG file</label> <!-- 英文 Label -->
+                <input type="file" id="imageUpload" accept="image/png" class="input-file-swiftui" />
+            </div>
+            <div id="dropArea" class="drop-area-swiftui">
+                <p class="text-gray-600">Or drag and drop PNG image here</p> <!-- 英文提示 -->
+            </div>
         </div>
 
-        <div id="dropArea" class="drop-area-swiftui mb-6">
-            <p class="text-gray-600">Or drag and drop a PNG image here</p> <!-- 英文拖拽提示 -->
+        <div id="previewArea" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden"> <!-- 预览 Card，初始隐藏 -->
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">2. Preview</h2> <!-- 英文标题 -->
+            <img id="previewImage" src="#" alt="Preview Image" class="max-w-full h-auto rounded-md shadow-md mb-4"> <!-- 英文 alt -->
+            <div id="compressionInfo" class="text-sm text-gray-600 mb-4"></div> <!-- 压缩信息区域，移除 hidden 类，始终显示，但内容由 JS 控制 -->
         </div>
 
-        <div id="previewArea" class="mb-6 hidden">
-            <h2 class="text-xl font-semibold text-gray-700 mb-2">Preview</h2> <!-- 英文预览标题 -->
-            <img id="previewImage" src="#" alt="Preview Image" class="max-w-full h-auto rounded-md shadow-md mb-4">
-            <div id="compressionInfo" class="text-sm text-gray-600 hidden"></div>
-        </div>
-
-        <div class="text-center">
-            <button id="convertButton" class="btn-swiftui hidden" disabled>Convert to WebP & Download</button> <!-- 英文转换按钮文字 -->
-        </div>
-
-        <div id="downloadLinkArea" class="mt-6 text-center hidden">
-            <a id="downloadLink" href="#" download="converted-image.webp" class="btn-swiftui">Download WebP Image</a> <!-- 英文下载按钮文字 -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center"> <!-- 转换 & 下载 Card -->
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">3. Convert & Download</h2> <!-- 英文标题 -->
+            <button id="convertButton" class="btn-swiftui mb-4 hidden" disabled>Convert to WebP and Download</button> <!-- 英文按钮，添加 mb-4 间距 -->
+            <div id="downloadLinkArea" class="hidden">
+                <a id="downloadLink" href="#" download="converted-image.webp" class="btn-swiftui">Download WebP Image</a> <!-- 英文下载链接 -->
+            </div>
         </div>
     </div>
 
