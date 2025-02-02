@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
     const compressionInfo = document.getElementById('compressionInfo');
-    const removeCardButton = document.getElementById('removeCardButton'); // Updated ID
+    const removeAllImagesButton = document.getElementById('removeAllImagesButton'); // Updated ID
     const noFileSelectedText = document.getElementById('noFileSelectedText');
 
     let uploadedFiles = [];
@@ -57,6 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadedFiles = [...files];
             console.log('Files selected:', uploadedFiles);
 
+            thumbnailArea.innerHTML = ''; // Clear previous thumbnails
+            previewArea.classList.remove('hidden');
+            convertButton.classList.remove('hidden');
+            convertButton.disabled = false;
+            noFileSelectedText.classList.add('hidden');
+            removeAllImagesButton.classList.remove('hidden'); // Show "Remove All" button
+
             let allValid = true;
             for (const file of uploadedFiles) {
                 if (!file.type.startsWith('image/png') && !file.type.startsWith('image/jpeg')) {
@@ -66,13 +73,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (allValid) {
-                previewArea.classList.remove('hidden');
-                convertButton.classList.remove('hidden');
-                convertButton.disabled = false;
-                noFileSelectedText.classList.add('hidden');
-                removeCardButton.classList.add('hidden'); // Keep card remove button hidden
-                compressionInfo.classList.add('hidden');
-                displayThumbnails(); // Call function to display thumbnails
+                uploadedFiles.forEach((file, index) => { // Iterate with index for remove function
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const thumbnailContainer = document.createElement('div');
+                        thumbnailContainer.classList.add('thumbnail-container');
+
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = file.name;
+                        img.classList.add('thumbnail-image');
+
+                        const removeButton = document.createElement('button');
+                        removeButton.innerHTML = '×'; // 'X' icon
+                        removeButton.classList.add('thumbnail-remove-button');
+                        removeButton.ariaLabel = 'Remove Image';
+                        removeButton.addEventListener('click', () => {
+                            removeThumbnail(index); // Call removeThumbnail with index
+                        });
+
+
+                        thumbnailContainer.appendChild(img);
+                        thumbnailContainer.appendChild(removeButton);
+                        thumbnailArea.appendChild(thumbnailContainer);
+                    }
+                    reader.readAsDataURL(file);
+                });
+
+
             } else {
                 alert('Please select only PNG or JPG image files.');
                 console.warn('Invalid file types selected.');
@@ -87,49 +115,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-    function displayThumbnails() {
-        thumbnailArea.innerHTML = ''; // Clear existing thumbnails
-
-        uploadedFiles.forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const thumbnailContainer = document.createElement('div');
-                thumbnailContainer.classList.add('thumbnail-container');
-                thumbnailContainer.dataset.index = index; // Store index for removal
-
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.alt = 'Thumbnail';
-                img.classList.add('thumbnail-img');
-
-                const removeButton = document.createElement('button');
-                removeButton.type = 'button';
-                removeButton.classList.add('thumbnail-remove-btn');
-                removeButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 17.47a.75.75 0 11-1.06-1.06L10.94 12 5.47 5.47z" clip-rule="evenodd" /></svg>`; // X icon SVG
-
-                removeButton.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent container click if any
-                    const indexToRemove = parseInt(thumbnailContainer.dataset.index, 10);
-                    removeThumbnail(indexToRemove);
-                });
-
-
-                thumbnailContainer.appendChild(img);
-                thumbnailContainer.appendChild(removeButton);
-                thumbnailArea.appendChild(thumbnailContainer);
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-
     function removeThumbnail(indexToRemove) {
         console.log('Removing thumbnail at index:', indexToRemove);
-        uploadedFiles.splice(indexToRemove, 1); // Remove file from array
-        displayThumbnails(); // Re-render thumbnails
-        if (uploadedFiles.length === 0) { // If no files left, reset UI
-            resetUI();
-            noFileSelectedText.classList.remove('hidden');
+        uploadedFiles = uploadedFiles.filter((_, index) => index !== indexToRemove); // Remove file from array
+        console.log('Remaining files:', uploadedFiles);
+        thumbnailArea.innerHTML = ''; // Clear all thumbnails
+        if (uploadedFiles.length > 0) {
+             uploadedFiles.forEach((file, index) => { // Re-render thumbnails for remaining files
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const thumbnailContainer = document.createElement('div');
+                    thumbnailContainer.classList.add('thumbnail-container');
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = file.name;
+                    img.classList.add('thumbnail-image');
+
+                    const removeButton = document.createElement('button');
+                    removeButton.innerHTML = '×'; // 'X' icon
+                    removeButton.classList.add('thumbnail-remove-button');
+                    removeButton.ariaLabel = 'Remove Image';
+                    removeButton.addEventListener('click', () => {
+                        removeThumbnail(index); // Call removeThumbnail with updated index
+                    });
+
+                    thumbnailContainer.appendChild(img);
+                    thumbnailContainer.appendChild(removeButton);
+                    thumbnailArea.appendChild(thumbnailContainer);
+                }
+                reader.readAsDataURL(file);
+            });
+        } else {
+            resetUI(); // Reset UI if no files left
         }
     }
 
@@ -145,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadLinkArea.classList.add('hidden');
         previewArea.classList.remove('hidden');
         compressionInfo.classList.add('hidden');
-        removeCardButton.classList.add('hidden');
+        removeAllImagesButton.classList.add('hidden'); // Hide remove all button during conversion
 
 
         const zip = new JSZip();
@@ -185,12 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
             compressionInfo.classList.remove('hidden');
 
 
+            // Create ZIP archive
             webpFiles.forEach(webpFile => {
                 zip.file(webpFile.originalName.replace(/\.(png|jpg)$/i, '.webp'), webpFile.file);
             });
             const zipBlob = await zip.generateAsync({ type: "blob" });
 
 
+            // Create download link for ZIP
             const downloadUrlZip = URL.createObjectURL(zipBlob);
             downloadLink.href = downloadUrlZip;
             downloadLinkArea.classList.remove('hidden');
@@ -203,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } finally {
             convertButton.textContent = 'Convert Images';
             convertButton.disabled = false;
-            removeCardButton.classList.add('hidden');
+            removeAllImagesButton.classList.remove('hidden'); // Show remove all button after conversion
         }
     });
 
@@ -216,13 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
-        removeCardButton.classList.add('hidden');
+        removeAllImagesButton.classList.add('hidden');
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
     }
 
 
-    removeCardButton.addEventListener('click', () => { // No function bound to card remove button currently
+    removeAllImagesButton.addEventListener('click', () => {
         console.log('Remove All Images button clicked.');
         resetUI();
         noFileSelectedText.classList.remove('hidden');
