@@ -1,53 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PNG/JPG to WebP Converter</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
-</head>
-<body class="bg-gray-100 font-sans antialiased">
-    <div class="container mx-auto p-8 max-w-xl">
-        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">PNG/JPG to WebP Converter</h1>
-         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="card-header">
-                <h2 class="card-title">Select Images</h2>
-            </div>
-            <div class="mb-4">
-                <label for="imageUpload" class="block text-gray-700 text-sm font-bold mb-2">Choose PNG or JPG files (up to 20)</label>
-                <input type="file" id="imageUpload" accept="image/png, image/jpeg" class="input-file-swiftui" multiple />
-                <p id="noFileSelectedText" class="text-gray-500 text-sm italic mt-1 hidden">No files selected.</p>
-            </div>
-            <div id="dropArea" class="drop-area-swiftui">
-                <p class="text-gray-600">Or drag and drop PNG/JPG images here (up to 20)</p>
-            </div>
-        </div>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-        <div id="previewArea" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
-             <div class="card-header">
-                <h2 class="card-title">Processing</h2>
-                 <button id="removeAllImagesButton" class="remove-image-btn" type="button" aria-label="Remove All Images" hidden>×</button> <!-- Consider "Remove All" button if needed -->
-            </div>
-            <div id="thumbnailArea" class="flex flex-wrap justify-start gap-4 mt-4"> <!-- Thumbnail container -->
+@layer utilities {
+    .btn-swiftui {
+        @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-200;
+    }
+    .btn-swiftui:disabled {
+        @apply bg-gray-400 cursor-not-allowed hover:bg-gray-400;
+    }
+    .btn-swiftui-pill {
+        @apply rounded-full px-6 py-2;
+    }
+    .input-file-swiftui {
+        @apply border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500;
+    }
+    .drop-area-swiftui {
+        @apply border-2 border-dashed border-gray-400 rounded-md p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-gray-50 transition-colors duration-200;
+    }
+    .card-title {
+        @apply text-xl font-bold text-gray-700 mb-4 text-3xl;
+    }
+    .card-header {
+        @apply flex justify-between items-center mb-4;
+    }
+    .remove-image-btn {
+        @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200;
+    }
 
-            </div>
-            <div id="compressionInfo" class="text-sm text-gray-600 mt-4 hidden"></div>
-        </div>
+    /* Thumbnail Styles - Simplified, No 3D */
+    .thumbnail-container {
+        @apply relative w-24 h-24 rounded-md overflow-hidden shadow-md bg-white; /* Adjust w-24 h-24 for thumbnail size */
+    }
 
-        <div class="bg-white rounded-lg shadow-md p-6 text-center">
-           <div class="card-header">
-               <h2 class="card-title">Convert</h2>
-           </div>
-            <button id="convertButton" class="btn-swiftui btn-swiftui-pill hidden" disabled>Convert Images</button>
-            <div id="downloadLinkArea" class="hidden">
-                <a id="downloadLink" href="#" download="converted-images.zip" class="btn-swiftui">Download WebP Images (ZIP)</a>
-            </div>
-        </div>
-    </div>
+    .thumbnail-image {
+        @apply block w-full h-full object-cover;
+        /* Removed 3D transform */
+    }
 
-    <script src="script.js"></script>
-</body>
-</html>
+
+    .thumbnail-remove-button {
+        @apply absolute top-1 right-1 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200 opacity-0 hover:opacity-100; /* Hidden by default, visible on container hover */
+        font-size: 0.8rem;
+    }
+
+    .thumbnail-container:hover .thumbnail-remove-button {
+        @apply opacity-100; /* Make remove button visible on hover */
+    }
+}
