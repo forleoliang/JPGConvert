@@ -28,23 +28,23 @@
         @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200;
     }
 
-    /* Simplified Thumbnail Styles - No 3D Effect */
+    /* Thumbnail Styles - Simplified, No 3D */
     .thumbnail-container {
         @apply relative w-24 h-24 rounded-md overflow-hidden shadow-md bg-white; /* Adjust w-24 h-24 for thumbnail size */
     }
 
     .thumbnail-image {
-        @apply block w-full h-full object-cover; /* Basic image display */
+        @apply block w-full h-full object-cover;
+        /* Removed 3D transform */
     }
 
 
     .thumbnail-remove-button {
-        @apply absolute top-1 right-1 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200; /* Adjust w-8 h-8 for button size = 32px */
+        @apply absolute top-1 right-1 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200 opacity-0 hover:opacity-100; /* Hidden by default, visible on container hover */
         font-size: 0.8rem;
-        opacity: 0.7;
     }
 
     .thumbnail-container:hover .thumbnail-remove-button {
-        opacity: 1;
+        @apply opacity-100; /* Make remove button visible on hover */
     }
 }
