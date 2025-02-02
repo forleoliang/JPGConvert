@@ -1,106 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <!-- 加载Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com/4.0.0"></script>
-  <title>PNG转换神器 by lensclear</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNG to WebP 转换器</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script> <!-- 引入 Tailwind CSS CDN -->
+    <style>
+        /* 自定义 Tailwind 配置，实现 SwiftUI 风格 */
+        @layer utilities {
+            .btn-swiftui {
+                @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md;
+            }
+            .input-file-swiftui {
+                @apply border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500;
+            }
+            .drop-area-swiftui {
+                @apply border-2 border-dashed border-gray-400 rounded-md p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-gray-50;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-8">
-  <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-6">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">🖼️ PNG转换工具</h1>
-    
-    <!-- 上传区域 -->
-    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 mb-6 text-center">
-      <input type="file" id="upload" accept=".png" class="hidden" />
-      <label for="upload" class="cursor-pointer">
-        <div class="text-6xl mb-4">📤</div>
-        <p class="text-gray-600">点击上传PNG文件</p>
-      </label>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="container mx-auto p-8 max-w-xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">PNG to WebP 转换器</h1>
+
+        <div class="mb-6">
+            <label for="imageUpload" class="block text-gray-700 text-sm font-bold mb-2">选择 PNG 图片</label>
+            <input type="file" id="imageUpload" accept="image/png" class="input-file-swiftui" />
+        </div>
+
+        <div id="dropArea" class="drop-area-swiftui mb-6">
+            <p class="text-gray-600">或者拖拽 PNG 图片到这里</p>
+        </div>
+
+        <div id="previewArea" class="mb-6 hidden">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">预览</h2>
+            <img id="previewImage" src="#" alt="预览图片" class="max-w-full h-auto rounded-md shadow-md">
+        </div>
+
+        <div class="text-center">
+            <button id="convertButton" class="btn-swiftui hidden">转换为 WebP 并下载</button>
+        </div>
+
+        <div id="downloadLinkArea" class="mt-6 text-center hidden">
+            <a id="downloadLink" href="#" download="converted-image.webp" class="btn-swiftui">下载 WebP 图片</a>
+        </div>
     </div>
 
-    <!-- 设置区域 -->
-    <div class="space-y-4 mb-6">
-      <div>
-        <label class="block text-gray-700 mb-2">输出格式</label>
-        <select id="format" class="w-full p-2 border rounded-lg">
-          <option value="avif">AVIF（超小体积）</option>
-          <option value="webp">WebP（兼容性好）</option>
-        </select>
-      </div>
-      
-      <div>
-        <label class="block text-gray-700 mb-2">质量等级</label>
-        <input type="range" id="quality" min="1" max="100" value="80" 
-               class="w-full bg-gray-200 rounded-lg">
-      </div>
-    </div>
-
-    <!-- 转换按钮 -->
-    <button onclick="convert()" 
-            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition">
-      开始转换
-    </button>
-
-    <!-- 结果展示 -->
-    <div id="output" class="mt-6 hidden">
-      <div class="bg-green-100 p-4 rounded-lg">
-        <p class="text-green-700">✅ 转换成功！</p>
-        <a id="downloadLink" class="text-blue-500 underline mt-2 inline-block">点击下载</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- 转换脚本 -->
-  <script>
-    // async function loadCodec(format) {
-  const cdnURL = "https://esm.sh/@squoosh/";
-  const { default: codec } = await import(`${cdnURL}${format === 'avif' ? 'avif-enc' : 'webp-enc'}`);
-  return codec;
-}
-
-async function convert() {
-  const file = document.getElementById('upload').files[0];
-  const format = document.getElementById('format').value;
-  const quality = document.getElementById('quality').value;
-
-  // 加载编解码器
-  const codec = await loadCodec(format);
-
-  // 显示加载状态
-  const outputDiv = document.getElementById('output');
-  outputDiv.classList.add('hidden');
-
-  // 读取文件
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    const imageData = new Uint8Array(e.target.result);
-
-    // 使用Web Worker处理
-    const worker = new Worker(new URL('worker.js', import.meta.url));
-    
-    worker.postMessage({
-      imageData,
-      format,
-      options: { 
-        quality: parseInt(quality),
-        chromaSubsampling: '4:2:0'
-      }
-    });
-
-    worker.onmessage = async ({ data }) => {
-      const blob = new Blob([data], { type: `image/${format}` });
-      const url = URL.createObjectURL(blob);
-      
-      // 显示下载链接
-      const downloadLink = document.getElementById('downloadLink');
-      downloadLink.href = url;
-      downloadLink.download = `converted.${format}`;
-      outputDiv.classList.remove('hidden');
-    };
-  };
-  reader.readAsArrayBuffer(file);
-}
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
