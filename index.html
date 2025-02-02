@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> <!-- Add JSZip CDN -->
     <style>
         /* Custom Tailwind configurations for SwiftUI style */
         @layer utilities {
@@ -35,8 +35,11 @@
              .remove-image-btn { /* Remove image 'X' button style */
                 @apply text-red-500 hover:text-red-700 text-xl font-bold cursor-pointer transition-colors duration-200; /* Make 'X' red */
             }
-            .thumbnail { /* Style for preview thumbnails */
-                @apply max-w-full h-auto rounded-md shadow-md mb-2; /* Added mb-2 for spacing */
+            .preview-image-container { /* Container for each preview image */
+                @apply mb-4 relative shadow-md rounded-md overflow-hidden; /* Add margin, shadow, rounded corners */
+            }
+            .preview-image-container img {
+                @apply block w-full h-auto; /* Ensure image is responsive within container */
             }
         }
     </style>
@@ -63,8 +66,8 @@
                 <h2 class="card-title">Processing</h2>
                  <button id="removeImageButton" class="remove-image-btn" type="button" aria-label="Remove Images" hidden>×</button>
             </div>
-            <div id="previewImageArea">
-                <!-- Thumbnails will be dynamically added here -->
+            <div id="previewImageArea" class="mt-4"> <!-- Added mt-4 for some top margin -->
+                <!-- Preview images will be dynamically added here -->
             </div>
             <div id="compressionInfo" class="text-sm text-gray-600 mb-4 hidden"></div>
         </div>
