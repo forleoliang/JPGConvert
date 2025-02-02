@@ -29,11 +29,27 @@
         <div id="previewArea" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
              <div class="card-header">
                 <h2 class="card-title">Processing</h2>
-                 <button id="removeAllImagesButton" class="remove-image-btn" type="button" aria-label="Remove All Images" hidden>×</button> <!-- Consider "Remove All" button if needed -->
+                 <button id="removeAllImagesButton" class="remove-image-btn" type="button" aria-label="Remove All Images" hidden>×</button>
             </div>
-            <div id="thumbnailArea" class="flex flex-wrap justify-start gap-4 mt-4"> <!-- Thumbnail container -->
 
+            <div class="mb-4">
+                <label for="qualitySlider" class="block text-gray-700 text-sm font-bold mb-2">WebP Quality: <span id="qualityValue">75</span></label>  <!-- Quality Slider Label -->
+                <input type="range" id="qualitySlider" class="w-full" min="0" max="100" value="75" step="1"> <!-- Quality Slider -->
             </div>
+
+
+            <div id="comparisonArea" class="flex mb-4">  <!-- 并排对比区域 -->
+                <div class="w-1/2 pr-2">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Original Image</h3>
+                    <img id="originalPreviewImage" src="#" alt="Original Image" class="max-w-full h-auto rounded-md shadow-md">
+                </div>
+                <div class="w-1/2 pl-2">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">WebP Preview</h3>
+                    <img id="webpPreviewImage" src="#" alt="WebP Preview Image" class="max-w-full h-auto rounded-md shadow-md">
+                </div>
+            </div>
+
+
             <div id="compressionInfo" class="text-sm text-gray-600 mt-4 hidden"></div>
         </div>
 
