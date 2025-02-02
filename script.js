@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
+    const compressionInfo = document.getElementById('compressionInfo'); // 获取压缩信息显示元素
 
     let uploadedFile = null;
 
@@ -67,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             previewArea.classList.remove('hidden');
             convertButton.classList.remove('hidden');
             convertButton.disabled = false; // 上传图片后启用转换按钮
+            compressionInfo.classList.add('hidden'); // 隐藏压缩信息，等待转换完成后显示
         };
         reader.readAsDataURL(file);
     }
@@ -81,9 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.textContent = '转换中...'; // 按钮显示 "转换中..."
         convertButton.disabled = true; // 禁用按钮
         downloadLinkArea.classList.add('hidden'); // 转换前先隐藏下载链接区域
+        compressionInfo.classList.add('hidden'); // 转换前隐藏压缩信息
 
         try {
             console.log('Starting image compression...'); // 调试信息
+            const originalFileSize = uploadedFile.size; // 获取原始文件大小
             const compressedFile = await imageCompression(uploadedFile, {
                 maxSizeMB: 2,          // (可选) 最大文件大小 MB，根据需要调整，这里设置为 2MB
                 maxWidthOrHeight: 2000, // (可选) 图片最大宽度或高度，根据需要调整，这里设置为 2000px
@@ -93,6 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             console.log('Image compression completed successfully.'); // 调试信息
             console.log('Compressed image file:', compressedFile); // 调试信息
+            const compressedFileSize = compressedFile.size; // 获取压缩后文件大小
+            const compressionPercentage = ((originalFileSize - compressedFileSize) / originalFileSize) * 100; // 计算压缩百分比
+            const formattedPercentage = compressionPercentage.toFixed(2); // 保留两位小数
+            console.log(`Compression percentage: ${formattedPercentage}%`); // 调试信息
+
+            compressionInfo.textContent = `压缩率: ${formattedPercentage}% (原始大小: ${(originalFileSize / 1024).toFixed(2)}KB, 压缩后大小: ${(compressedFileSize / 1024).toFixed(2)}KB)`; // 显示压缩信息
+            compressionInfo.classList.remove('hidden'); // 显示压缩信息
 
             // 创建下载链接
             const downloadUrl = URL.createObjectURL(compressedFile);
@@ -118,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.classList.add('hidden');
         convertButton.disabled = true; // 重置后禁用转换按钮
         downloadLinkArea.classList.add('hidden');
+        compressionInfo.classList.add('hidden'); // 重置时隐藏压缩信息
         fileInput.value = ''; // 清空文件 input 的值
     }
 });
