@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
-    const previewImageArea = document.getElementById('previewImageArea'); // Get preview image area container
+    const previewImageArea = document.getElementById('previewImageArea');
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadedFiles = [...files];
             console.log('Files selected:', uploadedFiles);
 
-            // Clear any existing previews
+            // Clear existing thumbnails
             previewImageArea.innerHTML = '';
 
             let allValid = true;
@@ -76,8 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 removeImageButton.classList.add('hidden');
                 compressionInfo.classList.add('hidden');
 
-                // Display image thumbnails
-                displayThumbnails(uploadedFiles); // Call new function to display thumbnails
+                // Display thumbnails
+                uploadedFiles.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = file.name;
+                        img.classList.add('thumbnail'); // Apply thumbnail style
+                        previewImageArea.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                });
+
 
             } else {
                 alert('Please select only PNG or JPG image files.');
@@ -91,22 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
             resetUI();
             noFileSelectedText.classList.remove('hidden');
         }
-    }
-
-    function displayThumbnails(files) {
-        previewImageArea.innerHTML = ''; // Clear existing thumbnails
-
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.alt = file.name;
-                img.classList.add('preview-image-thumbnail'); // Apply thumbnail class
-                previewImageArea.appendChild(img); // Append thumbnail to preview area
-            }
-            reader.readAsDataURL(file);
-        });
     }
 
 
@@ -142,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     maxWidthOrHeight: 2000,
                     useWebWorker: true,
                     fileType: 'webp',
-                    quality: 0.6, // Or your desired default quality
+                    quality: 0.6,
                 });
 
                 totalCompressedSize += compressedFile.size;
@@ -161,14 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
             compressionInfo.classList.remove('hidden');
 
 
-            // Create ZIP archive
             webpFiles.forEach(webpFile => {
                 zip.file(webpFile.originalName.replace(/\.(png|jpg)$/i, '.webp'), webpFile.file);
             });
             const zipBlob = await zip.generateAsync({ type: "blob" });
 
 
-            // Create download link for ZIP
             const downloadUrlZip = URL.createObjectURL(zipBlob);
             downloadLink.href = downloadUrlZip;
             downloadLinkArea.classList.remove('hidden');
