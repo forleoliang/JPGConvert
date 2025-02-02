@@ -2,20 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
-    const previewImageArea = document.getElementById('previewImageArea'); // Get preview image area container
+    const imageStackContainer = document.getElementById('imageStackContainer'); // Get stack container
     const convertButton = document.getElementById('convertButton');
     const downloadLinkArea = document.getElementById('downloadLinkArea');
     const downloadLink = document.getElementById('downloadLink');
     const compressionInfo = document.getElementById('compressionInfo');
-    const removeImageButton = document.getElementById('removeImageButton');
     const noFileSelectedText = document.getElementById('noFileSelectedText');
 
-    let uploadedFiles = []; // Use an array to store multiple uploaded files
+    let uploadedFiles = [];
 
     const imageCompression = window.imageCompression;
-    const JSZip = window.JSZip; // Access JSZip library
+    const JSZip = window.JSZip;
 
-    if (typeof imageCompression === 'undefined' || typeof JSZip === 'undefined') {
+    if (!imageCompression || !JSZip) {
         console.error('Error: Required libraries not loaded! Check CDN links.');
         alert('Libraries failed to load. Check network and CDN links.');
         return;
@@ -42,22 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         dropArea.classList.remove('hover:border-blue-500', 'hover:bg-gray-50');
 
-        const files = Array.from(e.dataTransfer.files); // Convert FileList to Array
-        handleFilesSelection(files); // Call the new handler for file list
+        const files = Array.from(e.dataTransfer.files);
+        handleFilesSelection(files);
     }
 
     function handleFile(event) {
-        const files = Array.from(event.target.files); // Convert FileList to Array
-        handleFilesSelection(files); // Call the new handler for file list
+        const files = Array.from(event.target.files);
+        handleFilesSelection(files);
     }
 
 
     function handleFilesSelection(files) {
         if (files && files.length > 0) {
-            uploadedFiles = [...files]; // Store all selected files
+            uploadedFiles = [...files];
             console.log('Files selected:', uploadedFiles);
 
-            previewImageArea.innerHTML = ''; // Clear any existing previews
+            imageStackContainer.innerHTML = ''; // Clear any existing previews
 
             let allValid = true;
             for (const file of uploadedFiles) {
@@ -72,23 +71,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 convertButton.classList.remove('hidden');
                 convertButton.disabled = false;
                 noFileSelectedText.classList.add('hidden');
-                removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
                 compressionInfo.classList.add('hidden'); // Hide compression info initially
 
-                // Create preview elements for each file
-                uploadedFiles.forEach(file => {
+                uploadedFiles.forEach((file, index) => { // Loop through each uploaded file
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        const container = document.createElement('div');
-                        container.classList.add('preview-image-container'); // Apply container style
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.alt = file.name; // Set alt attribute for accessibility
-                        container.appendChild(img);
-                        previewImageArea.appendChild(container); // Add container to preview area
-                    }
-                    reader.readAsDataURL(file);
+                        const imagePreview = document.createElement('img');
+                        imagePreview.src = e.target.result;
+                        imagePreview.alt = file.name;
+                        imagePreview.classList.add('image-preview-stacked'); // Apply stacked image class
+
+                        const removeButton = document.createElement('button');
+                        removeButton.innerHTML = '×';
+                        removeButton.classList.add('remove-preview-btn');
+                        removeButton.ariaLabel = 'Remove Image';
+
+                        removeButton.addEventListener('click', (event) => {
+                            event.preventDefault(); event.stopPropagation(); // Stop event bubbling
+
+                            const fileNameToRemove = file.name;
+                            uploadedFiles = uploadedFiles.filter(f => f.name !== fileNameToRemove); // Remove file from array
+
+                            console.log('File removed:', fileNameToRemove, 'Remaining files:', uploadedFiles);
+                            imageStackContainer.removeChild(imagePreview.parentNode); // Remove preview from UI
+
+                            if (uploadedFiles.length === 0) {
+                                resetUI(); // Reset UI if no files left
+                            }
+
+                        });
+
+
+                        const previewItem = document.createElement('div'); // Container for each preview and remove button
+                        previewItem.appendChild(imagePreview);
+                        previewItem.appendChild(removeButton);
+                        imageStackContainer.appendChild(previewItem); // Add to stack container
+
+
+                    };
+                    reader.readAsDataURL(file); // Read file for preview
                 });
+
 
             } else {
                 alert('Please select only PNG or JPG image files.');
@@ -114,13 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.textContent = 'Converting Images...';
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
-        previewArea.classList.remove('hidden'); // Ensure processing area is visible
-        compressionInfo.classList.add('hidden'); // Ensure compression info is hidden
-        removeImageButton.classList.add('hidden'); // Hide remove button during conversion
+        previewArea.classList.remove('hidden');
+        compressionInfo.classList.add('hidden');
 
 
-        const zip = new JSZip(); // Create a new JSZip instance
-        const webpFiles = []; // Array to store converted WebP files for zipping
+        const zip = new JSZip();
+        const webpFiles = [];
         let totalOriginalSize = 0;
         let totalCompressedSize = 0;
 
@@ -130,18 +152,18 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < uploadedFiles.length; i++) {
                 const file = uploadedFiles[i];
                 console.log(`Processing file ${i + 1} of ${uploadedFiles.length}:`, file.name);
-                totalOriginalSize += file.size; // Accumulate original sizes
+                totalOriginalSize += file.size;
 
                 const compressedFile = await imageCompression(file, {
                     maxSizeMB: 2,
                     maxWidthOrHeight: 2000,
                     useWebWorker: true,
                     fileType: 'webp',
-                    quality: 0.6, // Or your desired default quality
+                    quality: 0.6,
                 });
 
-                totalCompressedSize += compressedFile.size; // Accumulate compressed sizes
-                webpFiles.push({ file: compressedFile, originalName: file.name }); // Store converted file and original name
+                totalCompressedSize += compressedFile.size;
+                webpFiles.push({ file: compressedFile, originalName: file.name });
                 console.log(`File ${i + 1} converted:`, file.name, '->', compressedFile.name);
             }
 
@@ -156,14 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
             compressionInfo.classList.remove('hidden');
 
 
-            // Create ZIP archive
             webpFiles.forEach(webpFile => {
-                zip.file(webpFile.originalName.replace(/\.(png|jpg)$/i, '.webp'), webpFile.file); // Add each WebP file to zip
+                zip.file(webpFile.originalName.replace(/\.(png|jpg)$/i, '.webp'), webpFile.file);
             });
-            const zipBlob = await zip.generateAsync({ type: "blob" }); // Generate zip as Blob
+            const zipBlob = await zip.generateAsync({ type: "blob" });
 
 
-            // Create download link for ZIP
             const downloadUrlZip = URL.createObjectURL(zipBlob);
             downloadLink.href = downloadUrlZip;
             downloadLinkArea.classList.remove('hidden');
@@ -174,30 +194,25 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error details:', error);
             alert('Batch image conversion failed. See console for details.');
         } finally {
-            convertButton.textContent = 'Convert Images'; // Reset button text
+            convertButton.textContent = 'Convert Images';
             convertButton.disabled = false;
-            removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
         }
     });
 
 
     function resetUI() {
-        uploadedFiles = []; // Reset the array of files
-        previewImageArea.innerHTML = ''; // Clear preview images
+        uploadedFiles = [];
+        imageStackContainer.innerHTML = ''; // Clear image previews
         previewArea.classList.add('hidden');
         convertButton.classList.add('hidden');
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
-        removeImageButton.classList.add('hidden'); // Hide remove button in multi-file mode
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
     }
 
 
-    removeImageButton.addEventListener('click', () => {
-        console.log('Remove Images button clicked.');
-        resetUI();
-        noFileSelectedText.classList.remove('hidden');
-    });
+    const removeImageButton = null; // removeImageButton from header is removed in HTML, not needed here now.
+
 });
