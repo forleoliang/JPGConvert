@@ -9,8 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const compressionInfo = document.getElementById('compressionInfo');
     const removeAllImagesButton = document.getElementById('removeAllImagesButton');
     const noFileSelectedText = document.getElementById('noFileSelectedText');
+    const qualitySlider = document.getElementById('qualitySlider'); // 获取质量滑块
+    const qualityValueDisplay = document.getElementById('qualityValue'); // 获取质量值显示 span
+    const originalPreviewImage = document.getElementById('originalPreviewImage'); // 获取原始预览图 img 元素
+    const webpPreviewImage = document.getElementById('webpPreviewImage'); // 获取 WebP 预览图 img 元素
+
 
     let uploadedFiles = [];
+    let currentQuality = 75; // 初始质量值，与滑块初始值一致
+
 
     const imageCompression = window.imageCompression;
     const JSZip = window.JSZip;
@@ -27,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dropArea.addEventListener('dragover', dragOverHandler);
     dropArea.addEventListener('dragleave', dragLeaveHandler);
     dropArea.addEventListener('drop', dropHandler);
+    qualitySlider.addEventListener('input', handleQualityChange); // 监听质量滑块 input 事件
 
 
     function dragOverHandler(e) {
@@ -105,7 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert(`Error reading file: ${file.name}. Please check console for details.`);
                     };
                     reader.readAsDataURL(file);
+
+                    // 显示第一张上传的图片作为原始预览图 (只显示一次)
+                    if (index === 0) {
+                        originalPreviewImage.src = e.target.result;
+                    }
                 });
+
+                // 初始时，用默认质量值压缩并预览第一张图片
+                if (uploadedFiles.length > 0) {
+                    previewFirstImageWithQuality(uploadedFiles[0], currentQuality);
+                }
 
 
             } else {
@@ -155,10 +173,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 reader.readAsDataURL(file);
             });
+            // 移除图片后，如果还有图片，重新预览第一张
+            previewFirstImageWithQuality(uploadedFiles[0], currentQuality);
         } else {
             resetUI();
         }
     }
+
+
+    async function previewFirstImageWithQuality(imageFile, quality) {
+        if (!imageFile) return; // 如果没有图片，则返回
+
+        console.log(`Previewing first image: ${imageFile.name} with quality: ${quality}`);
+        previewArea.classList.remove('hidden'); // 确保预览区域显示
+        webpPreviewImage.src = '#'; // 清空 WebP 预览图，显示加载状态
+
+        try {
+            const compressedFile = await imageCompression(imageFile, {
+                maxSizeMB: 2,
+                maxWidthOrHeight: 2000,
+                useWebWorker: true,
+                fileType: 'webp',
+                quality: quality / 100, // 质量值从 0-100 转换为 0-1 范围
+            });
+            const webpURL = URL.createObjectURL(compressedFile);
+            webpPreviewImage.src = webpURL; // 显示 WebP 预览图
+
+            const originalFileSize = imageFile.size;
+            const compressedFileSize = compressedFile.size;
+            const compressionPercentage = ((originalFileSize - compressedFileSize) / originalFileSize) * 100;
+            const formattedPercentage = compressionPercentage.toFixed(2);
+
+            compressionInfo.textContent = `Compression Ratio (Quality: ${quality}): ${formattedPercentage}% (Original Size: ${(originalFileSize / 1024).toFixed(2)}KB, Compressed Size: ${(compressedFileSize / 1024).toFixed(2)}KB)`;
+            compressionInfo.classList.remove('hidden');
+
+
+        } catch (error) {
+            console.error('Preview generation failed:', error);
+            webpPreviewImage.src = '#'; // 预览失败时，清空 WebP 预览图
+            compressionInfo.textContent = 'Preview generation failed.';
+            compressionInfo.classList.remove('hidden');
+        }
+    }
+
+
+    function handleQualityChange(event) {
+        currentQuality = parseInt(event.target.value); // 获取滑块的整数值
+        qualityValueDisplay.textContent = currentQuality; // 更新显示的质量值
+
+        if (uploadedFiles.length > 0) {
+            previewFirstImageWithQuality(uploadedFiles[0], currentQuality); // 使用新的质量值重新预览第一张图片
+        }
+    }
+
 
 
     convertButton.addEventListener('click', async () => {
@@ -170,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.textContent = 'Converting Images...';
         convertButton.disabled = true;
         downloadLinkArea.classList.add('hidden');
-        previewArea.classList.remove('hidden');
+        previewArea.classList.remove('hidden'); // 确保预览区域显示
         compressionInfo.classList.add('hidden');
         removeAllImagesButton.classList.add('hidden');
 
@@ -181,30 +248,30 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalCompressedSize = 0;
 
         try {
-            console.log('Starting batch image conversion...');
+            console.log('Starting batch image conversion with quality:', currentQuality); // 记录当前质量值
 
             for (let i = 0; i < uploadedFiles.length; i++) {
                 const file = uploadedFiles[i];
-                const options = { // Define options here for logging
+                const options = {
                     maxSizeMB: 2,
                     maxWidthOrHeight: 2000,
                     useWebWorker: true,
                     fileType: 'webp',
-                    quality: 0.05, // VERY LOW quality for debugging negative compression - experiment with 0.01, 0.1, 0.3, 0.6, 0.8, 1
+                    quality: currentQuality / 100, // 使用当前的质量值
                 };
-                console.log(`Processing file ${i + 1} of ${uploadedFiles.length}:`, file.name, file.type, file.size); // Log file details
-                console.log("Compression options:", options); // Log compression options
+                console.log(`Processing file ${i + 1} of ${uploadedFiles.length}:`, file.name, file.type, file.size);
+                console.log("Compression options:", options);
                 totalOriginalSize += file.size;
 
-                const startTime = performance.now(); // Start time for performance check
+                const startTime = performance.now();
                 const compressedFile = await imageCompression(file, options);
-                const endTime = performance.now(); // End time
-                console.log(`imageCompression execution time: ${endTime - startTime} milliseconds`); // Log execution time
+                const endTime = performance.now();
+                console.log(`imageCompression execution time: ${endTime - startTime} milliseconds`);
 
 
                 totalCompressedSize += compressedFile.size;
                 webpFiles.push({ file: compressedFile, originalName: file.name });
-                console.log(`File ${i + 1} converted:`, file.name, '->', compressedFile.name, 'Original Size:', file.size, 'Compressed Size:', compressedFile.size); // Log sizes
+                console.log(`File ${i + 1} converted:`, file.name, '->', compressedFile.name, 'Original Size:', file.size, 'Compressed Size:', compressedFile.size);
 
 
             }
@@ -216,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formattedPercentage = totalCompressionPercentage.toFixed(2);
             console.log(`Total Compression percentage for all files: ${formattedPercentage}%`);
 
-            compressionInfo.textContent = `Total Compression Ratio: ${formattedPercentage}% (Original Total Size: ${(totalOriginalSize / 1024).toFixed(2)}KB, Compressed Total Size: ${(totalCompressedSize / 1024).toFixed(2)}KB)`;
+            compressionInfo.textContent = `Total Compression Ratio (Quality: ${currentQuality}): ${formattedPercentage}% (Original Total Size: ${(totalOriginalSize / 1024).toFixed(2)}KB, Compressed Total Size: ${(totalCompressedSize / 1024).toFixed(2)}KB)`; // 显示当前质量值
             compressionInfo.classList.remove('hidden');
 
 
@@ -256,6 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
         removeAllImagesButton.classList.add('hidden');
         fileInput.value = '';
         noFileSelectedText.classList.add('hidden');
+        originalPreviewImage.src = '#'; // 清空原始预览图
+        webpPreviewImage.src = '#';    // 清空 WebP 预览图
     }
 
 
