@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadedFiles = [...files];
             console.log('Files selected:', uploadedFiles);
 
-            thumbnailArea.innerHTML = '';
+            thumbnailArea.innerHTML = ''; // Clear previous thumbnails
             previewArea.classList.remove('hidden');
             convertButton.classList.remove('hidden');
             convertButton.disabled = false;
@@ -76,11 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 uploadedFiles.forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
+                        console.log('FileReader onload triggered for:', file.name); // Debugging log
                         const thumbnailContainer = document.createElement('div');
                         thumbnailContainer.classList.add('thumbnail-container');
-                        thumbnailContainer.style.left = `${index * 10}px`; /* Offset each thumbnail */
-                        thumbnailContainer.style.top = `${index * 5}px`;  /* Slight vertical offset too */
-
 
                         const img = document.createElement('img');
                         img.src = e.target.result;
@@ -95,11 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             removeThumbnail(index);
                         });
 
-
                         thumbnailContainer.appendChild(img);
                         thumbnailContainer.appendChild(removeButton);
                         thumbnailArea.appendChild(thumbnailContainer);
-                    }
+                        console.log('Thumbnail appended for:', file.name); // Debugging log
+                    };
+                    reader.onerror = (error) => { // Add error handler for FileReader
+                        console.error('FileReader error for:', file.name, error); // Debugging log
+                    };
+                    console.log('FileReader started for:', file.name); // Debugging log
                     reader.readAsDataURL(file);
                 });
 
@@ -129,9 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 reader.onload = (e) => {
                     const thumbnailContainer = document.createElement('div');
                     thumbnailContainer.classList.add('thumbnail-container');
-                    thumbnailContainer.style.left = `${index * 10}px`; /* Offset each thumbnail - important to re-apply on re-render */
-                    thumbnailContainer.style.top = `${index * 5}px`;   /* Slight vertical offset too */
-
 
                     const img = document.createElement('img');
                     img.src = e.target.result;
