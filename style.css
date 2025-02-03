@@ -43,8 +43,8 @@
 
 
     .thumbnail-remove-button {
-        @apply absolute top-1 right-1 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200 opacity-0 hover:opacity-100; /* Hidden by default, visible on container hover */
-        font-size: 0.8rem;
+         @apply absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200 opacity-0 group-hover:opacity-100;
+         font-size: 0.7rem;
     }
 
     .thumbnail-container:hover .thumbnail-remove-button {
