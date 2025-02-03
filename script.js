@@ -257,12 +257,17 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadLink.download = downloadFileName;
             downloadLinkArea.classList.remove('hidden');
 
-            // 添加下载完成后的清理
-            downloadLink.onclick = () => {
+            // 改进下载完成后的清理逻辑
+            const cleanupObjectURL = () => {
+                // 使用更长的超时时间确保下载已经开始
                 setTimeout(() => {
                     URL.revokeObjectURL(downloadUrl);
-                }, 100);
+                }, 2000);
             };
+
+            // 使用事件监听器而不是直接赋值
+            downloadLink.addEventListener('click', cleanupObjectURL, { once: true });
+
             const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
             compressionInfo.textContent = 
                 `Total compression: ${savings}% reduction ` +
