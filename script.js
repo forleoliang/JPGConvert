@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 页面切换逻辑
+    const navLinks = document.querySelectorAll('nav a[data-page]');
+    const pages = document.querySelectorAll('#converterPage, #contactPage');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetPageId = link.getAttribute('data-page');
+            
+            pages.forEach(page => {
+                if (page.id === targetPageId) {
+                    page.classList.remove('hidden');
+                } else {
+                    page.classList.add('hidden');
+                }
+            });
+        });
+    });
+
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
@@ -212,13 +231,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 zip.file(newFileName, compressedFile);
             }
 
-            const zipBlob = await zip.generateAsync({ type: 'blob' });
-            const zipUrl = URL.createObjectURL(zipBlob);
-            
-            downloadLink.href = zipUrl;
-            downloadLink.download = 'converted-images.zip';
+            let downloadUrl;
+            let downloadFileName;
+
+            if (uploadedFiles.length === 1) {
+                // 单张图片直接下载WebP
+                const compressedFile = await imageCompression(uploadedFiles[0], {
+                    maxSizeMB: 2,
+                    maxWidthOrHeight: 2000,
+                    useWebWorker: true,
+                    fileType: 'webp',
+                    quality: currentQuality / 100
+                });
+                const blob = new Blob([compressedFile], { type: 'image/webp' });
+                downloadUrl = URL.createObjectURL(blob);
+                downloadFileName = uploadedFiles[0].name.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+            } else {
+                // 多张图片打包下载
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+                downloadUrl = URL.createObjectURL(zipBlob);
+                downloadFileName = 'converted-images.zip';
+            }
+
+            downloadLink.href = downloadUrl;
+            downloadLink.download = downloadFileName;
             downloadLinkArea.classList.remove('hidden');
 
+            // 添加下载完成后的清理
+            downloadLink.onclick = () => {
+                setTimeout(() => {
+                    URL.revokeObjectURL(downloadUrl);
+                }, 100);
+            };
             const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
             compressionInfo.textContent = 
                 `Total compression: ${savings}% reduction ` +
