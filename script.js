@@ -4,22 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const pages = document.querySelectorAll('#converterPage, #contactPage');
     const converterPage = document.getElementById('converterPage');
     const contactPage = document.getElementById('contactPage');
-  
+
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetPageId = link.getAttribute('data-page');
-  
-             if (targetPageId === 'converterPage') {
+
+            if (targetPageId === 'converterPage') {
                 converterPage.classList.remove('hidden');
                 contactPage.classList.add('hidden');
             } else if (targetPageId === 'contactPage') {
                 contactPage.classList.remove('hidden');
-                 converterPage.classList.add('hidden');
+                converterPage.classList.add('hidden');
             }
         });
     });
-  
+
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Filter valid image files
-        const validFiles = files.filter(file => 
-            file.type.startsWith('image/png') || 
+        const validFiles = files.filter(file =>
+            file.type.startsWith('image/png') ||
             file.type.startsWith('image/jpeg')
         );
 
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         uploadedFiles = validFiles;
-        
+
         // Show UI elements
         previewArea.classList.remove('hidden');
         convertButton.classList.remove('hidden');
@@ -122,11 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = document.createElement('img');
             img.src = e.target.result;
             img.alt = file.name;
-            img.className = 'w-full h-20 object-cover rounded-lg thumbnail-image';
+            img.className = 'w-full h-full object-cover rounded-md thumbnail-image';
 
-            const removeButton = document.createElement('button');
+             const removeButton = document.createElement('button');
             removeButton.innerHTML = '×';
-            removeButton.className = 'absolute top-0 right-0 bg-red-500 text-white w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity thumbnail-remove-button';
+            removeButton.className = 'absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity thumbnail-remove-button';
             removeButton.onclick = () => removeThumbnail(index);
 
             thumbnailContainer.appendChild(img);
@@ -159,20 +159,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const compressedFile = await imageCompression(file, options);
             const reader = new FileReader();
-            
+
             reader.onload = (e) => {
                 webpPreviewImage.src = e.target.result;
-                
+
                 const originalSize = (file.size / 1024).toFixed(2);
                 const compressedSize = (compressedFile.size / 1024).toFixed(2);
                 const savings = (100 * (1 - compressedFile.size / file.size)).toFixed(1);
-                
-                compressionInfo.textContent = 
+
+                compressionInfo.textContent =
                     `Compression: ${savings}% reduction ` +
                     `(${originalSize}KB → ${compressedSize}KB)`;
                 compressionInfo.classList.remove('hidden');
             };
-            
+
             reader.readAsDataURL(compressedFile);
 
         } catch (error) {
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleQualityChange(event) {
         currentQuality = parseInt(event.target.value);
         qualityValueDisplay.textContent = currentQuality;
-        
+
         if (uploadedFiles.length > 0) {
             previewFirstImageWithQuality(uploadedFiles[0], currentQuality);
         }
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function removeThumbnail(index) {
         uploadedFiles.splice(index, 1);
         thumbnailArea.innerHTML = '';
-        
+
         if (uploadedFiles.length > 0) {
             uploadedFiles.forEach((file, i) => createThumbnail(file, i));
             setPreviewImage(uploadedFiles[0]);
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         convertButton.disabled = true;
         convertButton.textContent = '转换中...';
-        
+
         try {
             const options = {
                 maxSizeMB: 2,
@@ -248,8 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 downloadFileName = 'converted-images.zip';
             }
 
-             // 设置下载链接和事件处理
-             downloadLink.onclick = (e) => {
+            // 设置下载链接和事件处理
+            downloadLink.onclick = (e) => {
                 e.preventDefault();
                 const a = document.createElement('a');
                 a.href = downloadUrl;
@@ -262,10 +262,10 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadLinkArea.classList.remove('hidden');
 
             const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
-            compressionInfo.textContent = 
+            compressionInfo.textContent =
                 `总压缩率: ${savings}% ` +
                 `(${(totalOriginalSize / 1024).toFixed(2)}KB → ${(totalCompressedSize / 1024).toFixed(2)}KB)`;
-            
+
         } catch (error) {
             console.error('转换失败:', error);
             alert('图片转换失败，请重试。');
@@ -291,14 +291,14 @@ document.addEventListener('DOMContentLoaded', () => {
     removeAllImagesButton.onclick = () => {
         resetUI();
     };
-  
-     // 初始化页面显示
-     const hash = window.location.hash;
-      if (hash === '#contactPage') {
-         converterPage.classList.add('hidden');
-         contactPage.classList.remove('hidden');
-        } else {
-         converterPage.classList.remove('hidden');
-          contactPage.classList.add('hidden');
-         }
+
+    // 初始化页面显示
+    const hash = window.location.hash;
+    if (hash === '#contactPage') {
+        converterPage.classList.add('hidden');
+        contactPage.classList.remove('hidden');
+    } else {
+        converterPage.classList.remove('hidden');
+        contactPage.classList.add('hidden');
+    }
 });
