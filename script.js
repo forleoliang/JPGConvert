@@ -18,10 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentQuality = 75;
 
     // Verify required libraries
-    const imageCompression = window.imageCompression;
-    const JSZip = window.JSZip;
-
-    if (!imageCompression || !JSZip) {
+    if (typeof imageCompression === 'undefined' || typeof JSZip === 'undefined') {
         console.error('Required libraries not loaded');
         alert('Required libraries failed to load. Please check your internet connection.');
         return;
@@ -71,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        uploadedFiles = validFiles; // Remove the 20 file limit
+        uploadedFiles = validFiles;
         
         // Show UI elements
         previewArea.classList.remove('hidden');
@@ -79,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.disabled = false;
         noFileSelectedText.classList.add('hidden');
         removeAllImagesButton.hidden = false;
-        dropArea.classList.add('has-files');
 
         // Clear existing thumbnails
         thumbnailArea.innerHTML = '';
@@ -100,16 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const reader = new FileReader();
         reader.onload = (e) => {
             const thumbnailContainer = document.createElement('div');
-            thumbnailContainer.className = 'thumbnail-container';
+            thumbnailContainer.className = 'relative group';
 
             const img = document.createElement('img');
             img.src = e.target.result;
             img.alt = file.name;
-            img.className = 'thumbnail-image';
+            img.className = 'w-full h-20 object-cover rounded-lg';
 
             const removeButton = document.createElement('button');
             removeButton.innerHTML = '×';
-            removeButton.className = 'thumbnail-remove-button';
+            removeButton.className = 'absolute top-0 right-0 bg-red-500 text-white w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity';
             removeButton.onclick = () => removeThumbnail(index);
 
             thumbnailContainer.appendChild(img);
