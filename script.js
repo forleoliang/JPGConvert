@@ -71,11 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-<<<<<<< HEAD
         uploadedFiles = validFiles; // Remove the 20 file limit
-=======
-        uploadedFiles = validFiles;
->>>>>>> 3ea90cea97d8b34cec9074c43b79c77e1e33d2eb
         
         // Show UI elements
         previewArea.classList.remove('hidden');
@@ -83,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.disabled = false;
         noFileSelectedText.classList.add('hidden');
         removeAllImagesButton.hidden = false;
+        dropArea.classList.add('has-files');
 
         // Clear existing thumbnails
         thumbnailArea.innerHTML = '';
