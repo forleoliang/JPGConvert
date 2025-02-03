@@ -216,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const zipUrl = URL.createObjectURL(zipBlob);
             
             downloadLink.href = zipUrl;
+            downloadLink.download = 'converted-images.zip';
             downloadLinkArea.classList.remove('hidden');
 
             const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
