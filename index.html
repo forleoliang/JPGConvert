@@ -14,8 +14,8 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex space-x-8">
-                    <a href="#" class="text-gray-700 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">转换器</a>
-                    <a href="mailto:lensclear@outlook.com" class="text-gray-700 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">联系方式</a>
+                    <a href="#" data-page="converterPage" class="text-gray-700 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">转换器</a>
+                    <a href="mailto:lensclear@outlook.com" data-page="contactPage" class="text-gray-700 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium">联系方式</a>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div id="dropArea" class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 transition-colors">
                 <p class="text-gray-600">Or drag and drop PNG/JPG images here</p>
             </div>
-            <div id="thumbnailArea" class="grid grid-cols-4 gap-4 mt-4"></div>
+            <div id="thumbnailArea" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4"></div>
         </div>
 
         <!-- Processing Card -->

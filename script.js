@@ -297,6 +297,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     removeAllImagesButton.onclick = () => {
         resetUI();
-        noFileSelectedText.classList.remove('hidden');
     };
 });
