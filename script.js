@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 页面切换逻辑
     const navLinks = document.querySelectorAll('nav a[data-page]');
-    const pages = document.querySelectorAll('#converterPage, #contactPage');
     const converterPage = document.getElementById('converterPage');
     const contactPage = document.getElementById('contactPage');
 
@@ -29,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadLink = document.getElementById('downloadLink');
     const compressionInfo = document.getElementById('compressionInfo');
     const removeAllImagesButton = document.getElementById('removeAllImagesButton');
-    const noFileSelectedText = document.getElementById('noFileSelectedText');
     const qualitySlider = document.getElementById('qualitySlider');
     const qualityValueDisplay = document.getElementById('qualityValue');
     const originalPreviewImage = document.getElementById('originalPreviewImage');
@@ -73,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
     async function handleFilesSelection(files) {
         if (!files || files.length === 0) {
             resetUI();
-            noFileSelectedText.classList.remove('hidden');
             return;
         }
 
@@ -95,8 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         previewArea.classList.remove('hidden');
         convertButton.classList.remove('hidden');
         convertButton.disabled = false;
-        noFileSelectedText.classList.add('hidden');
-        removeAllImagesButton.hidden = false;
+        removeAllImagesButton.classList.remove('hidden');
 
         // Clear existing thumbnails
         thumbnailArea.innerHTML = '';
@@ -124,8 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
             img.alt = file.name;
             img.className = 'w-full h-full object-cover rounded-md thumbnail-image';
 
-             const removeButton = document.createElement('button');
-            removeButton.innerHTML = '×';
+            const removeButton = document.createElement('button');
+            removeButton.innerHTML = '&times;';
             removeButton.className = 'absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity thumbnail-remove-button';
             removeButton.onclick = () => removeThumbnail(index);
 
@@ -204,12 +199,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     convertButton.onclick = async () => {
         if (uploadedFiles.length === 0) {
-            alert('请先选择图片。');
+            alert('Please select images first.');
             return;
         }
 
         convertButton.disabled = true;
-        convertButton.textContent = '转换中...';
+        convertButton.textContent = 'Converting...';
 
         try {
             const options = {
@@ -226,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let totalCompressedSize = 0;
 
             if (uploadedFiles.length === 1) {
-                // 单张图片直接下载WebP
+                // Single image direct download as WebP
                 const compressedFile = await imageCompression(uploadedFiles[0], options);
                 const blob = new Blob([await compressedFile.arrayBuffer()], { type: 'image/webp' });
                 downloadUrl = URL.createObjectURL(blob);
@@ -234,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 totalOriginalSize = uploadedFiles[0].size;
                 totalCompressedSize = compressedFile.size;
             } else {
-                // 多张图片打包下载
+                // Multiple images, download as zip
                 const zip = new JSZip();
                 for (const file of uploadedFiles) {
                     const compressedFile = await imageCompression(file, options);
@@ -248,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 downloadFileName = 'converted-images.zip';
             }
 
-            // 设置下载链接和事件处理
+            // Set download link and event handling
             downloadLink.onclick = (e) => {
                 e.preventDefault();
                 const a = document.createElement('a');
@@ -263,15 +258,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
             compressionInfo.textContent =
-                `总压缩率: ${savings}% ` +
+                `Total Compression: ${savings}% ` +
                 `(${(totalOriginalSize / 1024).toFixed(2)}KB → ${(totalCompressedSize / 1024).toFixed(2)}KB)`;
 
         } catch (error) {
-            console.error('转换失败:', error);
-            alert('图片转换失败，请重试。');
+            console.error('Conversion failed:', error);
+            alert('Image conversion failed, please try again.');
         } finally {
             convertButton.disabled = false;
-            convertButton.textContent = '转换图片';
+            convertButton.textContent = 'Convert Images';
         }
     };
 
@@ -282,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         convertButton.classList.add('hidden');
         downloadLinkArea.classList.add('hidden');
         compressionInfo.classList.add('hidden');
-        removeAllImagesButton.hidden = true;
+        removeAllImagesButton.classList.add('hidden');
         fileInput.value = '';
         originalPreviewImage.src = '#';
         webpPreviewImage.src = '#';
@@ -292,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resetUI();
     };
 
-    // 初始化页面显示
+    // Initialize page display
     const hash = window.location.hash;
     if (hash === '#contactPage') {
         converterPage.classList.add('hidden');
