@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        uploadedFiles = validFiles.slice(0, 20); // Limit to 20 files
+        uploadedFiles = validFiles;
         
         // Show UI elements
         previewArea.classList.remove('hidden');
