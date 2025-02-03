@@ -114,5 +114,109 @@
             </div>
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageUpload = document.getElementById('imageUpload');
+            const thumbnailArea = document.getElementById('thumbnailArea');
+            const previewArea = document.getElementById('previewArea');
+            const convertButton = document.getElementById('convertButton');
+            const removeAllImagesButton = document.getElementById('removeAllImagesButton');
+            const downloadLinkArea = document.getElementById('downloadLinkArea');
+            const downloadLink = document.getElementById('downloadLink');
+            const qualitySlider = document.getElementById('qualitySlider');
+            const qualityValue = document.getElementById('qualityValue');
+            const compressionInfo = document.getElementById('compressionInfo');
+
+            let images = [];
+
+            imageUpload.addEventListener('change', handleFileUpload);
+            qualitySlider.addEventListener('input', updateQualityValue);
+            convertButton.addEventListener('click', convertImages);
+            removeAllImagesButton.addEventListener('click', removeAllImages);
+
+            function handleFileUpload(event) {
+                const files = event.target.files;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'thumbnail-image';
+                        const container = document.createElement('div');
+                        container.className = 'thumbnail-container';
+                        const removeButton = document.createElement('div');
+                        removeButton.className = 'thumbnail-remove-button';
+                        removeButton.innerHTML = '&times;';
+                        removeButton.onclick = () => {
+                            container.remove();
+                            images = images.filter((img) => img !== file);
+                            toggleConvertButton();
+                        };
+                        container.appendChild(img);
+                        container.appendChild(removeButton);
+                        thumbnailArea.appendChild(container);
+                        images.push(file);
+                        toggleConvertButton();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            function updateQualityValue() {
+                qualityValue.textContent = qualitySlider.value;
+            }
+
+            function toggleConvertButton() {
+                if (images.length > 0) {
+                    convertButton.classList.remove('hidden');
+                    removeAllImagesButton.classList.remove('hidden');
+                } else {
+                    convertButton.classList.add('hidden');
+                    removeAllImagesButton.classList.add('hidden');
+                }
+            }
+
+            function convertImages() {
+                // Implement the image conversion logic here using browser-image-compression
+                // and update the previewArea with the converted images
+                previewArea.classList.remove('hidden');
+                compressionInfo.classList.remove('hidden');
+                downloadLinkArea.classList.remove('hidden');
+                // Example: converting the first image
+                const options = {
+                    maxSizeMB: 1,
+                    maxWidthOrHeight: 1920,
+                    useWebWorker: true,
+                    quality: qualitySlider.value / 100
+                };
+                browserImageCompression(images[0], options)
+                    .then((compressedFile) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const originalImage = document.getElementById('originalPreviewImage');
+                            originalImage.src = URL.createObjectURL(images[0]);
+                            const webpImage = document.getElementById('webpPreviewImage');
+                            webpImage.src = e.target.result;
+                            compressionInfo.textContent = `Original size: ${(images[0].size / 1024).toFixed(2)} KB, Compressed size: ${(compressedFile.size / 1024).toFixed(2)} KB`;
+                        };
+                        reader.readAsDataURL(compressedFile);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
+
+            function removeAllImages() {
+                thumbnailArea.innerHTML = '';
+                images = [];
+                toggleConvertButton();
+                previewArea.classList.add('hidden');
+                compressionInfo.classList.add('hidden');
+                downloadLinkArea.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
