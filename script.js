@@ -246,18 +246,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 downloadFileName = 'converted-images.zip';
             }
 
-            downloadLink.href = downloadUrl;
-            downloadLink.download = downloadFileName;
-            downloadLinkArea.classList.remove('hidden');
-
-            // 改进下载完成后的清理逻辑
-            const cleanupObjectURL = () => {
-                window.setTimeout(() => {
-                    URL.revokeObjectURL(downloadUrl);
-                }, 5000);
+             // 设置下载链接和事件处理
+             downloadLink.onclick = (e) => {
+                e.preventDefault();
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = downloadFileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
             };
-
-            downloadLink.addEventListener('click', cleanupObjectURL, { once: true });
+            downloadLinkArea.classList.remove('hidden');
 
             const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
             compressionInfo.textContent = 
