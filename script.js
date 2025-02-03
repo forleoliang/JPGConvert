@@ -2,22 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // 页面切换逻辑
     const navLinks = document.querySelectorAll('nav a[data-page]');
     const pages = document.querySelectorAll('#converterPage, #contactPage');
-
+    const converterPage = document.getElementById('converterPage');
+    const contactPage = document.getElementById('contactPage');
+  
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetPageId = link.getAttribute('data-page');
-            
-            pages.forEach(page => {
-                if (page.id === targetPageId) {
-                    page.classList.remove('hidden');
-                } else {
-                    page.classList.add('hidden');
-                }
-            });
+  
+             if (targetPageId === 'converterPage') {
+                converterPage.classList.remove('hidden');
+                contactPage.classList.add('hidden');
+            } else if (targetPageId === 'contactPage') {
+                contactPage.classList.remove('hidden');
+                 converterPage.classList.add('hidden');
+            }
         });
     });
-
+  
     const fileInput = document.getElementById('imageUpload');
     const dropArea = document.getElementById('dropArea');
     const previewArea = document.getElementById('previewArea');
@@ -115,16 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const reader = new FileReader();
         reader.onload = (e) => {
             const thumbnailContainer = document.createElement('div');
-            thumbnailContainer.className = 'relative group';
+            thumbnailContainer.className = 'relative group thumbnail-container';
 
             const img = document.createElement('img');
             img.src = e.target.result;
             img.alt = file.name;
-            img.className = 'w-full h-20 object-cover rounded-lg';
+            img.className = 'w-full h-20 object-cover rounded-lg thumbnail-image';
 
             const removeButton = document.createElement('button');
             removeButton.innerHTML = '×';
-            removeButton.className = 'absolute top-0 right-0 bg-red-500 text-white w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity';
+            removeButton.className = 'absolute top-0 right-0 bg-red-500 text-white w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity thumbnail-remove-button';
             removeButton.onclick = () => removeThumbnail(index);
 
             thumbnailContainer.appendChild(img);
@@ -289,4 +291,14 @@ document.addEventListener('DOMContentLoaded', () => {
     removeAllImagesButton.onclick = () => {
         resetUI();
     };
+  
+     // 初始化页面显示
+     const hash = window.location.hash;
+      if (hash === '#contactPage') {
+         converterPage.classList.add('hidden');
+         contactPage.classList.remove('hidden');
+        } else {
+         converterPage.classList.remove('hidden');
+          contactPage.classList.add('hidden');
+         }
 });
