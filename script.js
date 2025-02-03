@@ -202,52 +202,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     convertButton.onclick = async () => {
         if (uploadedFiles.length === 0) {
-            alert('Please select images first.');
+            alert('请先选择图片。');
             return;
         }
 
         convertButton.disabled = true;
-        convertButton.textContent = 'Converting...';
+        convertButton.textContent = '转换中...';
         
         try {
-            const zip = new JSZip();
-            let totalOriginalSize = 0;
-            let totalCompressedSize = 0;
-
-            for (const file of uploadedFiles) {
-                const compressedFile = await imageCompression(file, {
-                    maxSizeMB: 2,
-                    maxWidthOrHeight: 2000,
-                    useWebWorker: true,
-                    fileType: 'webp',
-                    quality: currentQuality / 100
-                });
-
-                totalOriginalSize += file.size;
-                totalCompressedSize += compressedFile.size;
-
-                // Add to zip with .webp extension
-                const newFileName = file.name.replace(/\.(png|jpg|jpeg)$/i, '.webp');
-                zip.file(newFileName, compressedFile);
-            }
+            const options = {
+                maxSizeMB: 2,
+                maxWidthOrHeight: 2000,
+                useWebWorker: true,
+                fileType: 'webp',
+                quality: currentQuality / 100
+            };
 
             let downloadUrl;
             let downloadFileName;
+            let totalOriginalSize = 0;
+            let totalCompressedSize = 0;
 
             if (uploadedFiles.length === 1) {
                 // 单张图片直接下载WebP
-                const compressedFile = await imageCompression(uploadedFiles[0], {
-                    maxSizeMB: 2,
-                    maxWidthOrHeight: 2000,
-                    useWebWorker: true,
-                    fileType: 'webp',
-                    quality: currentQuality / 100
-                });
-                const blob = new Blob([compressedFile], { type: 'image/webp' });
+                const compressedFile = await imageCompression(uploadedFiles[0], options);
+                const blob = new Blob([await compressedFile.arrayBuffer()], { type: 'image/webp' });
                 downloadUrl = URL.createObjectURL(blob);
                 downloadFileName = uploadedFiles[0].name.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+                totalOriginalSize = uploadedFiles[0].size;
+                totalCompressedSize = compressedFile.size;
             } else {
                 // 多张图片打包下载
+                const zip = new JSZip();
+                for (const file of uploadedFiles) {
+                    const compressedFile = await imageCompression(file, options);
+                    totalOriginalSize += file.size;
+                    totalCompressedSize += compressedFile.size;
+                    const newFileName = file.name.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+                    zip.file(newFileName, await compressedFile.arrayBuffer());
+                }
                 const zipBlob = await zip.generateAsync({ type: 'blob' });
                 downloadUrl = URL.createObjectURL(zipBlob);
                 downloadFileName = 'converted-images.zip';
@@ -259,26 +252,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 改进下载完成后的清理逻辑
             const cleanupObjectURL = () => {
-                // 使用更长的超时时间确保下载已经开始
-                setTimeout(() => {
+                window.setTimeout(() => {
                     URL.revokeObjectURL(downloadUrl);
-                }, 2000);
+                }, 5000);
             };
 
-            // 使用事件监听器而不是直接赋值
             downloadLink.addEventListener('click', cleanupObjectURL, { once: true });
 
             const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
             compressionInfo.textContent = 
-                `Total compression: ${savings}% reduction ` +
+                `总压缩率: ${savings}% ` +
                 `(${(totalOriginalSize / 1024).toFixed(2)}KB → ${(totalCompressedSize / 1024).toFixed(2)}KB)`;
             
         } catch (error) {
-            console.error('Conversion failed:', error);
-            alert('Failed to convert images. Please try again.');
+            console.error('转换失败:', error);
+            alert('图片转换失败，请重试。');
         } finally {
             convertButton.disabled = false;
-            convertButton.textContent = 'Convert Images';
+            convertButton.textContent = '转换图片';
         }
     };
 
