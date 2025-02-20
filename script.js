@@ -1,299 +1,240 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('nav a[data-page]');
-    const converterPage = document.getElementById('converterPage');
-    const contactPage = document.getElementById('contactPage');
+document.addEventListener('DOMContentLoaded', function() {
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const convertButton = document.getElementById('convertButton');
+    const downloadButton = document.getElementById('downloadButton');
+    const previewArea = document.getElementById('previewArea');
+    const originalPreview = document.getElementById('originalPreview');
+    const convertedPreview = document.getElementById('convertedPreview');
+    const originalInfo = document.getElementById('originalInfo');
+    const convertedInfo = document.getElementById('convertedInfo');
+    const formatButtons = document.querySelectorAll('.format-button');
+    const qualitySlider = document.getElementById('qualitySlider');
+    const qualityValue = document.getElementById('qualityValue');
+    const fileList = document.getElementById('fileList');
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetPageId = link.getAttribute('data-page');
+    let selectedFiles = [];
+    let selectedFormat = 'webp';
+    let convertedBlobs = new Map();
+    fileInput.multiple = true;
 
-            if (targetPageId === 'converterPage') {
-                converterPage.classList.remove('hidden');
-                contactPage.classList.add('hidden');
-            } else if (targetPageId === 'contactPage') {
-                contactPage.classList.remove('hidden');
-                converterPage.classList.add('hidden');
-            }
+    // Format selection handling
+    formatButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            formatButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            selectedFormat = button.dataset.format;
+            if (selectedFiles.length > 0) convertAllImages();
         });
     });
 
-    const fileInput = document.getElementById('imageUpload');
-    const dropArea = document.getElementById('dropArea');
-    const previewArea = document.getElementById('previewArea');
-    const thumbnailArea = document.getElementById('thumbnailArea');
-    const convertButton = document.getElementById('convertButton');
-    const downloadLinkArea = document.getElementById('downloadLinkArea');
-    const downloadLink = document.getElementById('downloadLink');
-    const compressionInfo = document.getElementById('compressionInfo');
-    const removeAllImagesButton = document.getElementById('removeAllImagesButton');
-    const qualitySlider = document.getElementById('qualitySlider');
-    const qualityValueDisplay = document.getElementById('qualityValue');
-    const originalPreviewImage = document.getElementById('originalPreviewImage');
-    const webpPreviewImage = document.getElementById('webpPreviewImage');
-
-    let uploadedFiles = [];
-    let currentQuality = 75;
-
-    // Verify required libraries
-    if (typeof imageCompression === 'undefined' || typeof JSZip === 'undefined') {
-        console.error('Required libraries not loaded');
-        alert('Required libraries failed to load. Please check your internet connection.');
-        return;
-    }
-
-    // Event Listeners
-    fileInput.addEventListener('change', handleFile);
-    dropArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropArea.classList.add('border-blue-500', 'bg-gray-50');
+    // Drag and drop handling
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
     });
-    dropArea.addEventListener('dragleave', (e) => {
+
+    function preventDefaults(e) {
         e.preventDefault();
-        dropArea.classList.remove('border-blue-500', 'bg-gray-50');
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.add('drag-over');
+        });
     });
-    dropArea.addEventListener('drop', dropHandler);
-    qualitySlider.addEventListener('input', handleQualityChange);
 
-    function dropHandler(e) {
-        e.preventDefault();
-        dropArea.classList.remove('border-blue-500', 'bg-gray-50');
-        const files = Array.from(e.dataTransfer.files);
-        handleFilesSelection(files);
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.remove('drag-over');
+        });
+    });
+
+    dropZone.addEventListener('drop', handleDrop);
+    fileInput.addEventListener('change', handleFileSelect);
+    convertButton.addEventListener('click', convertAllImages);
+    downloadButton.addEventListener('click', downloadImage);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
     }
 
-    function handleFile(event) {
-        const files = Array.from(event.target.files);
-        handleFilesSelection(files);
+    function handleFileSelect(e) {
+        const files = e.target.files;
+        handleFiles(files);
     }
 
-    async function handleFilesSelection(files) {
-        if (!files || files.length === 0) {
-            resetUI();
-            return;
-        }
+    function handleFiles(files) {
+        const validFiles = Array.from(files).filter(file => file.type.match('image/(jpeg|png)'));
+        if (validFiles.length > 0) {
+            selectedFiles = validFiles;
+            fileList.innerHTML = '';
+            fileList.style.display = 'block';
+            convertedBlobs.clear();
 
-        // Filter valid image files
-        const validFiles = files.filter(file =>
-            file.type.startsWith('image/png') ||
-            file.type.startsWith('image/jpeg')
-        );
+            validFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-size">${(file.size / 1024).toFixed(2)} KB</span>
+                    </div>
+                    <div class="file-status">Pending</div>
+                `;
+                fileList.appendChild(fileItem);
+            });
 
-        if (validFiles.length === 0) {
-            alert('Please select only PNG or JPG images.');
-            resetUI();
-            return;
-        }
-
-        uploadedFiles = validFiles;
-
-        // Show UI elements
-        previewArea.classList.remove('hidden');
-        convertButton.classList.remove('hidden');
-        convertButton.disabled = false;
-        removeAllImagesButton.classList.remove('hidden');
-
-        // Clear existing thumbnails
-        thumbnailArea.innerHTML = '';
-
-        // Create thumbnails and set preview
-        for (let i = 0; i < uploadedFiles.length; i++) {
-            const file = uploadedFiles[i];
-            createThumbnail(file, i);
-
-            // Set the first image as preview
-            if (i === 0) {
-                setPreviewImage(file);
-            }
-        }
-    }
-
-    function createThumbnail(file, index) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const thumbnailContainer = document.createElement('div');
-            thumbnailContainer.className = 'relative group thumbnail-container';
-
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.alt = file.name;
-            img.className = 'w-full h-full object-cover rounded-md thumbnail-image';
-
-            const removeButton = document.createElement('button');
-            removeButton.innerHTML = '&times;';
-            removeButton.className = 'absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity thumbnail-remove-button';
-            removeButton.onclick = () => removeThumbnail(index);
-
-            thumbnailContainer.appendChild(img);
-            thumbnailContainer.appendChild(removeButton);
-            thumbnailArea.appendChild(thumbnailContainer);
-        };
-        reader.readAsDataURL(file);
-    }
-
-    async function setPreviewImage(file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            originalPreviewImage.src = e.target.result;
-            previewFirstImageWithQuality(file, currentQuality);
-        };
-        reader.readAsDataURL(file);
-    }
-
-    async function previewFirstImageWithQuality(file, quality) {
-        if (!file) return;
-
-        try {
-            const options = {
-                maxSizeMB: 2,
-                maxWidthOrHeight: 2000,
-                useWebWorker: true,
-                fileType: 'webp',
-                quality: quality / 100
-            };
-
-            const compressedFile = await imageCompression(file, options);
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                webpPreviewImage.src = e.target.result;
-
-                const originalSize = (file.size / 1024).toFixed(2);
-                const compressedSize = (compressedFile.size / 1024).toFixed(2);
-                const savings = (100 * (1 - compressedFile.size / file.size)).toFixed(1);
-
-                compressionInfo.textContent =
-                    `Compression: ${savings}% reduction ` +
-                    `(${originalSize}KB → ${compressedSize}KB)`;
-                compressionInfo.classList.remove('hidden');
-            };
-
-            reader.readAsDataURL(compressedFile);
-
-        } catch (error) {
-            console.error('Preview generation failed:', error);
-            alert('Failed to generate preview. Please try again.');
-        }
-    }
-
-    function handleQualityChange(event) {
-        currentQuality = parseInt(event.target.value);
-        qualityValueDisplay.textContent = currentQuality;
-
-        if (uploadedFiles.length > 0) {
-            previewFirstImageWithQuality(uploadedFiles[0], currentQuality);
-        }
-    }
-
-    function removeThumbnail(index) {
-        uploadedFiles.splice(index, 1);
-        thumbnailArea.innerHTML = '';
-
-        if (uploadedFiles.length > 0) {
-            uploadedFiles.forEach((file, i) => createThumbnail(file, i));
-            setPreviewImage(uploadedFiles[0]);
-        } else {
-            resetUI();
-        }
-    }
-
-    convertButton.onclick = async () => {
-        if (uploadedFiles.length === 0) {
-            alert('Please select images first.');
-            return;
-        }
-
-        convertButton.disabled = true;
-        convertButton.textContent = 'Converting...';
-
-        try {
-            const options = {
-                maxSizeMB: 2,
-                maxWidthOrHeight: 2000,
-                useWebWorker: true,
-                fileType: 'webp',
-                quality: currentQuality / 100
-            };
-
-            let downloadUrl;
-            let downloadFileName;
-            let totalOriginalSize = 0;
-            let totalCompressedSize = 0;
-
-            if (uploadedFiles.length === 1) {
-                // Single image direct download as WebP
-                const compressedFile = await imageCompression(uploadedFiles[0], options);
-                const blob = new Blob([await compressedFile.arrayBuffer()], { type: 'image/webp' });
-                downloadUrl = URL.createObjectURL(blob);
-                downloadFileName = uploadedFiles[0].name.replace(/\.(png|jpg|jpeg)$/i, '.webp');
-                totalOriginalSize = uploadedFiles[0].size;
-                totalCompressedSize = compressedFile.size;
+            if (validFiles.length === 1) {
+                displayOriginalImage(validFiles[0]);
             } else {
-                // Multiple images, download as zip
-                const zip = new JSZip();
-                for (const file of uploadedFiles) {
-                    const compressedFile = await imageCompression(file, options);
-                    totalOriginalSize += file.size;
-                    totalCompressedSize += compressedFile.size;
-                    const newFileName = file.name.replace(/\.(png|jpg|jpeg)$/i, '.webp');
-                    zip.file(newFileName, await compressedFile.arrayBuffer());
-                }
-                const zipBlob = await zip.generateAsync({ type: 'blob' });
-                downloadUrl = URL.createObjectURL(zipBlob);
-                downloadFileName = 'converted-images.zip';
+                previewArea.style.display = 'none';
             }
-
-            // Set download link and event handling
-            downloadLink.onclick = (e) => {
-                e.preventDefault();
-                const a = document.createElement('a');
-                a.href = downloadUrl;
-                a.download = downloadFileName;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(downloadUrl);
-            };
-            downloadLinkArea.classList.remove('hidden');
-
-            const savings = (100 * (1 - totalCompressedSize / totalOriginalSize)).toFixed(1);
-            compressionInfo.textContent =
-                `Total Compression: ${savings}% ` +
-                `(${(totalOriginalSize / 1024).toFixed(2)}KB → ${(totalCompressedSize / 1024).toFixed(2)}KB)`;
-
-        } catch (error) {
-            console.error('Conversion failed:', error);
-            alert('Image conversion failed, please try again.');
-        } finally {
             convertButton.disabled = false;
-            convertButton.textContent = 'Convert Images';
+            updateDownloadButton();
+        }
+
+        if (files.length > validFiles.length) {
+            alert('Some files were skipped. Only JPEG and PNG files are supported.');
+        }
+    }
+
+    function displayOriginalImage(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            originalPreview.src = e.target.result;
+            previewArea.style.display = 'block';
+            updateImageInfo(file, originalInfo);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function updateImageInfo(file, infoElement) {
+        const size = (file.size / 1024).toFixed(2);
+        infoElement.textContent = `Size: ${size} KB`;
+    }
+
+    async function convertImage(file, index = 0) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const quality = qualitySlider.value / 100;
+                const mimeType = `image/${selectedFormat}`;
+
+                canvas.toBlob(
+                    (blob) => {
+                        const fileItems = fileList.getElementsByClassName('file-item');
+                        if (fileItems[index]) {
+                            const statusElement = fileItems[index].querySelector('.file-status');
+                            statusElement.textContent = `Converted (${(blob.size / 1024).toFixed(2)} KB)`;
+                        }
+
+                        convertedBlobs.set(file.name, blob);
+                        if (selectedFiles.length === 1) {
+                            const url = URL.createObjectURL(blob);
+                            convertedPreview.src = url;
+                            updateImageInfo(blob, convertedInfo);
+                            downloadButton.disabled = false;
+                        }
+                        resolve();
+                    },
+                    mimeType,
+                    quality
+                );
+            };
+
+            img.src = URL.createObjectURL(file);
+        });
+    }
+
+    function downloadImage() {
+        if (selectedFiles.length === 1) {
+            const blob = convertedBlobs.get(selectedFiles[0].name);
+            if (!blob) return;
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            const originalName = selectedFiles[0].name.split('.')[0];
+            link.download = `${originalName}.${selectedFormat}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            downloadAllImages();
+        }
+    }
+
+    async function downloadAllImages() {
+        if (convertedBlobs.size === 0) return;
+
+        const zip = new JSZip();
+        const folder = zip.folder('converted_images');
+
+        convertedBlobs.forEach((blob, fileName) => {
+            const newName = `${fileName.split('.')[0]}.${selectedFormat}`;
+            folder.file(newName, blob);
+        });
+
+        const content = await zip.generateAsync({type: 'blob'});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(content);
+        link.download = `converted_images.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // 添加质量控制滑块事件
+    const updateQuality = (e) => {
+        const value = e.target.value;
+        qualityValue.textContent = value;
+        if (selectedFiles.length > 0) {
+            convertAllImages();
         }
     };
+    qualitySlider.addEventListener('input', updateQuality);
+    qualitySlider.addEventListener('change', updateQuality);
 
-    function resetUI() {
-        uploadedFiles = [];
-        thumbnailArea.innerHTML = '';
-        previewArea.classList.add('hidden');
-        convertButton.classList.add('hidden');
-        downloadLinkArea.classList.add('hidden');
-        compressionInfo.classList.add('hidden');
-        removeAllImagesButton.classList.add('hidden');
-        fileInput.value = '';
-        originalPreviewImage.src = '#';
-        webpPreviewImage.src = '#';
+    // 添加批量转换功能
+    async function convertAllImages() {
+        convertButton.disabled = true;
+        for (let i = 0; i < selectedFiles.length; i++) {
+            await convertImage(selectedFiles[i], i);
+        }
+        convertButton.disabled = false;
     }
 
-    removeAllImagesButton.onclick = () => {
-        resetUI();
-    };
+    // 修改转换按钮事件
+    convertButton.addEventListener('click', convertAllImages);
 
-    // Initialize page display
-    const hash = window.location.hash;
-    if (hash === '#contactPage') {
-        converterPage.classList.add('hidden');
-        contactPage.classList.remove('hidden');
-    } else {
-        converterPage.classList.remove('hidden');
-        contactPage.classList.add('hidden');
+    // 更新下载按钮状态
+    function updateDownloadButton() {
+        downloadButton.disabled = selectedFiles.length === 0 || convertedBlobs.size === 0;
     }
+
+    // 在相关操作后更新下载按钮状态
+    function clearSelection() {
+        selectedFiles = [];
+        convertedBlobs.clear();
+        fileList.style.display = 'none';
+        fileList.innerHTML = '';
+        previewArea.style.display = 'none';
+        updateDownloadButton();
+    }
+
+    // 添加清除按钮
+    const clearButton = document.createElement('button');
+    clearButton.textContent = 'Clear All';
+    clearButton.className = 'clear-button';
+    clearButton.onclick = clearSelection;
+    fileList.parentNode.insertBefore(clearButton, fileList);
+
 });
