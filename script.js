@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const convertButton = document.getElementById('convertButton');
-    const downloadButton = document.getElementById('downloadButton');
+
     const previewArea = document.getElementById('previewArea');
     const originalPreview = document.getElementById('originalPreview');
     const convertedPreview = document.getElementById('convertedPreview');
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dropZone.addEventListener('drop', handleDrop);
     fileInput.addEventListener('change', handleFileSelect);
     convertButton.addEventListener('click', convertAllImages);
-    downloadButton.addEventListener('click', downloadImage);
+
 
     function handleDrop(e) {
         const dt = e.dataTransfer;
@@ -73,18 +73,42 @@ document.addEventListener('DOMContentLoaded', function() {
             fileList.innerHTML = '';
             fileList.style.display = 'block';
             convertedBlobs.clear();
+            document.querySelector('.clear-button').style.display = 'block';
+        
 
             validFiles.forEach((file, index) => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <div class="file-info">
-                        <span class="file-name">${file.name}</span>
-                        <span class="file-size">${(file.size / 1024).toFixed(2)} KB</span>
-                    </div>
-                    <div class="file-status">Pending</div>
+                
+                const thumbnailContainer = document.createElement('div');
+                thumbnailContainer.className = 'thumbnail-container';
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'file-thumbnail';
+                thumbnailContainer.appendChild(thumbnail);
+
+                const fileInfoContainer = document.createElement('div');
+                fileInfoContainer.className = 'file-info';
+                fileInfoContainer.innerHTML = `
+                    <span class="file-name">${file.name}</span>
+                    <span class="file-size">${(file.size / 1024).toFixed(2)} KB</span>
                 `;
+
+                const statusContainer = document.createElement('div');
+                statusContainer.className = 'file-status';
+                const spinner = document.createElement('div');
+                spinner.className = 'pending-spinner';
+                statusContainer.appendChild(spinner);
+
+                fileItem.appendChild(thumbnailContainer);
+                fileItem.appendChild(fileInfoContainer);
+                fileItem.appendChild(statusContainer);
                 fileList.appendChild(fileItem);
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    thumbnail.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
             });
 
             if (validFiles.length === 1) {
@@ -118,6 +142,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function convertImage(file, index = 0) {
         return new Promise((resolve) => {
+            const fileItems = fileList.getElementsByClassName('file-item');
+            const statusElement = fileItems[index].querySelector('.file-status');
+            statusElement.innerHTML = '<div class="loading-spinner"></div>Converting...';
+
+            if (selectedFiles.length === 1) {
+                const previewBox = convertedPreview.parentNode;
+                const convertedTitle = previewBox.querySelector('h3');
+                const existingSpinner = previewBox.querySelector('.loading-spinner');
+                
+                if (existingSpinner) {
+                    existingSpinner.remove();
+                }
+
+                convertedPreview.style.display = 'none';
+                if (convertedTitle) convertedTitle.style.display = 'none';
+
+                const loadingSpinner = document.createElement('div');
+                loadingSpinner.className = 'loading-spinner';
+                previewBox.insertBefore(loadingSpinner, convertedPreview);
+            }
+
             const img = new Image();
             img.onload = function() {
                 const canvas = document.createElement('canvas');
@@ -125,41 +170,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 canvas.height = img.height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0);
-
+    
                 const quality = qualitySlider.value / 100;
                 const mimeType = `image/${selectedFormat}`;
-
+    
                 canvas.toBlob(
                     (blob) => {
-                        const fileItems = fileList.getElementsByClassName('file-item');
                         if (fileItems[index]) {
-                            const statusElement = fileItems[index].querySelector('.file-status');
-                            statusElement.textContent = `Converted (${(blob.size / 1024).toFixed(2)} KB)`;
+                            statusElement.innerHTML = `Converted (${(blob.size / 1024).toFixed(2)} KB)`;
                         }
-
+    
                         convertedBlobs.set(file.name, blob);
                         if (selectedFiles.length === 1) {
+                            const previewBox = convertedPreview.parentNode;
+                            const loadingSpinner = previewBox.querySelector('.loading-spinner');
+                            const convertedTitle = previewBox.querySelector('h3');
+
+                            if (loadingSpinner) loadingSpinner.remove();
+                            if (convertedTitle) convertedTitle.style.display = 'block';
+                            
                             const url = URL.createObjectURL(blob);
                             convertedPreview.src = url;
+                            convertedPreview.style.display = 'block';
                             updateImageInfo(blob, convertedInfo);
-                            downloadButton.disabled = false;
                         }
+                        updateDownloadButton();
                         resolve();
                     },
                     mimeType,
                     quality
                 );
             };
-
+    
             img.src = URL.createObjectURL(file);
         });
     }
 
     function downloadImage() {
-        if (selectedFiles.length === 1) {
+        if (selectedFiles.length === 1 && convertedBlobs.size === 1) {
             const blob = convertedBlobs.get(selectedFiles[0].name);
             if (!blob) return;
-
+    
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             const originalName = selectedFiles[0].name.split('.')[0];
@@ -167,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        } else {
+        } else if (convertedBlobs.size > 1) {
             downloadAllImages();
         }
     }
@@ -193,23 +244,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 添加质量控制滑块事件
-    const updateQuality = (e) => {
-        const value = e.target.value;
-        qualityValue.textContent = value;
+    let qualityDebounceTimer;
+    qualitySlider.addEventListener('input', function() {
+        document.getElementById('qualityValue').textContent = this.value;
+    });
+
+    qualitySlider.addEventListener('change', function() {
         if (selectedFiles.length > 0) {
-            convertAllImages();
+            clearTimeout(qualityDebounceTimer);
+            qualityDebounceTimer = setTimeout(() => {
+                convertAllImages();
+            }, 300);
         }
-    };
-    qualitySlider.addEventListener('input', updateQuality);
-    qualitySlider.addEventListener('change', updateQuality);
+    });
 
     // 添加批量转换功能
     async function convertAllImages() {
         convertButton.disabled = true;
-        for (let i = 0; i < selectedFiles.length; i++) {
-            await convertImage(selectedFiles[i], i);
+
+        try {
+            for (let i = 0; i < selectedFiles.length; i++) {
+                await convertImage(selectedFiles[i], i);
+            }
+
+        } catch (error) {
+            console.error('转换过程中发生错误:', error);
+        } finally {
+            convertButton.disabled = false;
+            updateDownloadButton(); // 更新下载按钮状态
         }
-        convertButton.disabled = false;
     }
 
     // 修改转换按钮事件
@@ -227,14 +290,37 @@ document.addEventListener('DOMContentLoaded', function() {
         fileList.style.display = 'none';
         fileList.innerHTML = '';
         previewArea.style.display = 'none';
+        document.querySelector('.clear-button').style.display = 'none';
+
         updateDownloadButton();
     }
 
-    // 添加清除按钮
+    // 添加清除按钮和批量下载按钮
     const clearButton = document.createElement('button');
     clearButton.textContent = 'Clear All';
     clearButton.className = 'clear-button';
     clearButton.onclick = clearSelection;
-    fileList.parentNode.insertBefore(clearButton, fileList);
+
+    const batchDownloadButton = document.createElement('button');
+    batchDownloadButton.textContent = 'Download';
+    batchDownloadButton.className = 'batch-download-button';
+    batchDownloadButton.onclick = downloadAllImages;
+    batchDownloadButton.disabled = true;
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'button-container';
+    buttonContainer.appendChild(clearButton);
+    buttonContainer.appendChild(batchDownloadButton);
+    fileList.parentNode.insertBefore(buttonContainer, fileList);
+
+    // 更新下载按钮状态时同时更新批量下载按钮
+    function updateDownloadButton() {
+        const hasFiles = selectedFiles.length > 0;
+        const hasConvertedFiles = convertedBlobs.size > 0;
+        const allFilesConverted = hasFiles && (convertedBlobs.size === selectedFiles.length);
+        
+
+        batchDownloadButton.disabled = !allFilesConverted;
+    }
 
 });
