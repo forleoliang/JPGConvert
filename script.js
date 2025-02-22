@@ -163,46 +163,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 previewBox.insertBefore(loadingSpinner, convertedPreview);
             }
 
-            const img = new Image();
-            img.onload = function() {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-    
-                const quality = qualitySlider.value / 100;
-                const mimeType = `image/${selectedFormat}`;
-    
-                canvas.toBlob(
-                    (blob) => {
-                        if (fileItems[index]) {
-                            statusElement.innerHTML = `Converted (${(blob.size / 1024).toFixed(2)} KB)`;
-                        }
-    
-                        convertedBlobs.set(file.name, blob);
-                        if (selectedFiles.length === 1) {
-                            const previewBox = convertedPreview.parentNode;
-                            const loadingSpinner = previewBox.querySelector('.loading-spinner');
-                            const convertedTitle = previewBox.querySelector('h3');
+            const worker = new Worker('imageWorker.js');
+            const quality = qualitySlider.value / 100;
 
-                            if (loadingSpinner) loadingSpinner.remove();
-                            if (convertedTitle) convertedTitle.style.display = 'block';
-                            
-                            const url = URL.createObjectURL(blob);
-                            convertedPreview.src = url;
-                            convertedPreview.style.display = 'block';
-                            updateImageInfo(blob, convertedInfo);
-                        }
-                        updateDownloadButton();
-                        resolve();
-                    },
-                    mimeType,
-                    quality
-                );
+            worker.onmessage = function(e) {
+                if (e.data.success) {
+                    const blob = e.data.blob;
+                    if (fileItems[index]) {
+                        statusElement.innerHTML = `Converted (${(blob.size / 1024).toFixed(2)} KB)`;
+                    }
+
+                    convertedBlobs.set(file.name, blob);
+                    if (selectedFiles.length === 1) {
+                        const previewBox = convertedPreview.parentNode;
+                        const loadingSpinner = previewBox.querySelector('.loading-spinner');
+                        const convertedTitle = previewBox.querySelector('h3');
+
+                        if (loadingSpinner) loadingSpinner.remove();
+                        if (convertedTitle) convertedTitle.style.display = 'block';
+                        
+                        const url = URL.createObjectURL(blob);
+                        convertedPreview.src = url;
+                        convertedPreview.style.display = 'block';
+                        updateImageInfo(blob, convertedInfo);
+                    }
+                    updateDownloadButton();
+                    worker.terminate();
+                    resolve();
+                } else {
+                    console.error('Conversion failed:', e.data.error);
+                    statusElement.innerHTML = 'Conversion failed';
+                    worker.terminate();
+                    resolve();
+                }
             };
-    
-            img.src = URL.createObjectURL(file);
+
+            worker.onerror = function(error) {
+                console.error('Worker error:', error);
+                statusElement.innerHTML = 'Conversion failed';
+                worker.terminate();
+                resolve();
+            };
+
+            worker.postMessage({
+                file: file,
+                quality: quality,
+                selectedFormat: selectedFormat
+            });
         });
     }
 
@@ -268,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
         } catch (error) {
-            console.error('转换过程中发生错误:', error);
+            console.error('Error during conversion:', error);
         } finally {
             convertButton.disabled = false;
             updateDownloadButton(); // 更新下载按钮状态
