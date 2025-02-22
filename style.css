@@ -126,6 +126,11 @@ main {
     transition: all 0.3s ease;
 }
 
+.format-button:hover {
+    background: rgba(0, 122, 255, 0.1);
+    border-color: var(--accent-color);
+}
+
 .format-button.active {
     background: var(--accent-color);
     color: white;
@@ -140,6 +145,10 @@ main {
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.convert-button:hover:not(:disabled), .download-button:hover:not(:disabled) {
+    background: #0056b3;
 }
 
 .quality-control {
@@ -265,6 +274,10 @@ main {
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.batch-download-button:hover:not(:disabled) {
+    background: #0056b3;
 }
 
 .batch-download-button:disabled {
