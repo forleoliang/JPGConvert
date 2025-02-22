@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
             fileList.style.display = 'block';
             convertedBlobs.clear();
             document.querySelector('.clear-button').style.display = 'block';
+            batchDownloadButton.style.display = 'block';
         
-
             validFiles.forEach((file, index) => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
@@ -291,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fileList.innerHTML = '';
         previewArea.style.display = 'none';
         document.querySelector('.clear-button').style.display = 'none';
+        batchDownloadButton.style.display = 'none';
 
         updateDownloadButton();
     }
@@ -306,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
     batchDownloadButton.className = 'batch-download-button';
     batchDownloadButton.onclick = downloadAllImages;
     batchDownloadButton.disabled = true;
+    batchDownloadButton.style.display = 'none';
 
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
