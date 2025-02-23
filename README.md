@@ -1,19 +1,8 @@
-# WebP Converter
+# image-converter
 
-A user-friendly web-based image conversion tool that allows you to convert PNG/JPG images to WebP format. This tool features an intuitive interface with drag-and-drop upload, batch conversion, and quality adjustment capabilities.
+# Open Source License
 
-## Key Features
-
-- Convert PNG and JPG images to WebP format
-- Drag-and-drop upload and file browsing
-- Real-time preview functionality
-- Adjustable output image quality (1-100%)
-- Batch conversion and download support
-- Beautiful macOS-style interface
-
-## Open Source License
-
-This project is released under the [MIT License](https://opensource.org/licenses/MIT).
+This project is an open source PNG/JPG to WebP image converter. The source code is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 Copyright (c) 2024 lensclear
 
