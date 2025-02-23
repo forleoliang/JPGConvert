@@ -1,4 +1,4 @@
-# image-converter
+# Webp-Converter
 
 # Open Source License
 
