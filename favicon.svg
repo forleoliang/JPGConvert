@@ -1,11 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
   <defs>
-    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4285F4"/>
-      <stop offset="100%" style="stop-color:#34A853"/>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF5733"/>
+      <stop offset="50%" style="stop-color:#FFC300"/>
+      <stop offset="100%" style="stop-color:#DAF7A6"/>
     </linearGradient>
   </defs>
-  <rect x="4" y="4" width="24" height="24" rx="4" fill="url(#gradient)"/>
-  <path d="M16 8l4 8h-8l4-8z" fill="#FFFFFF"/>
-  <circle cx="16" cy="16" r="6" fill="#FBBC05"/>
+  <rect x="0" y="0" width="32" height="32" fill="url(#bgGradient)"/>
+  <g transform="translate(16,16)">
+    <g fill="none" stroke-width="2">
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="red"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="orange" transform="rotate(45)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="yellow" transform="rotate(90)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="green" transform="rotate(135)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="blue" transform="rotate(180)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="indigo" transform="rotate(225)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="violet" transform="rotate(270)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="pink" transform="rotate(315)"/>
+    </g>
+  </g>
 </svg>
