@@ -333,4 +333,28 @@ document.addEventListener('DOMContentLoaded', function() {
         
         batchDownloadButton.disabled = !allFilesConverted;
     }
+
+    // 处理FAQ点击展开/收起
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const isOpen = answer.style.maxHeight;
+            
+            // 先关闭所有已打开的FAQ
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.style.maxHeight = null;
+                item.previousElementSibling.classList.remove('active');
+                item.classList.remove('active');
+            });
+            
+            // 如果之前不是打开状态，则打开当前FAQ
+            if (!isOpen) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                question.classList.add('active');
+                answer.classList.add('active');
+            }
+        });
+    });
 });

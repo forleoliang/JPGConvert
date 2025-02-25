@@ -143,62 +143,44 @@
             <h2 class="faq-title">Frequently Asked Questions</h2>
             <div class="faq-container">
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>What is WebP format and why should I use it?</h3>
-                        <span class="faq-indicator">+</span>
-                    </div>
+                    <div class="faq-question">What image formats can I convert to WebP?</div>
                     <div class="faq-answer">
-                        <p>WebP is a modern image format developed by Google that provides superior lossless and lossy compression for web images. WebP images are typically 25-35% smaller than comparable JPEG or PNG files, which helps websites load faster, uses less bandwidth, and improves Core Web Vitals scores.</p>
+                        <p>This tool is specifically designed to convert JPG/JPEG and PNG images to WebP format. Other formats are not supported at this time.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Is this tool completely free to use?</h3>
-                        <span class="faq-indicator">+</span>
-                    </div>
+                    <div class="faq-question">Is my data secure when using this tool?</div>
                     <div class="faq-answer">
-                        <p>Yes, this tool is 100% free to use with no restrictions. There are no hidden fees, subscription requirements, or limits on the number of images you can convert. Your images never leave your device, as all processing happens locally in your browser.</p>
+                        <p>Absolutely! All processing is done locally in your browser. Your images never leave your device, and no data is sent to any server, ensuring complete privacy and security.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>What's the maximum file size I can convert?</h3>
-                        <span class="faq-indicator">+</span>
-                    </div>
+                    <div class="faq-question">What is WebP and why should I use it?</div>
                     <div class="faq-answer">
-                        <p>The maximum file size depends on your browser and device memory. Generally, most modern browsers can handle files up to 50MB, but for optimal performance, we recommend keeping individual files under 20MB. For extremely large files, you may experience slower conversion times.</p>
+                        <p>WebP is a modern image format developed by Google that provides superior lossless and lossy compression for web images. WebP images are typically 25-35% smaller than comparable JPEG or PNG files while maintaining similar visual quality, resulting in faster website loading times and reduced bandwidth usage.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Will converting to WebP affect image quality?</h3>
-                        <span class="faq-indicator">+</span>
-                    </div>
+                    <div class="faq-question">What quality setting should I use?</div>
                     <div class="faq-answer">
-                        <p>WebP provides excellent image quality even at high compression rates. You can control the quality level using the slider (1-100%). At higher settings (80-100%), most users can't distinguish between the original and WebP version. At lower settings, you'll achieve greater file size reduction, but with some quality loss.</p>
+                        <p>For most web usage, a quality setting between 70-85% offers the best balance between file size and image quality. Lower values (below 70%) will produce smaller files but may show more compression artifacts. Higher values (above 85%) will maintain higher quality but with diminishing returns on file size reduction.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Which browsers support WebP images?</h3>
-                        <span class="faq-indicator">+</span>
-                    </div>
+                    <div class="faq-question">Is there a limit to how many images I can convert at once?</div>
                     <div class="faq-answer">
-                        <p>WebP is supported by all major modern browsers including Chrome, Firefox, Edge, Safari, and Opera. As of 2023, global browser support for WebP is over 95%. For the small percentage of older browsers that don't support WebP, you can implement fallbacks using the &lt;picture&gt; element in your HTML.</p>
+                        <p>There's no fixed limit, but performance depends on your device's capabilities. For optimal performance, we recommend converting batches of 20-30 images at a time. Larger batches may cause your browser to slow down.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Can I convert multiple images at once?</h3>
-                        <span class="faq-indicator">+</span>
-                    </div>
+                    <div class="faq-question">Are WebP images supported in all browsers?</div>
                     <div class="faq-answer">
-                        <p>Yes, this converter supports batch processing. You can upload multiple JPG and PNG files simultaneously, and the tool will convert all of them to WebP format. After conversion, you can download them individually or as a single ZIP archive containing all converted images.</p>
+                        <p>WebP is now supported in all major modern browsers including Chrome, Firefox, Edge, Safari, and Opera. However, older browser versions might not support WebP. For websites, it's recommended to provide fallback formats using the picture element.</p>
                     </div>
                 </div>
             </div>
@@ -210,31 +192,5 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="script.js"></script>
-    
-    <script>
-        // FAQ交互功能
-        document.addEventListener('DOMContentLoaded', function() {
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                const indicator = item.querySelector('.faq-indicator');
-                
-                question.addEventListener('click', () => {
-                    // 切换当前FAQ项的展开/折叠状态
-                    const isOpen = item.classList.contains('faq-active');
-                    
-                    if (isOpen) {
-                        item.classList.remove('faq-active');
-                        indicator.textContent = '+';
-                    } else {
-                        item.classList.add('faq-active');
-                        indicator.textContent = '−';
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
