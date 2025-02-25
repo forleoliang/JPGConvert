@@ -1,22 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-  <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FF5733"/>
-      <stop offset="50%" style="stop-color:#FFC300"/>
-      <stop offset="100%" style="stop-color:#DAF7A6"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="32" height="32" fill="url(#bgGradient)"/>
+  <rect width="32" height="32" fill="#FFFFFF"/>
   <g transform="translate(16,16)">
-    <g fill="none" stroke-width="2">
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="red"/>
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="orange" transform="rotate(45)"/>
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="yellow" transform="rotate(90)"/>
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="green" transform="rotate(135)"/>
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="blue" transform="rotate(180)"/>
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="indigo" transform="rotate(225)"/>
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="violet" transform="rotate(270)"/>
-      <path d="M0,-10 L3,-3 L10,-3 L4,2 L6,10 L0,6 L-6,10 L-4,2 L-10,-3 L-3,-3 Z" stroke="pink" transform="rotate(315)"/>
+    <g>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#FF5733"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#33FF57" transform="rotate(45)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#3357FF" transform="rotate(90)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#FF33A1" transform="rotate(135)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#FF33FF" transform="rotate(180)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#33FFFF" transform="rotate(225)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#FFFF33" transform="rotate(270)"/>
+      <path d="M0,-10 L3,-3 L10,-3 L4,0 L6,7 L0,4 L-6,7 L-4,0 L-10,-3 L-3,-3 Z" fill="#FF5733" transform="rotate(315)"/>
     </g>
   </g>
 </svg>
