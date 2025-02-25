@@ -138,11 +138,103 @@
             </div>
         </section>
 
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is WebP format and why should I use it?</h3>
+                        <span class="faq-indicator">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>WebP is a modern image format developed by Google that provides superior lossless and lossy compression for web images. WebP images are typically 25-35% smaller than comparable JPEG or PNG files, which helps websites load faster, uses less bandwidth, and improves Core Web Vitals scores.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is this tool completely free to use?</h3>
+                        <span class="faq-indicator">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, this tool is 100% free to use with no restrictions. There are no hidden fees, subscription requirements, or limits on the number of images you can convert. Your images never leave your device, as all processing happens locally in your browser.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What's the maximum file size I can convert?</h3>
+                        <span class="faq-indicator">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The maximum file size depends on your browser and device memory. Generally, most modern browsers can handle files up to 50MB, but for optimal performance, we recommend keeping individual files under 20MB. For extremely large files, you may experience slower conversion times.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Will converting to WebP affect image quality?</h3>
+                        <span class="faq-indicator">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>WebP provides excellent image quality even at high compression rates. You can control the quality level using the slider (1-100%). At higher settings (80-100%), most users can't distinguish between the original and WebP version. At lower settings, you'll achieve greater file size reduction, but with some quality loss.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Which browsers support WebP images?</h3>
+                        <span class="faq-indicator">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>WebP is supported by all major modern browsers including Chrome, Firefox, Edge, Safari, and Opera. As of 2023, global browser support for WebP is over 95%. For the small percentage of older browsers that don't support WebP, you can implement fallbacks using the &lt;picture&gt; element in your HTML.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I convert multiple images at once?</h3>
+                        <span class="faq-indicator">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, this converter supports batch processing. You can upload multiple JPG and PNG files simultaneously, and the tool will convert all of them to WebP format. After conversion, you can download them individually or as a single ZIP archive containing all converted images.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <footer>
             <p>Email: <a href="mailto:lensclear@outlook.com">lensclear@outlook.com</a></p>
         </footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="script.js"></script>
+    
+    <script>
+        // FAQ交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const indicator = item.querySelector('.faq-indicator');
+                
+                question.addEventListener('click', () => {
+                    // 切换当前FAQ项的展开/折叠状态
+                    const isOpen = item.classList.contains('faq-active');
+                    
+                    if (isOpen) {
+                        item.classList.remove('faq-active');
+                        indicator.textContent = '+';
+                    } else {
+                        item.classList.add('faq-active');
+                        indicator.textContent = '−';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
