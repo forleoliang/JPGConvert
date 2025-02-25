@@ -213,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 下载单个图片函数
     function downloadImage() {
         if (selectedFiles.length === 1 && convertedBlobs.size === 1) {
             const blob = convertedBlobs.get(selectedFiles[0].name);
@@ -231,7 +230,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 下载多个图片为zip文件
     async function downloadAllImages() {
         if (convertedBlobs.size === 0) return;
 
@@ -267,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // 批量转换功能
+    // 添加批量转换功能
     async function convertAllImages() {
         convertButton.disabled = true;
 
@@ -284,12 +282,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // 修改转换按钮事件
+    convertButton.addEventListener('click', convertAllImages);
+
     // 处理下载操作，根据图片数量决定下载方式
     function handleDownload() {
         if (selectedFiles.length === 1 && convertedBlobs.size === 1) {
-            downloadImage(); // 单张图片直接下载
+            downloadImage();
         } else if (convertedBlobs.size > 1) {
-            downloadAllImages(); // 多张图片下载zip
+            downloadAllImages();
         }
     }
 
@@ -306,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateDownloadButton();
     }
 
-    // 添加清除按钮和下载按钮
+    // 添加清除按钮和批量下载按钮
     const clearButton = document.createElement('button');
     clearButton.textContent = 'Clear All';
     clearButton.className = 'clear-button';
@@ -315,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const batchDownloadButton = document.createElement('button');
     batchDownloadButton.textContent = 'Download';
     batchDownloadButton.className = 'batch-download-button';
-    batchDownloadButton.onclick = handleDownload; // 修改为使用handleDownload函数
+    batchDownloadButton.onclick = handleDownload;
     batchDownloadButton.disabled = true;
     batchDownloadButton.style.display = 'none';
 
@@ -325,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
     buttonContainer.appendChild(batchDownloadButton);
     fileList.parentNode.insertBefore(buttonContainer, fileList);
 
-    // 更新下载按钮状态
+    // 更新下载按钮状态时同时更新批量下载按钮
     function updateDownloadButton() {
         const hasFiles = selectedFiles.length > 0;
         const hasConvertedFiles = convertedBlobs.size > 0;
@@ -333,4 +334,5 @@ document.addEventListener('DOMContentLoaded', function() {
         
         batchDownloadButton.disabled = !allFilesConverted;
     }
+
 });

@@ -1,15 +1,15 @@
-# WebP Converter
+# JPG/PNG to WebP Converter
 
-A modern, user-friendly web application for converting PNG and JPEG images to WebP format. This tool provides an efficient way to optimize your images while maintaining high quality.
+A modern, user-friendly web application specifically designed for converting JPG and PNG images to WebP format. This tool provides an efficient way to optimize your images while maintaining high quality.
 
 ## Features
 
 - Drag and drop interface for easy file upload
-- Batch conversion support
+- Batch conversion of JPG/PNG files to WebP
 - Quality adjustment slider (1-100%)
 - Real-time preview of conversion results
 - Size comparison between original and converted images
-- Bulk download option with ZIP compression
+- Single file or bulk download options (ZIP compression for multiple files)
 - macOS-style modern UI
 
 ## License
