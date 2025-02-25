@@ -346,14 +346,12 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.faq-answer').forEach(item => {
                 item.style.maxHeight = null;
                 item.previousElementSibling.classList.remove('active');
-                item.classList.remove('active');
             });
             
             // 如果之前不是打开状态，则打开当前FAQ
             if (!isOpen) {
                 answer.style.maxHeight = answer.scrollHeight + 'px';
                 question.classList.add('active');
-                answer.classList.add('active');
             }
         });
     });
