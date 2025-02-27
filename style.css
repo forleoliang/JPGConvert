@@ -58,6 +58,142 @@ header {
 .minimize { background-color: #febc2e; }
 .maximize { background-color: #28c840; }
 
+.language-switch {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    transition: background-color 0.3s ease;
+}
+
+.menu-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.lang-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+    display: none;
+    z-index: 1000;
+    min-width: 140px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.lang-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+.lang-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    text-align: center;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.lang-btn:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 4px;
+    padding-bottom: 8px;
+}
+
+.lang-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.lang-btn.active {
+    background-color: rgba(0, 122, 255, 0.1);
+    color: var(--accent-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+    --bg-primary: rgba(242, 242, 242, 0.9);
+    --bg-secondary: rgba(255, 255, 255, 0.8);
+    --text-primary: #333;
+    --accent-color: #007AFF;
+    --border-radius: 10px;
+    --spacing: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: var(--spacing);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--bg-primary);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+header {
+    background: var(--bg-secondary);
+    padding: 15px var(--spacing);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.window-controls {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.close { background-color: #ff5f57; }
+.minimize { background-color: #febc2e; }
+.maximize { background-color: #28c840; }
+
 h1 {
     text-align: center;
     font-size: 1.5em;
@@ -564,5 +700,89 @@ footer a:hover {
     
     .faq-answer p {
         padding: 18px 0;
+    }
+}
+/* Reviews Section */
+.reviews-section {
+    padding: var(--spacing);
+    text-align: center;
+    margin-bottom: var(--spacing);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reviews-title {
+    font-size: 1.8em;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+.reviews-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 100%;
+}
+
+.review-card {
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.review-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.review-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+}
+
+.review-stars {
+    color: #FFD700;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.review-text {
+    color: #666;
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+
+/* 响应式布局 */
+@media (max-width: 1024px) {
+    .reviews-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .reviews-container {
+        grid-template-columns: 1fr;
     }
 }

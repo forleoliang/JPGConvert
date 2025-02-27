@@ -26,6 +26,18 @@
                 <span class="control minimize"></span>
                 <span class="control maximize"></span>
             </div>
+            <div class="language-switch">
+                <button class="menu-btn" id="langMenuBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+                </button>
+                <div class="lang-menu" id="langMenu">
+                    <button class="lang-btn" data-lang="en">English</button>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                    <button class="lang-btn" data-lang="es">Español</button>
+                    <button class="lang-btn" data-lang="fr">Français</button>
+                    <button class="lang-btn" data-lang="pt">Português</button>
+                </div>
+            </div>
             <h1>JPG/PNG to WebP Converter</h1>
         </header>
 
@@ -142,6 +154,78 @@
             </div>
         </section>
 
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <h2 class="reviews-title">User Reviews</h2>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="https://xsgames.co/randomusers/assets/avatars/male/1.jpg" alt="User Avatar">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-name">Robert Thompson</div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">This image converter is a game-changer for my photography business. The batch processing feature saves me hours of work, and the quality control is exceptional.</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="https://xsgames.co/randomusers/assets/avatars/female/2.jpg" alt="User Avatar">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-name">Jennifer Parker</div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">As a graphic designer, I appreciate the precision and reliability of this tool. The interface is intuitive, and the conversion quality is consistently excellent.</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="https://xsgames.co/randomusers/assets/avatars/male/3.jpg" alt="User Avatar">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-name">William Chen</div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">The local processing feature gives me peace of mind when handling sensitive client images. Fast, secure, and professional - exactly what I needed.</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="https://xsgames.co/randomusers/assets/avatars/female/4.jpg" alt="User Avatar">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-name">Emily Rodriguez</div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">I use this tool daily for my social media content. The ability to maintain image quality while reducing file size is invaluable for my work.</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="https://xsgames.co/randomusers/assets/avatars/male/5.jpg" alt="User Avatar">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-name">Daniel Martinez</div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">Perfect for my web development projects. The batch conversion feature and format flexibility make this tool an essential part of my workflow.</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="https://xsgames.co/randomusers/assets/avatars/female/6.jpg" alt="User Avatar">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-name">Sophie Anderson</div>
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-text">The speed and efficiency of this converter are remarkable. It handles large batches of images seamlessly, saving me valuable time in my design work.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- FAQ Section -->
         <section class="faq-section">
             <h2 class="faq-title">Frequently Asked Questions</h2>
@@ -195,6 +279,7 @@
         </footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
