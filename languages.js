@@ -1080,21 +1080,18 @@ function updateAlternateLinks(currentLang) {
 
 // Initialize language based on URL parameter, localStorage, or browser settings
 function initializeLanguage() {
-    // 总是优先使用英语作为默认语言
-    let lang = 'en';
-    
-    // 然后检查URL参数（如果用户明确要求其他语言）
+    // Check URL parameters first
     const urlParams = new URLSearchParams(window.location.search);
-    const urlLang = urlParams.get('lang');
-    if (urlLang && translations[urlLang]) {
-        lang = urlLang;
+    let lang = urlParams.get('lang');
+    
+    // 如果URL中没有指定语言，或者指定的语言不存在，则默认使用英文
+    if (!lang || !translations[lang]) {
+        // 忽略localStorage和浏览器设置，直接使用英文
+        lang = 'en';
     }
     
-    // 设置语言
+    // Set the language
     setLanguage(lang);
-    
-    // 同时保存到localStorage以便将来访问
-    localStorage.setItem('preferredLanguage', lang);
 }
 
 // Event listener for language selector
