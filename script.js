@@ -282,16 +282,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Conversion failed:', e.data.error);
                         // 如果Worker转换失败，使用备用方法
                         worker.terminate();
-                        fallbackConversion(file, index, resolve);
+                        // 检查是否需要使用回退方法
+                        if (e.data.needFallback) {
+                            fallbackConversion(file, index, resolve);
+                        } else {
+                            statusElement.innerHTML = getTranslatedText('conversion_failed', 'Conversion failed');
+                            resolve();
+                        }
                     }
                 };
 
                 worker.onerror = function(e) {
                     clearTimeout(workerTimeout);
                     console.error('Worker error:', e);
-                    statusElement.innerHTML = getTranslatedText('conversion_failed', 'Conversion failed');
                     worker.terminate();
-                    resolve();
+                    fallbackConversion(file, index, resolve);
                 };
 
                 // 向Worker发送消息
@@ -597,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function() {
     faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
             const answer = question.nextElementSibling;
-            const isOpen = answer.style.maxHeight;
+            const isActive = question.classList.contains('active');
             
             // 先关闭所有已打开的FAQ
             document.querySelectorAll('.faq-answer').forEach(item => {
@@ -605,10 +610,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.previousElementSibling.classList.remove('active');
             });
             
-            // 如果之前不是打开状态，则打开当前FAQ
-            if (!isOpen) {
-                answer.style.maxHeight = answer.scrollHeight + 'px';
+            // 如果之前不是激活状态，则打开当前FAQ
+            if (!isActive) {
                 question.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
             }
         });
     });
@@ -636,7 +641,13 @@ document.addEventListener('DOMContentLoaded', function() {
         option.addEventListener('click', function() {
             const lang = this.getAttribute('data-lang');
             if (typeof setLanguage === 'function' && lang) {
+                // 移除所有语言选项的active类
+                languageOptions.forEach(opt => opt.classList.remove('active'));
+                // 给当前选中的语言选项添加active类
+                this.classList.add('active');
+                // 设置语言
                 setLanguage(lang);
+                // 关闭语言选择器
                 languageContainer.classList.remove('active');
             }
         });
@@ -677,19 +688,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 清理按钮事件
     clearButton.addEventListener('click', () => {
+        // 清空文件和状态
         selectedFiles = [];
         convertedBlobs = new Map();
+        
+        // 清空文件列表
         fileList.innerHTML = '';
+        fileList.style.display = 'none';
+        
+        // 禁用或隐藏按钮
         convertButton.disabled = true;
         downloadAllButton.style.display = 'none';
+        downloadAllButton.disabled = true;
         clearButton.style.display = 'none';
+        
         // 重置预览区域
         originalPreview.src = '';
         convertedPreview.src = '';
         originalInfo.textContent = '';
         convertedInfo.textContent = '';
+        
         // 隐藏预览区域
         previewArea.style.display = 'none';
+        
+        // 提示用户操作已完成
+        console.log('已清除所有文件和转换结果');
     });
 
     // 添加下载全部按钮的点击事件处理程序

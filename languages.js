@@ -1092,6 +1092,15 @@ function initializeLanguage() {
     
     // Set the language
     setLanguage(lang);
+    
+    // 设置初始语言选项的active状态
+    document.querySelectorAll('.language-option').forEach(option => {
+        if (option.getAttribute('data-lang') === lang) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
+        }
+    });
 }
 
 // Event listener for language selector
