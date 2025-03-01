@@ -1,7 +1,7 @@
 const translations = {
     'en': {
         // Header
-        'title': 'JPG/PNG to WebP Converter',
+        'title': 'JPG/PNG to WebP/AVIF Converter',
         
         // Upload Area
         'drag_drop': 'Drag and drop your image here or',
@@ -11,6 +11,14 @@ const translations = {
         'convert_to': 'Convert to:',
         'quality': 'Quality:',
         'convert_all': 'Convert All',
+        
+        // Format descriptions
+        'webp_desc': 'WebP - Good compression, wide support',
+        'avif_desc': 'AVIF - Best compression, newer format',
+        
+        // AVIF specific messages
+        'avif_processing': 'Processing AVIF (may take longer)...',
+        'avif_not_supported': 'AVIF encoding not supported in your browser',
         
         // Preview Area
         'original': 'Original',
@@ -574,27 +582,35 @@ const translations = {
         'faq6_q': 'Υποστηρίζονται οι εικόνες WebP σε όλα τα προγράμματα περιήγησης;',
         'faq6_a': 'Το WebP υποστηρίζεται πλέον σε όλα τα κύρια σύγχρονα προγράμματα περιήγησης, συμπεριλαμβανομένων των Chrome, Firefox, Edge, Safari και Opera. Ωστόσο, παλαιότερες εκδόσεις προγραμμάτων περιήγησης ενδέχεται να μην υποστηρίζουν το WebP. Για ιστότοπους, συνιστάται η παροχή εναλλακτικών μορφών χρησιμοποιώντας το στοιχείο picture.',
         
-        // Footer
+        // Email
         'email': 'Email:'
     },
     'zh': {
-        // Header
-        'title': 'JPG/PNG转WebP转换器',
+        // 标题
+        'title': 'JPG/PNG 转 WebP/AVIF 转换器',
         
-        // Upload Area
+        // 上传区域
         'drag_drop': '拖放您的图片到这里或',
         'browse': '浏览',
         
-        // Controls
+        // 控制区
         'convert_to': '转换为:',
         'quality': '质量:',
         'convert_all': '全部转换',
         
-        // Preview Area
+        // 格式描述
+        'webp_desc': 'WebP - 良好压缩率，广泛支持',
+        'avif_desc': 'AVIF - 最佳压缩率，较新格式',
+        
+        // AVIF特定消息
+        'avif_processing': '正在处理AVIF（可能需要更长时间）...',
+        'avif_not_supported': '您的浏览器不支持AVIF编码',
+        
+        // 预览区域
         'original': '原图',
         'converted': '已转换',
         
-        // Conversion status messages
+        // 转换状态消息
         'converting': '转换中...',
         'converting_fallback': '使用备用方法转换中...',
         'conversion_failed': '转换失败',
@@ -603,11 +619,15 @@ const translations = {
         'size_info': '大小: {0} KB',
         'files_skipped': '部分文件被跳过。仅支持JPEG和PNG文件。',
         
-        // Buttons
+        // 按钮
         'clear_all': '全部清除',
         'download': '下载',
+        'download_all': '全部下载',
         
-        // Features Section
+        // 元数据移除信息
+        'metadata_note': '注意：转换过程中将移除EXIF等元数据',
+        
+        // 核心功能部分
         'key_features': '核心功能',
         'no_uploads': '无需上传到服务器',
         'privacy_desc': '您的图片保持私密。不会发送任何数据到服务器。',
@@ -626,7 +646,7 @@ const translations = {
         'size_reduction': '减小文件大小',
         'size_desc': '在保持质量的同时显著减少文件大小。',
         
-        // Reviews Section
+        // 用户评价部分
         'user_reviews': '用户评价',
         'review1_name': '李明',
         'review1_text': '这个图像转换器对我的摄影业务是个改变游戏规则的工具。批量处理功能为我节省了数小时的工作时间，而且质量控制非常出色。',
@@ -641,22 +661,22 @@ const translations = {
         'review6_name': '孙丽',
         'review6_text': '这个转换器的速度和效率令人印象深刻。它无缝处理大批量图像，为我的设计工作节省了宝贵的时间。',
         
-        // FAQ Section
+        // 常见问题部分
         'faq': '常见问题',
-        'faq1_q': '我可以将哪些图像格式转换为WebP？',
-        'faq1_a': '该工具专为将JPG/JPEG和PNG图像转换为WebP格式而设计。目前不支持其他格式。',
+        'faq1_q': '我可以将哪些图像格式转换为WebP和AVIF？',
+        'faq1_a': '该工具专为将JPG/JPEG和PNG图像转换为WebP或AVIF格式而设计。目前不支持其他格式。',
         'faq2_q': '使用此工具时我的数据安全吗？',
         'faq2_a': '绝对安全！所有处理都在您的浏览器本地完成。您的图像永远不会离开您的设备，也不会将任何数据发送到任何服务器，确保完全的隐私和安全。',
-        'faq3_q': '什么是WebP，为什么我应该使用它？',
-        'faq3_a': 'WebP是由谷歌开发的现代图像格式，为网络图像提供了更好的有损和无损压缩。WebP图像通常比同等质量的JPEG或PNG文件小25-35%，同时保持相似的视觉质量，从而缩短网站加载时间并减少带宽使用。',
+        'faq3_q': '什么是WebP和AVIF，为什么我应该使用它们？',
+        'faq3_a': 'WebP是由谷歌开发的现代图像格式，为网络图像提供了更好的有损和无损压缩。AVIF是更新的格式，提供更高的压缩率，但浏览器支持相对较新。这两种格式通常比同等质量的JPEG或PNG文件小25-50%，同时保持相似的视觉质量，从而缩短网站加载时间并减少带宽使用。',
         'faq4_q': '我应该使用什么质量设置？',
         'faq4_a': '对于大多数网络用途，70-85%的质量设置提供了文件大小和图像质量之间的最佳平衡。较低的值（低于70%）将产生更小的文件，但可能显示更多的压缩失真。较高的值（高于85%）将保持更高的质量，但文件大小减少的效果将逐渐减弱。',
         'faq5_q': '我一次可以转换多少图像？',
         'faq5_a': '没有固定限制，但性能取决于您设备的能力。为了获得最佳性能，我们建议一次转换20-30张图像。更大批量的转换可能会导致浏览器速度变慢。',
-        'faq6_q': 'WebP图像是否被所有浏览器支持？',
-        'faq6_a': 'WebP现在被所有主要的现代浏览器支持，包括Chrome、Firefox、Edge、Safari和Opera。然而，较旧的浏览器版本可能不支持WebP。对于网站，建议使用picture元素提供后备格式。',
+        'faq6_q': 'WebP和AVIF图像是否被所有浏览器支持？',
+        'faq6_a': 'WebP现在被所有主要的现代浏览器支持，包括Chrome、Firefox、Edge、Safari和Opera。AVIF支持较新，主要在Chrome、Firefox和Opera中提供。对于网站，建议使用picture元素提供后备格式。',
         
-        // Footer
+        // 邮箱
         'email': '邮箱:'
     },
     'ja': {

@@ -534,11 +534,20 @@ main {
     gap: 15px;
     flex-wrap: wrap;
     max-width: 100%;
+    text-align: center;
+}
+
+.format-selection, .quality-control, .action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
 }
 
 .action-buttons {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     flex-wrap: nowrap;
 }
@@ -547,11 +556,13 @@ main {
     display: flex;
     align-items: center;
     gap: 15px;
+    justify-content: center;
 }
 
-/* 添加format-label样式用于加粗文字 */
 .format-label {
-    font-weight: bold;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #444;
 }
 
 .format-buttons {
@@ -560,26 +571,74 @@ main {
 }
 
 .format-button {
-    background: linear-gradient(to bottom, #f8f8f8, #e8e8e8);
-    border: none; /* 移除边框线 */
-    padding: 8px 16px;
+    background: linear-gradient(to bottom, #007aff, #0066db);
+    color: white;
+    border: none;
+    padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1);
+    white-space: nowrap;
 }
 
 .format-button:hover {
-    background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
-    border-color: rgba(0, 122, 255, 0.4);
+    background: linear-gradient(to bottom, #0089ff, #0074e0);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+}
+
+.format-button:active {
+    background: linear-gradient(to bottom, #0066db, #0052c0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    transform: translateY(1px);
 }
 
 .format-button.active {
-    background: linear-gradient(to bottom, #007aff, #0066db);
+    background: linear-gradient(to bottom, #34c759, #28a745);
+    border: none;
     color: white;
-    border-color: #0062cc;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(52, 199, 89, 0.4);
+}
+
+.format-info {
+    margin: 10px 0;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.format-comparison {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.format-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: white;
+    font-weight: 500;
+}
+
+.webp-badge {
+    background-color: #34A853;
+}
+
+.avif-badge {
+    background-color: #4285F4;
+}
+
+/* 禁用状态的格式按钮 */
+.format-button:disabled {
+    background: linear-gradient(to bottom, #cccccc, #bbbbbb);
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7;
 }
 
 .convert-button, .download-button, .clear-button, .batch-download-button {
@@ -614,6 +673,7 @@ main {
     align-items: center;
     gap: 15px;
     min-width: 200px;
+    justify-content: center;
 }
 
 .quality-label {
@@ -621,6 +681,8 @@ main {
     margin-right: 5px;
     font-weight: 500;
     color: #444;
+    display: flex;
+    align-items: center;
 }
 
 /* 为质量值添加固定宽度样式 */
@@ -888,17 +950,29 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
-    .preview-container {
-        grid-template-columns: 1fr;
-    }
-    
     .controls {
         flex-direction: column;
+        align-items: center;
+    }
+    
+    .format-selection, .quality-control, .action-buttons {
+        width: 100%;
+        justify-content: center;
+        margin: 8px 0;
     }
     
     .format-selection {
         flex-direction: column;
-        align-items: stretch;
+    }
+    
+    .format-buttons {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .format-button {
+        padding: 8px 15px;
     }
 }
 
@@ -1194,9 +1268,14 @@ footer a:hover {
     }
     
     .format-buttons {
-        width: 100%;
-        display: flex;
+        flex-direction: row;
         justify-content: center;
+        width: 100%;
+    }
+    
+    .format-button {
+        padding: 8px 12px;
+        font-size: 13px;
     }
     
     .quality-control {
@@ -1208,5 +1287,28 @@ footer a:hover {
     .quality-slider {
         width: 100%;
         max-width: 250px;
+    }
+}
+
+/* 添加高亮标签的样式 */
+.active-badge {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 0 0 4px currentColor;
+}
+
+/* 添加按钮加载状态的样式 */
+.button-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s linear infinite;
+    margin-right: 6px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
 }
