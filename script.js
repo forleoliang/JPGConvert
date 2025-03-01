@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        selectedFiles = validFiles;
+            selectedFiles = validFiles;
         updateFileList();
         convertButton.disabled = false;
         
@@ -86,53 +86,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateFileList() {
-        fileList.innerHTML = '';
-        fileList.style.display = 'block';
-        convertedBlobs.clear();
+            fileList.innerHTML = '';
+            fileList.style.display = 'block';
+            convertedBlobs.clear();
         clearButton.style.display = 'inline-block';
         downloadAllButton.style.display = 'inline-block';
         downloadAllButton.disabled = true;
-    
+        
         selectedFiles.forEach((file, index) => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
             fileItem.dataset.index = index;
-            
-            const thumbnailContainer = document.createElement('div');
-            thumbnailContainer.className = 'thumbnail-container';
-            const thumbnail = document.createElement('img');
-            thumbnail.className = 'file-thumbnail';
-            thumbnailContainer.appendChild(thumbnail);
+                
+                const thumbnailContainer = document.createElement('div');
+                thumbnailContainer.className = 'thumbnail-container';
+                const thumbnail = document.createElement('img');
+                thumbnail.className = 'file-thumbnail';
+                thumbnailContainer.appendChild(thumbnail);
 
-            const fileInfoContainer = document.createElement('div');
-            fileInfoContainer.className = 'file-info';
-            fileInfoContainer.innerHTML = `
-                <span class="file-name">${file.name}</span>
-                <span class="file-size">${(file.size / 1024).toFixed(2)} KB</span>
-            `;
+                const fileInfoContainer = document.createElement('div');
+                fileInfoContainer.className = 'file-info';
+                fileInfoContainer.innerHTML = `
+                    <span class="file-name">${file.name}</span>
+                    <span class="file-size">${(file.size / 1024).toFixed(2)} KB</span>
+                `;
 
-            const statusContainer = document.createElement('div');
-            statusContainer.className = 'file-status';
-            const spinner = document.createElement('div');
-            spinner.className = 'pending-spinner';
-            statusContainer.appendChild(spinner);
+                const statusContainer = document.createElement('div');
+                statusContainer.className = 'file-status';
+                const spinner = document.createElement('div');
+                spinner.className = 'pending-spinner';
+                statusContainer.appendChild(spinner);
 
-            fileItem.appendChild(thumbnailContainer);
-            fileItem.appendChild(fileInfoContainer);
-            fileItem.appendChild(statusContainer);
-            fileList.appendChild(fileItem);
+                fileItem.appendChild(thumbnailContainer);
+                fileItem.appendChild(fileInfoContainer);
+                fileItem.appendChild(statusContainer);
+                fileList.appendChild(fileItem);
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                thumbnail.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    thumbnail.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
 
         if (selectedFiles.length === 1) {
             displayOriginalImage(selectedFiles[0]);
-        } else {
-            previewArea.style.display = 'none';
+            } else {
+                previewArea.style.display = 'none';
         }
         updateDownloadButtonState();
     }
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
-                const quality = qualitySlider.value / 100;
+            const quality = qualitySlider.value / 100;
 
                 // 设置超时处理
                 const workerTimeout = setTimeout(() => {
@@ -214,11 +214,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     fallbackConversion(file, index, resolve);
                 }, 10000); // 10秒超时
 
-                worker.onmessage = function(e) {
+            worker.onmessage = function(e) {
                     clearTimeout(workerTimeout);
                     
-                    if (e.data.success) {
-                        const blob = e.data.blob;
+                if (e.data.success) {
+                    const blob = e.data.blob;
                         // 比较原始文件大小和转换后的文件大小
                         if (blob.size > file.size) {
                             console.log(`转换后文件更大，将使用原始文件格式: ${file.name} 原始大小: ${(file.size/1024).toFixed(2)} KB, 转换后大小: ${(blob.size/1024).toFixed(2)} KB`);
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 const originalBlob = new Blob([event.target.result], {type: file.type});
                                 convertedBlobs.set(file.name, originalBlob);
                                 
-                                if (fileItems[index]) {
+                    if (fileItems[index]) {
                                     const sizeKB = (file.size / 1024).toFixed(2);
                                     statusElement.innerHTML = getTranslatedText('original_kept', `Original kept (${sizeKB} KB)`).replace('{0}', sizeKB);
                                 }
@@ -258,28 +258,28 @@ document.addEventListener('DOMContentLoaded', function() {
                                 const compressionText = compressionRatio > 0 ? 
                                     ` (-${compressionRatio}%)` : '';
                                 statusElement.innerHTML = getTranslatedText('converted_size', `Converted (${sizeKB} KB)${compressionText}`).replace('{0}', sizeKB);
-                            }
+                    }
 
-                            convertedBlobs.set(file.name, blob);
-                            if (selectedFiles.length === 1) {
-                                const previewBox = convertedPreview.parentNode;
-                                const loadingSpinner = previewBox.querySelector('.loading-spinner');
-                                const convertedTitle = previewBox.querySelector('h3');
+                    convertedBlobs.set(file.name, blob);
+                    if (selectedFiles.length === 1) {
+                        const previewBox = convertedPreview.parentNode;
+                        const loadingSpinner = previewBox.querySelector('.loading-spinner');
+                        const convertedTitle = previewBox.querySelector('h3');
 
-                                if (loadingSpinner) loadingSpinner.remove();
-                                if (convertedTitle) convertedTitle.style.display = 'block';
-                                
-                                const url = URL.createObjectURL(blob);
-                                convertedPreview.src = url;
-                                convertedPreview.style.display = 'block';
-                                updateImageInfo(blob, convertedInfo);
-                            }
+                        if (loadingSpinner) loadingSpinner.remove();
+                        if (convertedTitle) convertedTitle.style.display = 'block';
+                        
+                        const url = URL.createObjectURL(blob);
+                        convertedPreview.src = url;
+                        convertedPreview.style.display = 'block';
+                        updateImageInfo(blob, convertedInfo);
+                    }
                             updateDownloadButtonState();
                         }
-                        worker.terminate();
-                        resolve();
-                    } else {
-                        console.error('Conversion failed:', e.data.error);
+                    worker.terminate();
+                    resolve();
+                } else {
+                    console.error('Conversion failed:', e.data.error);
                         // 如果Worker转换失败，使用备用方法
                         worker.terminate();
                         fallbackConversion(file, index, resolve);
@@ -296,11 +296,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // 向Worker发送消息
                 try {
-                    worker.postMessage({
-                        file: file,
-                        quality: quality,
-                        selectedFormat: selectedFormat
-                    });
+            worker.postMessage({
+                file: file,
+                quality: quality,
+                selectedFormat: selectedFormat
+            });
                 } catch (err) {
                     clearTimeout(workerTimeout);
                     console.error('向Worker发送消息失败:', err);
@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function convertAllImages() {
         // 禁用转换按钮防止多次点击
         convertButton.disabled = true;
-        
+
         try {
             // 循环处理每个文件，传递索引
             for (let i = 0; i < selectedFiles.length; i++) {
