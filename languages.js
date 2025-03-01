@@ -19,6 +19,9 @@ const translations = {
         // AVIF specific messages
         'avif_processing': 'Processing AVIF (may take longer)...',
         'avif_not_supported': 'AVIF encoding not supported in your browser',
+        'using_avif_encoder': 'Using Squoosh for AVIF conversion...',
+        'avif_conversion_failed': 'AVIF conversion failed',
+        'avif_not_available': 'AVIF encoder not available, try another format',
         
         // Preview Area
         'original': 'Original',
@@ -95,7 +98,7 @@ const translations = {
     },
     'es': {
         // Header
-        'title': 'Conversor de JPG/PNG a WebP',
+        'title': 'Conversor de JPG/PNG a WebP/AVIF',
         
         // Upload Area
         'drag_drop': 'Arrastra y suelta tu imagen aquí o',
@@ -105,6 +108,17 @@ const translations = {
         'convert_to': 'Convertir a:',
         'quality': 'Calidad:',
         'convert_all': 'Convertir Todo',
+        
+        // Format descriptions
+        'webp_desc': 'WebP - Buena compresión, amplio soporte',
+        'avif_desc': 'AVIF - Mejor compresión, formato más nuevo',
+        
+        // AVIF specific messages
+        'avif_processing': 'Procesando AVIF (puede tardar más)...',
+        'avif_not_supported': 'Codificación AVIF no compatible en tu navegador',
+        'using_avif_encoder': 'Usando Squoosh para la conversión AVIF...',
+        'avif_conversion_failed': 'Falló la conversión AVIF',
+        'avif_not_available': 'Codificador AVIF no disponible, prueba con otro formato',
         
         // Preview Area
         'original': 'Original',
@@ -177,7 +191,7 @@ const translations = {
     },
     'pt': {
         // Header
-        'title': 'Conversor de JPG/PNG para WebP',
+        'title': 'Conversor de JPG/PNG para WebP/AVIF',
         
         // Upload Area
         'drag_drop': 'Arraste e solte sua imagem aqui ou',
@@ -187,6 +201,17 @@ const translations = {
         'convert_to': 'Converter para:',
         'quality': 'Qualidade:',
         'convert_all': 'Converter Tudo',
+        
+        // Format descriptions
+        'webp_desc': 'WebP - Boa compressão, amplo suporte',
+        'avif_desc': 'AVIF - Melhor compressão, formato mais novo',
+        
+        // AVIF specific messages
+        'avif_processing': 'Processando AVIF (pode demorar mais)...',
+        'avif_not_supported': 'Codificação AVIF não é suportada em seu navegador',
+        'using_avif_encoder': 'Usando Squoosh para conversão AVIF...',
+        'avif_conversion_failed': 'Falha na conversão AVIF',
+        'avif_not_available': 'Codificador AVIF não disponível, tente outro formato',
         
         // Preview Area
         'original': 'Original',
@@ -605,6 +630,9 @@ const translations = {
         // AVIF特定消息
         'avif_processing': '正在处理AVIF（可能需要更长时间）...',
         'avif_not_supported': '您的浏览器不支持AVIF编码',
+        'using_avif_encoder': '正在使用Squoosh进行AVIF转换...',
+        'avif_conversion_failed': 'AVIF转换失败',
+        'avif_not_available': 'AVIF编码器不可用，请尝试其他格式',
         
         // 预览区域
         'original': '原图',

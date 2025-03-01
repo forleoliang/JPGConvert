@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
             formatButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             selectedFormat = button.dataset.format;
-            if (selectedFiles.length > 0) convertAllImages();
         });
     });
 
@@ -206,17 +205,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (selectedFormat === 'avif') {
                 // 使用Squoosh进行AVIF转换
-                statusElement.textContent = '使用Squoosh进行AVIF转换...';
+                statusElement.textContent = getTranslation('using_avif_encoder');
                 try {
                     // 检查AVIF编码器是否可用
                     const isAvailable = await window.squooshAvif.isAvailable();
                     if (!isAvailable) {
-                        throw new Error('AVIF编码器不可用，请尝试其他格式');
+                        throw new Error(getTranslation('avif_not_available'));
                     }
                     result = await window.squooshAvif.convertImageToAvif(file, quality);
                 } catch (avifError) {
-                    console.error('AVIF转换失败:', avifError);
-                    statusElement.textContent = `AVIF转换失败: ${avifError.message}`;
+                    console.error(getTranslation('avif_conversion_failed') + ':', avifError);
+                    statusElement.textContent = `${getTranslation('avif_conversion_failed')}: ${avifError.message}`;
                     statusElement.classList.remove('converting');
                     statusElement.classList.add('failed');
                     return null;
@@ -233,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return result;
             }
         } catch (error) {
-            console.error('转换失败:', error);
+            console.error(getTranslation('conversion_failed') + ':', error);
             statusElement.textContent = getTranslation('conversion_failed');
             statusElement.classList.remove('converting');
             statusElement.classList.add('failed');
