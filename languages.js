@@ -1,7 +1,7 @@
 const translations = {
     'en': {
         // Header
-        'title': 'JPG/PNG to WebP/AVIF Converter',
+        'title': 'JPG Convert',
         
         // Upload Area
         'drag_drop': 'Drag and drop your image here or',
@@ -98,7 +98,7 @@ const translations = {
     },
     'es': {
         // Header
-        'title': 'Conversor de JPG/PNG a WebP/AVIF',
+        'title': 'JPG Convertir',
         
         // Upload Area
         'drag_drop': 'Arrastra y suelta tu imagen aquí o',
@@ -191,7 +191,7 @@ const translations = {
     },
     'pt': {
         // Header
-        'title': 'Conversor de JPG/PNG para WebP/AVIF',
+        'title': 'JPG Converter',
         
         // Upload Area
         'drag_drop': 'Arraste e solte sua imagem aqui ou',
@@ -284,7 +284,7 @@ const translations = {
     },
     'fr': {
         // Header
-        'title': 'Convertisseur JPG/PNG en WebP',
+        'title': 'JPG Convertisseur',
         
         // Upload Area
         'drag_drop': 'Glissez et déposez votre image ici ou',
@@ -366,7 +366,7 @@ const translations = {
     },
     'de': {
         // Header
-        'title': 'JPG/PNG zu WebP Konverter',
+        'title': 'JPG Konverter',
         
         // Upload Area
         'drag_drop': 'Ziehen Sie Ihr Bild hierher oder',
@@ -448,7 +448,7 @@ const translations = {
     },
     'it': {
         // Header
-        'title': 'Convertitore da JPG/PNG a WebP',
+        'title': 'JPG Convertitore',
         
         // Upload Area
         'drag_drop': 'Trascina e rilascia la tua immagine qui o',
@@ -530,7 +530,7 @@ const translations = {
     },
     'el': {
         // Header
-        'title': 'Μετατροπέας JPG/PNG σε WebP',
+        'title': 'JPG Μετατροπέας',
         
         // Upload Area
         'drag_drop': 'Σύρετε και αποθέστε την εικόνα σας εδώ ή',
@@ -612,7 +612,7 @@ const translations = {
     },
     'zh': {
         // 标题
-        'title': 'JPG/PNG 转 WebP/AVIF 转换器',
+        'title': 'JPG 转换器',
         
         // 上传区域
         'drag_drop': '拖放您的图片到这里或',
@@ -709,7 +709,7 @@ const translations = {
     },
     'ja': {
         // Header
-        'title': 'JPG/PNGからWebP変換ツール',
+        'title': 'JPG 変換ツール',
         
         // Upload Area
         'drag_drop': '画像をここにドラッグ＆ドロップするか',
@@ -793,7 +793,7 @@ const translations = {
     // 新添加韩语翻译
     'ko': {
         // Header
-        'title': 'JPG/PNG에서 WebP 변환기',
+        'title': 'JPG 변환기',
         
         // Upload Area
         'drag_drop': '이미지를 여기에 끌어다 놓거나',
