@@ -89,7 +89,7 @@ header {
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
-    width: 150px;
+    width: 500px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -98,8 +98,13 @@ header {
     transform: translateY(-10px);
     transition: all 0.2s;
     overflow: hidden;
-    text-align: center;
-    padding: 0;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    z-index: 1000;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 .language-selector-container.active .language-dropdown-menu {
@@ -109,27 +114,18 @@ header {
 }
 
 .language-option {
-    padding: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: calc(25% - 10px);
+    margin: 5px;
+    text-align: center;
     cursor: pointer;
-    transition: all 0.2s ease;
-    height: 44px;
-    width: 100%;
-    position: relative;
+    padding: 10px 5px;
+    border-radius: 8px;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 .language-option:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.language-option:hover .language-flag {
-    transform: scale(1.05);
-}
-
-.language-option:hover .language-name {
-    color: var(--accent-color);
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
 }
 
 .language-option.active {
@@ -141,37 +137,25 @@ header {
     font-weight: 500;
 }
 
-.language-option.active .language-flag {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-.language-option:not(:last-child) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.language-option .lang-content-wrapper {
+.lang-content-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    width: 110px;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .language-flag {
-    width: 30px;
-    text-align: center;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
+    font-size: 24px;
+    margin-bottom: 6px;
 }
 
 .language-name {
-    width: 70px;
-    font-size: 14px;
+    font-size: 13px;
     color: #333;
-    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 /* 旧的语言选择器样式保留但隐藏 */
@@ -397,6 +381,33 @@ header {
 }
 
 /* 响应式样式 */
+@media (max-width: 992px) {
+    .language-dropdown-menu {
+        width: 440px;
+    }
+}
+
+@media (max-width: 768px) {
+    .language-dropdown-menu {
+        width: 360px;
+    }
+    
+    .language-option {
+        width: calc(25% - 8px);
+        margin: 4px;
+        padding: 8px 4px;
+    }
+    
+    .language-flag {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+    
+    .language-name {
+        font-size: 12px;
+    }
+}
+
 @media (max-width: 600px) {
     .language-selector-container {
         position: absolute;
@@ -404,7 +415,6 @@ header {
         top: 50%;
         transform: translateY(-50%);
         margin-top: 0;
-        text-align: center;
     }
     
     .language-globe-icon {
@@ -416,8 +426,9 @@ header {
         position: absolute;
         right: 0;
         left: auto;
-        width: 140px;
+        width: 280px; /* 与KEY FEATURES卡片宽度一致 */
         transform: translateY(-10px);
+        padding: 8px;
     }
     
     .language-selector-container.active .language-dropdown-menu {
@@ -425,56 +436,38 @@ header {
     }
     
     .language-option {
-        justify-content: center;
-        padding: 10px 0;
+        padding: 6px 2px;
     }
     
-    .language-option .lang-content-wrapper {
-        width: 100px;
+    .language-flag {
+        font-size: 18px;
+        margin-bottom: 3px;
     }
     
-    .window-controls {
-        left: 10px;
-        gap: 6px;
-    }
-    
-    .control {
-        width: 10px;
-        height: 10px;
-    }
-    
-    h1 {
-        font-size: 1.2em;
-        margin: 0 40px;
-    }
-    
-    header {
-        padding: 12px 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .language-name {
+        font-size: 10px;
     }
 }
 
-/* 更小屏幕的特殊调整 */
-@media (max-width: 400px) {
-    h1 {
-        font-size: 1em;
-        margin: 0 35px;
+@media (max-width: 350px) {
+    .language-dropdown-menu {
+        width: 240px; /* 更小屏幕适配 */
+        padding: 6px;
     }
     
-    .window-controls {
-        gap: 4px;
+    .language-option {
+        width: calc(25% - 6px);
+        margin: 3px;
+        padding: 5px 2px;
     }
     
-    .control {
-        width: 8px;
-        height: 8px;
+    .language-flag {
+        font-size: 16px;
+        margin-bottom: 2px;
     }
     
-    .language-globe-icon {
-        width: 24px;
-        height: 24px;
+    .language-name {
+        font-size: 9px;
     }
 }
 
@@ -1310,5 +1303,77 @@ footer a:hover {
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* 转换选项样式 */
+.conversion-options-section {
+    padding: var(--spacing);
+    text-align: center;
+    margin-bottom: var(--spacing);
+}
+
+.conversion-options-title {
+    font-size: 1.8em;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+.conversion-options-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.conversion-card {
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    padding: 25px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: transform 0.3s ease;
+    height: 100%;
+    cursor: pointer;
+}
+
+.conversion-card:hover {
+    transform: translateY(-5px);
+}
+
+.conversion-icon {
+    margin-bottom: 15px;
+}
+
+.conversion-card h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.conversion-card p {
+    font-size: 0.9em;
+    color: var(--text-primary);
+    opacity: 0.85;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 转换选项响应式布局 */
+@media (max-width: 1024px) {
+    .conversion-options-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .conversion-options-grid {
+        grid-template-columns: 1fr;
     }
 }
