@@ -107,7 +107,8 @@ header {
     overflow-y: auto;
 }
 
-.language-selector-container.active .language-dropdown-menu {
+.language-selector-container.active .language-dropdown-menu,
+.language-dropdown-menu.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -489,6 +490,12 @@ main {
     background: var(--bg-secondary);
     transition: all 0.3s ease;
     margin-bottom: var(--spacing);
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: var(--accent-color);
+    background: rgba(0, 122, 255, 0.05);
 }
 
 .upload-area.drag-over {
@@ -509,6 +516,12 @@ main {
 
 .upload-button:hover {
     text-decoration: underline;
+}
+
+.upload-hint {
+    font-size: 0.85em;
+    color: #888;
+    margin-top: 5px;
 }
 
 .controls-wrapper {

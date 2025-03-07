@@ -1,22 +1,68 @@
 # JPG/PNG to WebP Converter
 
-A modern, user-friendly web application specifically designed for converting JPG and PNG images to WebP format. This tool provides an efficient way to optimize your images while maintaining high quality.
+A simple, user-friendly web tool that converts JPG and PNG images to WebP format. WebP images are smaller but keep good quality, making your website faster.
+
+## Latest Updates
+
+- **Click Anywhere to Upload**: Now you can click anywhere in the upload area to select files
+- **Multi-language Support**: Added support for 20 languages:
+  - English, Spanish, Portuguese, French, German, Italian, Greek, Chinese, Japanese, Korean
+  - Russian, Arabic, Dutch, Polish, Turkish, Thai, Vietnamese, Indonesian, Swedish, Hindi
+- **AVIF Support**: Convert images to AVIF format for even smaller file sizes
+- **Improved SEO**: Updated sitemap.xml with all language versions
 
 ## Features
 
-- Drag and drop interface for easy file upload
-- Batch conversion of JPG/PNG files to WebP
-- Quality adjustment slider (1-100%)
-- Real-time preview of conversion results
-- Size comparison between original and converted images
-- Single file or bulk download options (ZIP compression for multiple files)
-- macOS-style modern UI
+- **Easy Upload**: Drag and drop files or click anywhere in the upload area
+- **Batch Processing**: Convert multiple images at once
+- **Quality Control**: Adjust image quality with a simple slider (1-100%)
+- **Live Preview**: See conversion results in real-time
+- **Size Comparison**: Compare file sizes between original and converted images
+- **Download Options**: Download single files or all files as ZIP
+- **No Server Upload**: All processing happens in your browser for privacy
+- **Modern UI**: Clean, macOS-style interface
+- **Multi-language**: Support for 20 different languages
+- **Multiple Formats**: Convert to WebP or AVIF
+
+## How to Deploy
+
+### Simple Method (for beginners)
+
+1. **Download the Code**: 
+   - Click the green "Code" button above
+   - Select "Download ZIP"
+   - Extract the ZIP file to a folder on your computer
+
+2. **Start a Local Server**:
+   - Open a terminal or command prompt
+   - Navigate to the folder where you extracted the files
+   - Run this command: `python -m http.server 8000`
+   - If that doesn't work, try: `python3 -m http.server 8000`
+
+3. **Use the Tool**:
+   - Open your web browser
+   - Go to: `http://localhost:8000`
+   - The converter is now ready to use!
+
+### For Websites
+
+1. **Upload Files**: Upload all files to your web hosting service
+2. **No Configuration Needed**: The tool works without any server-side setup
+3. **Access**: Visit your website URL to use the converter
+
+## How It Works
+
+1. Select JPG or PNG images by dragging them or clicking the upload area
+2. Choose your desired format (WebP or AVIF) and quality setting
+3. Click "Convert All" to process your images
+4. Preview the results and compare file sizes
+5. Download individual images or all converted images as a ZIP file
 
 ## License
 
 This project is released under the [MIT License](https://opensource.org/licenses/MIT).
 
-Copyright (c) 2024 lensclear
+Copyright (c) 2025 lensclear
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -85,6 +85,16 @@ document.addEventListener('DOMContentLoaded', function() {
         handleFiles(files);
     });
 
+    // 添加点击整个dropZone区域触发fileInput点击的功能
+    dropZone.addEventListener('click', (e) => {
+        // 如果点击的是上传按钮(label)，不需要额外处理，因为label已经关联了fileInput
+        if (e.target.tagName === 'LABEL' || e.target.closest('label')) {
+            return;
+        }
+        // 触发fileInput的点击事件
+        fileInput.click();
+    });
+
     fileInput.addEventListener('change', (e) => {
         handleFiles(e.target.files);
     });
@@ -179,16 +189,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!infoElement) return;
         
         const size = (file.size / 1024).toFixed(2);
-        infoElement.textContent = getTranslatedText('size_info', `Size: ${size} KB`).replace('{0}', size);
+        infoElement.textContent = getTranslation('size_info').replace('{0}', size);
     }
 
-    // 在文件顶部添加一个辅助函数来获取当前语言的翻译文本
-    function getTranslatedText(key, defaultText) {
-        const currentLang = document.documentElement.lang || 'en';
-        if (translations && translations[currentLang] && translations[currentLang][key]) {
-            return translations[currentLang][key];
-        }
-        return defaultText;
+    // 辅助函数：获取翻译文本
+    function getTranslation(key) {
+        // 使用window上全局定义的getTranslation函数
+        return window.getTranslation ? window.getTranslation(key) : key;
     }
 
     // 修改convertImage函数以支持AVIF转换
@@ -386,14 +393,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (loadingSpinner) loadingSpinner.remove();
     }
     
-    // 辅助函数：获取翻译文本
-    function getTranslation(key) {
-        const currentLang = document.documentElement.lang || 'en';
-        return translations && translations[currentLang] && translations[currentLang][key] 
-            ? translations[currentLang][key] 
-            : translations['en'][key] || key;
-    }
-
     // 下载Blob的通用函数
     function downloadBlob(blob, filename) {
         try {
