@@ -23,6 +23,14 @@ import './hi.js';
 // 全局翻译对象，将由各个语言文件填充
 window.translations = window.translations || {};
 
+// 确保页面加载时立即初始化语言
+document.addEventListener('DOMContentLoaded', function() {
+    // 如果initializeLanguage函数已定义，立即调用它
+    if (typeof initializeLanguage === 'function') {
+        initializeLanguage();
+    }
+});
+
 // 通用格式化字符串函数
 function formatString(str, ...args) {
     return str.replace(/{(\d+)}/g, function(match, number) { 
@@ -32,6 +40,12 @@ function formatString(str, ...args) {
 
 // 设置语言的函数
 function setLanguage(language) {
+    // 验证语言代码是否有效
+    if (!window.translations[language]) {
+        console.warn(`Invalid language code: ${language}, falling back to English`);
+        language = 'en';
+    }
+    
     const elementsToTranslate = document.querySelectorAll('[data-i18n]');
     elementsToTranslate.forEach(element => {
         const translationKey = element.getAttribute('data-i18n');
@@ -213,15 +227,36 @@ function updateAlternateLinks(currentLang) {
 
 // 根据URL参数、localStorage或浏览器设置初始化语言
 function initializeLanguage() {
+    // 检查是否是首次访问
+    const isFirstVisit = !localStorage.getItem('has_visited_before');
+    
     // 首先检查URL参数
     const urlParams = new URLSearchParams(window.location.search);
     let lang = urlParams.get('lang');
     
     // 如果URL中没有指定语言，或者指定的语言不存在
     if (!lang || !window.translations[lang]) {
-        // 忽略localStorage和浏览器设置，直接使用英文
-        lang = 'en';
+        // 如果是首次访问，默认使用英文
+        if (isFirstVisit) {
+            lang = 'en';
+        } else {
+            // 检查localStorage中保存的语言偏好
+            const storedLang = localStorage.getItem('preferred_language');
+            
+            // 如果localStorage中有有效的语言设置，使用它
+            if (storedLang && window.translations[storedLang]) {
+                lang = storedLang;
+            } else {
+                // 否则默认使用英文
+                lang = 'en';
+            }
+        }
     }
+    
+    console.log('Language initialized to:', lang, 'First visit:', isFirstVisit);
+    
+    // 标记用户已访问
+    localStorage.setItem('has_visited_before', 'true');
     
     // 设置语言
     setLanguage(lang);
