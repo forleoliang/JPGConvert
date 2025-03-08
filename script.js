@@ -590,9 +590,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // 初始化多语言支持
-    if (typeof initializeLanguage === 'function') {
+    // 初始化多语言支持 - 仅在尚未初始化时执行
+    if (typeof initializeLanguage === 'function' && !window.languageInitialized) {
         initializeLanguage();
+        window.languageInitialized = true;
     }
     
     // 添加地球图标语言切换器的交互逻辑
