@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/jpg2webp",
+      "destination": "/jpg2webp.html"
+    }
+  ]
+} 
