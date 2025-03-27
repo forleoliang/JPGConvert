@@ -110,13 +110,58 @@ function setLanguage(language) {
         }
     }
     
-    // 更新 meta description 标签
+    // 更新 meta description 标签 - 使用标准格式
     const descTag = document.querySelector('meta[name="description"]');
     if (descTag) {
-        const langDesc = document.querySelector(`meta[name="description:${language}"]`);
+        const langDesc = document.querySelector(`meta[name="description"][lang="${language}"]`);
         if (langDesc) {
             descTag.setAttribute('content', langDesc.getAttribute('content'));
         }
+    }
+    
+    // 更新 meta keywords 标签 - 使用标准格式
+    const keywordsTag = document.querySelector('meta[name="keywords"]');
+    if (keywordsTag) {
+        const langKeywords = document.querySelector(`meta[name="keywords"][lang="${language}"]`);
+        if (langKeywords) {
+            keywordsTag.setAttribute('content', langKeywords.getAttribute('content'));
+        }
+    }
+    
+    // 更新 og:description 标签
+    const ogDescTag = document.querySelector('meta[property="og:description"]');
+    if (ogDescTag && descTag) {
+        ogDescTag.setAttribute('content', descTag.getAttribute('content'));
+    }
+    
+    // 更新 og:locale 标签
+    const ogLocaleTag = document.querySelector('meta[property="og:locale"]');
+    if (ogLocaleTag) {
+        let locale;
+        switch(language) {
+            case 'en': locale = 'en_US'; break;
+            case 'es': locale = 'es_ES'; break;
+            case 'pt': locale = 'pt_PT'; break;
+            case 'fr': locale = 'fr_FR'; break;
+            case 'de': locale = 'de_DE'; break;
+            case 'it': locale = 'it_IT'; break;
+            case 'el': locale = 'el_GR'; break;
+            case 'zh': locale = 'zh_CN'; break;
+            case 'ja': locale = 'ja_JP'; break;
+            case 'ko': locale = 'ko_KR'; break;
+            case 'ru': locale = 'ru_RU'; break;
+            case 'ar': locale = 'ar_SA'; break;
+            case 'hi': locale = 'hi_IN'; break;
+            case 'nl': locale = 'nl_NL'; break;
+            case 'pl': locale = 'pl_PL'; break;
+            case 'tr': locale = 'tr_TR'; break;
+            case 'th': locale = 'th_TH'; break;
+            case 'vi': locale = 'vi_VN'; break;
+            case 'id': locale = 'id_ID'; break;
+            case 'sv': locale = 'sv_SE'; break;
+            default: locale = 'en_US';
+        }
+        ogLocaleTag.setAttribute('content', locale);
     }
     
     // 更新动态创建的元素
@@ -198,30 +243,45 @@ function updateDynamicTranslations(language) {
 function updateAlternateLinks(currentLang) {
     // 移除现有的alternate链接
     const existingLinks = document.querySelectorAll('link[rel="alternate"][hreflang]');
-    existingLinks.forEach(link => link.remove());
+    existingLinks.forEach(link => {
+        // 保留所有链接，保留原有的hreflang架构
+    });
     
-    // 添加新的alternate链接
-    const languages = Object.keys(window.translations);
+    // 更新canonical链接 - 使其指向当前语言版本而非默认版本
+    // 这有助于提高当前语言版本在搜索引擎中的权重
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+        if (currentLang === 'en') {
+            canonicalLink.setAttribute('href', 'https://www.jpgconvert.org/');
+        } else {
+            canonicalLink.setAttribute('href', `https://www.jpgconvert.org/?lang=${currentLang}`);
+        }
+    }
+    
+    // 确保所有语言链接都被添加，包括fallback到x-default
+    const languageCodes = ['en', 'es', 'pt', 'fr', 'de', 'it', 'el', 'zh', 'ja', 'ko', 'ru', 'ar', 'hi', 'nl', 'pl', 'tr', 'th', 'vi', 'id', 'sv'];
     const head = document.querySelector('head');
     
-    // 添加x-default链接
-    const defaultLink = document.createElement('link');
-    defaultLink.rel = 'alternate';
-    defaultLink.hreflang = 'x-default';
-    const defaultUrl = new URL(window.location.href);
-    defaultUrl.search = '';
-    defaultLink.href = defaultUrl.toString();
-    head.appendChild(defaultLink);
+    // 确保x-default链接存在
+    let xDefaultLink = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+    if (!xDefaultLink) {
+        xDefaultLink = document.createElement('link');
+        xDefaultLink.setAttribute('rel', 'alternate');
+        xDefaultLink.setAttribute('hreflang', 'x-default');
+        xDefaultLink.setAttribute('href', 'https://www.jpgconvert.org/');
+        head.appendChild(xDefaultLink);
+    }
     
-    languages.forEach(lang => {
-        const link = document.createElement('link');
-        link.rel = 'alternate';
-        link.hreflang = lang;
-        // 创建带有语言参数的URL
-        const url = new URL(window.location.href);
-        url.searchParams.set('lang', lang);
-        link.href = url.toString();
-        head.appendChild(link);
+    // 确保所有语言的链接都存在
+    languageCodes.forEach(langCode => {
+        let langLink = document.querySelector(`link[rel="alternate"][hreflang="${langCode}"]`);
+        if (!langLink) {
+            langLink = document.createElement('link');
+            langLink.setAttribute('rel', 'alternate');
+            langLink.setAttribute('hreflang', langCode);
+            langLink.setAttribute('href', `https://www.jpgconvert.org/?lang=${langCode}`);
+            head.appendChild(langLink);
+        }
     });
 }
 
