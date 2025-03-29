@@ -79,8 +79,8 @@ window.translations['en'] = {
         'size_reduction': 'Size Reduction',
         'size_desc': 'Significantly reduces file size while maintaining quality.',
         
-        // Reviews section
-        'user_reviews': 'User Reviews',
+        // Testimonials section
+        'user_reviews': 'User Testimonials',
         'review1_name': 'Robert Thompson',
         'review1_text': 'This image converter is a game-changer for my photography business. The batch processing feature saves me hours of work, and the quality control is exceptional.',
         'review2_name': 'Jennifer Parker',

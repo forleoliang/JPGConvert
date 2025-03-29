@@ -75,7 +75,7 @@ window.translations['it'] = {
         'size_desc': 'Riduce significativamente la dimensione del file mantenendo la qualità.',
         
         // Reviews Section
-        'user_reviews': 'Recensioni degli Utenti',
+        'user_reviews': 'Testimonianze degli Utenti',
         'review1_name': 'Roberto Tomasi',
         'review1_text': 'Questo convertitore di immagini ha rivoluzionato la mia attività fotografica. La funzione di elaborazione batch mi fa risparmiare ore di lavoro e il controllo della qualità è eccezionale.',
         'review2_name': 'Gianna Parisi',

@@ -79,7 +79,7 @@ window.translations['tr'] = {
         'size_desc': 'Görüntü kalitesini korumaya devam ederken dosya boyutunu azaltın.',
         
         // Reviews section
-        'user_reviews': 'Kullanıcı görüşleri',
+        'user_reviews': 'Kullanıcı tanıklıkları',
         'review1_name': 'Robert Thompson',
         'review1_text': 'Bu görüntü dönüştürücü, fotoğrafçılık işim için çok önemli bir araç oldu. Toplu işlem özelliği, çok sayıda iş saatimi tasarruf etmeme yardımcı oldu ve kalite kontrolü harikaydı.',
         'review2_name': 'Jennifer Parker',

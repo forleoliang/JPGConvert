@@ -79,7 +79,7 @@ window.translations['pl'] = {
         'size_desc': 'Znacznie zmniejsza rozmiar pliku przy zachowaniu jakości.',
         
         // Reviews section
-        'user_reviews': 'Opinie użytkowników',
+        'user_reviews': 'Świadectwa użytkowników',
         'review1_name': 'Robert Thompson',
         'review1_text': 'Ten konwerter obrazów to prawdziwa rewolucja dla mojej firmy fotograficznej. Funkcja przetwarzania wsadowego oszczędza mi godziny pracy, a kontrola jakości jest wyjątkowa.',
         'review2_name': 'Jennifer Parker',

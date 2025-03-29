@@ -79,7 +79,7 @@ window.translations['nl'] = {
         'size_desc': 'Betekenisvol grootte verminderen terwijl kwaliteit behouden blijft.',
         
         // Reviews section
-        'user_reviews': 'Gebruikersbeoordelingen',
+        'user_reviews': 'Gebruikersgetuigenissen',
         'review1_name': 'Robert Thompson',
         'review1_text': 'Deze afbeeldingsconverter is een game-changer voor mijn fotobusiness. De batchverwerkingfunctie bespaart mij uren werk, en de kwaliteitscontrole is uitstekend.',
         'review2_name': 'Jennifer Parker',

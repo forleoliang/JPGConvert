@@ -74,8 +74,8 @@ window.translations['fr'] = {
         'size_reduction': 'Réduction de Taille',
         'size_desc': 'Réduit considérablement la taille du fichier tout en maintenant la qualité.',
         
-        // Reviews Section
-        'user_reviews': 'Avis des Utilisateurs',
+        // Testimonials Section
+        'user_reviews': 'Témoignages des Utilisateurs',
         'review1_name': 'Robert Dupont',
         'review1_text': 'Ce convertisseur d\'images a changé la donne pour mon entreprise de photographie. La fonction de traitement par lots me fait gagner des heures de travail, et le contrôle de la qualité est exceptionnel.',
         'review2_name': 'Jeanne Parquet',

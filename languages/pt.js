@@ -75,7 +75,7 @@ window.translations['pt'] = {
         'size_desc': 'Riduce significativamente la dimensione del file mantenendo la qualità.',
         
         // Reviews Section
-        'user_reviews': 'Avaliações dos Usuários',
+        'user_reviews': 'Depoimentos dos Usuários',
         'review1_name': 'Roberto Silva',
         'review1_text': 'Este conversor de imagens revolucionou meu negócio de fotografia. O recurso de processamento em lote me economiza horas de trabalho, e o controle de qualidade é excepcional.',
         'review2_name': 'Juliana Parreira',

@@ -79,7 +79,7 @@ window.translations['vi'] = {
         'size_desc': 'Giảm đáng kể kích thước tệp trong khi vẫn duy trì chất lượng.',
         
         // Reviews section
-        'user_reviews': 'Đánh giá của người dùng',
+        'user_reviews': 'Lời chứng thực của người dùng',
         'review1_name': 'Robert Thompson',
         'review1_text': 'Công cụ chuyển đổi hình ảnh này là một bước đột phá cho doanh nghiệp nhiếp ảnh của tôi. Tính năng xử lý hàng loạt tiết kiệm cho tôi hàng giờ làm việc, và việc kiểm soát chất lượng thì xuất sắc.',
         'review2_name': 'Jennifer Parker',

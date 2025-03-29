@@ -79,7 +79,7 @@ window.translations['sv'] = {
         'size_desc': 'Minskar avsevärt filstorleken samtidigt som kvaliteten bibehålls.',
         
         // Reviews section
-        'user_reviews': 'Användarrecensioner',
+        'user_reviews': 'Användarintyg',
         'review1_name': 'Robert Thompson',
         'review1_text': 'Denna bildkonverterare är en spelchanger för min fotograferingsverksamhet. Batchbearbetningsfunktionen sparar mig timmar av arbete, och kvalitetskontrollen är exceptionell.',
         'review2_name': 'Jennifer Parker',

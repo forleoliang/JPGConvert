@@ -76,7 +76,7 @@ window.translations['ja'] = {
         'size_desc': '品質を維持しながらファイルサイズを大幅に削減。',
         
         // Reviews Section
-        'user_reviews': 'ユーザーレビュー',
+        'user_reviews': 'ユーザー証言',
         'review1_name': 'ロバート・トンプソン',
         'review1_text': 'この画像変換ツールは私の写真ビジネスにとって革新的です。バッチ処理機能で何時間もの作業時間を節約でき、品質管理も優れています。',
         'review2_name': 'ジェニファー・パーカー',

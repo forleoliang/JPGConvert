@@ -79,7 +79,7 @@ window.translations['id'] = {
         'size_desc': 'Secara signifikan mengurangi ukuran file sambil mempertahankan kualitas.',
         
         // Reviews section
-        'user_reviews': 'Ulasan Pengguna',
+        'user_reviews': 'Kesaksian Pengguna',
         'review1_name': 'Robert Thompson',
         'review1_text': 'Konverter gambar ini mengubah permainan untuk bisnis fotografi saya. Fitur pemrosesan batch menghemat waktu kerja saya berjam-jam, dan kontrol kualitasnya luar biasa.',
         'review2_name': 'Jennifer Parker',

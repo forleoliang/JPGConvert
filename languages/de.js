@@ -75,7 +75,7 @@ window.translations['de'] = {
         'size_desc': 'Reduziert die Dateigröße erheblich bei gleichbleibender Qualität.',
         
         // Reviews Section
-        'user_reviews': 'Nutzerbewertungen',
+        'user_reviews': 'Nutzerzeugnisse',
         'review1_name': 'Robert Müller',
         'review1_text': 'Dieser Bildkonverter ist ein Wendepunkt für mein Fotografiegeschäft. Die Stapelverarbeitungsfunktion spart mir stundenlange Arbeit, und die Qualitätskontrolle ist außergewöhnlich.',
         'review2_name': 'Jennifer Weber',

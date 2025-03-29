@@ -78,8 +78,8 @@ window.translations['zh'] = {
         'size_reduction': '减小文件大小',
         'size_desc': '在保持质量的同时显著减少文件大小。',
         
-        // 用户评价部分
-        'user_reviews': '用户评价',
+        // 用户证言部分
+        'user_reviews': '用户证言',
         'review1_name': '李明',
         'review1_text': '这个图像转换器对我的摄影业务是个改变游戏规则的工具。批量处理功能为我节省了数小时的工作时间，而且质量控制非常出色。',
         'review2_name': '张颖',

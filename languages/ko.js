@@ -79,7 +79,7 @@ window.translations['ko'] = {
         'size_desc': '품질을 유지하면서 파일 크기를 크게 줄입니다.',
         
         // Reviews section
-        'user_reviews': '사용자 리뷰',
+        'user_reviews': '사용자 증언',
         'review1_name': '로버트 톰슨',
         'review1_text': '이 이미지 변환기는 내 사진 비즈니스에 혁신적입니다. 일괄 처리 기능으로 수시간의 작업 시간을 절약할 수 있으며, 품질 관리도 뛰어납니다.',
         'review2_name': '제니퍼 파커',
