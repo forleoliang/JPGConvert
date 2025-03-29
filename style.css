@@ -29,6 +29,7 @@ body {
     border-radius: var(--border-radius);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: 1px solid #cccccc;
 }
 
 header {
@@ -483,7 +484,7 @@ main {
 }
 
 .upload-area {
-    border: 2px dashed #ccc;
+    border: 1px solid #cccccc;
     border-radius: var(--border-radius);
     padding: 40px;
     text-align: center;
@@ -753,6 +754,7 @@ main {
     display: none;
     max-height: 300px;
     overflow-y: auto;
+    border: 1px solid #cccccc;
 }
 
 .thumbnail-container {
@@ -908,7 +910,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
 }
 
 .preview-box img {
@@ -1008,7 +1010,7 @@ footer a:hover {
     background: var(--bg-secondary);
     border-radius: var(--border-radius);
     padding: 25px 15px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1090,7 +1092,7 @@ footer a:hover {
     background: var(--bg-secondary);
     border-radius: var(--border-radius);
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
     transition: transform 0.3s ease;
 }
 
@@ -1190,7 +1192,7 @@ footer a:hover {
     background: var(--bg-secondary);
     border-radius: var(--border-radius);
     padding: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
     text-align: left;
     transition: transform 0.3s ease;
     height: 100%;
