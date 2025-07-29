@@ -3,6 +3,10 @@
     {
       "source": "/jpg2webp",
       "destination": "/jpg2webp.html"
+    },
+    {
+      "source": "/jpg2avif",
+      "destination": "/jpg2avif.html"
     }
   ]
 } 
