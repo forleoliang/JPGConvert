@@ -1,4 +1,4 @@
-{
+  {
   "rewrites": [
     {
       "source": "/jpg2webp",
@@ -7,6 +7,18 @@
     {
       "source": "/jpg2avif",
       "destination": "/jpg2avif.html"
+    },
+    {
+      "source": "/jpg2png",
+      "destination": "/jpg2png.html"
+    },
+    {
+      "source": "/jpg2tiff",
+      "destination": "/jpg2tiff.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
     }
   ]
-} 
+}
