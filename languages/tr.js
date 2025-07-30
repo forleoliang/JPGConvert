@@ -108,6 +108,48 @@ window.translations['tr'] = {
         'faq6_q': 'WebP görüntüleri tüm tarayıcılarda destekleniyor mu?',
         'faq6_a': 'WebP, artık Chrome, Firefox, Edge, Safari ve Opera gibi tüm önemli modern tarayıcılarda destekleniyor. Ancak, eski tarayıcı versiyonları WebP desteklemeyebilir. Web siteleri için, picture öğesini kullanarak yedek formatlar sağlamayı öneririz.',
         
+        // About Us Page
+        'about_nav': 'Hakkımızda',
+        'about_title': 'Hakkımızda',
+        'our_mission': 'Misyonumuz',
+        'mission_content': 'LensClear.net olarak misyonumuz, kullanıcılara güçlü, güvenli ve kullanımı kolay görüntü dönüştürme araçları sağlamaktır. Yüksek kaliteli görüntü işlemenin gizlilik veya güvenlikten ödün vermeden herkes için erişilebilir olması gerektiğine inanıyoruz.',
+        'our_story': 'Hikayemiz',
+        'story_content': 'LensClear.net, hızlı ve güvenilir görüntü dönüştürme çözümlerine ihtiyaç duyan web geliştiricileri ve tasarımcıların artan ihtiyaçlarına yanıt olarak kuruldu. Mevcut araçların yavaş olduğunu, gizlilik sorunları yaşadığını veya gerekli özelliklere sahip olmadığını gördük. Bu yüzden daha iyi bir çözüm inşa etmeye karar verdik.',
+        'about_lensclear': 'LensClear.net Hakkında',
+        'lensclear_content': 'LensClear.net, modern görüntü dönüştürme teknolojisinde öncüdür. Platformumuz tamamen tarayıcı tabanlıdır, bu da görüntülerinizin cihazınızdan hiç ayrılmadığı anlamına gelir. WebP, AVIF, PNG ve TIFF dahil olmak üzere en son görüntü formatlarını destekliyoruz, size özel ihtiyaçlarınız için doğru formatı seçme esnekliği sağlıyoruz.',
+        'our_values': 'Değerlerimiz',
+        'privacy_title': 'Gizlilik',
+        'privacy_content': 'Görüntüleriniz sizindir. Tüm işlemlerimiz tarayıcınızda yerel olarak yapılır.',
+        'speed_title': 'Hız',
+        'speed_content': 'Hızlı dönüştürme süreleri ve verimli toplu işleme için optimize edilmişiz.',
+        'quality_title': 'Kalite',
+        'quality_content': 'Algoritmalarımız dosya boyutu ve görüntü kalitesi arasındaki en iyi dengeyi sağlar.',
+        'accessibility_title': 'Erişilebilirlik',
+        'accessibility_content': 'Araçlarımız teknik uzmanlık seviyesine bakılmaksızın herkes için tasarlanmıştır.',
+        'get_in_touch': 'İletişime Geçin',
+        'contact_content': 'Sorularınız veya önerileriniz mi var? Sizden haber almayı çok isteriz! Bizimle iletişime geçin ve LensClear.net\'i nasıl daha da iyi hale getirebileceğimizi söyleyin.',
+        
+        // Footer
+        'footer_about': 'Hakkımızda',
+        'footer_privacy': 'Gizlilik Politikası',
+        'footer_terms': 'Hizmet Şartları',
+        'footer_contact': 'İletişim',
+        'footer_support': 'Destek',
+        'footer_blog': 'Blog',
+        'footer_news': 'Haberler',
+        'footer_updates': 'Güncellemeler',
+        'footer_social': 'Sosyal',
+        'footer_twitter': 'Twitter',
+        'footer_facebook': 'Facebook',
+        'footer_instagram': 'Instagram',
+        'footer_linkedin': 'LinkedIn',
+        'footer_tools': 'Araçlar',
+        'footer_jpg_webp': 'JPG\'den WebP\'ye',
+        'footer_jpg_avif': 'JPG\'den AVIF\'e',
+        'footer_jpg_png': 'JPG\'den PNG\'ye',
+        'footer_jpg_tiff': 'JPG\'den TIFF\'e',
+        'footer_copyright': '© 2024 LensClear.net. Tüm hakları saklıdır.',
+        
         // Email
         'email': 'E-posta:'
     };

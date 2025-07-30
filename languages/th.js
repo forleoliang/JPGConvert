@@ -108,6 +108,48 @@ window.translations['th'] = {
         'faq6_q': 'รูปภาพ WebP ได้รับการสนับสนุนในทุกเบราว์เซอร์หรือไม่?',
         'faq6_a': 'WebP, artık Chrome, Firefox, Edge, Safari และ Opera gibi tüm önemli modern tarayıcılarda destekleniyor. Ancak, eski tarayıcı versiyonları WebP desteklemeyebilir. Web siteleri için, picture öğesini kullanarak yedek formatlar sağlamayı öneririz.',
         
+        // About Us Page
+        'about_nav': 'เกี่ยวกับเรา',
+        'about_title': 'เกี่ยวกับเรา',
+        'our_mission': 'ภารกิจของเรา',
+        'mission_content': 'ที่ LensClear.net ภารกิจของเราคือการมอบเครื่องมือแปลงรูปภาพที่ทรงพลัง ปลอดภัย และใช้งานง่ายให้กับผู้ใช้ เราเชื่อว่าการประมวลผลรูปภาพคุณภาพสูงควรเข้าถึงได้สำหรับทุกคนโดยไม่ต้องเสียสละความเป็นส่วนตัวหรือความปลอดภัย',
+        'our_story': 'เรื่องราวของเรา',
+        'story_content': 'LensClear.net ก่อตั้งขึ้นเพื่อตอบสนองความต้องการที่เพิ่มขึ้นของนักพัฒนาเว็บและนักออกแบบที่ต้องการโซลูชันการแปลงรูปภาพที่รวดเร็วและเชื่อถือได้ เราเห็นว่าเครื่องมือที่มีอยู่นั้นช้า มีปัญหาด้านความเป็นส่วนตัว หรือขาดคุณสมบัติที่จำเป็น ดังนั้นเราจึงตัดสินใจสร้างโซลูชันที่ดีกว่า',
+        'about_lensclear': 'เกี่ยวกับ LensClear.net',
+        'lensclear_content': 'LensClear.net เป็นผู้บุกเบิกในเทคโนโลยีการแปลงรูปภาพสมัยใหม่ แพลตฟอร์มของเราทำงานบนเบราว์เซอร์ทั้งหมด ซึ่งหมายความว่ารูปภาพของคุณไม่เคยออกจากอุปกรณ์ของคุณ เรารองรับรูปแบบรูปภาพล่าสุด รวมถึง WebP, AVIF, PNG และ TIFF ให้ความยืดหยุ่นในการเลือกรูปแบบที่เหมาะสมสำหรับความต้องการเฉพาะของคุณ',
+        'our_values': 'ค่านิยมของเรา',
+        'privacy_title': 'ความเป็นส่วนตัว',
+        'privacy_content': 'รูปภาพของคุณเป็นของคุณ การประมวลผลทั้งหมดของเราทำในเบราว์เซอร์ของคุณเท่านั้น',
+        'speed_title': 'ความเร็ว',
+        'speed_content': 'เราปรับให้เหมาะสมสำหรับเวลาการแปลงที่รวดเร็วและการประมวลผลเป็นชุดที่มีประสิทธิภาพ',
+        'quality_title': 'คุณภาพ',
+        'quality_content': 'อัลกอริทึมของเรารับประกันความสมดุลที่ดีที่สุดระหว่างขนาดไฟล์และคุณภาพของรูปภาพ',
+        'accessibility_title': 'การเข้าถึง',
+        'accessibility_content': 'เครื่องมือของเราออกแบบมาสำหรับทุกคน ไม่ว่าจะมีความเชี่ยวชาญทางเทคนิคหรือไม่',
+        'get_in_touch': 'ติดต่อเรา',
+        'contact_content': 'มีคำถามหรือข้อเสนอแนะหรือไม่? เราอยากได้ยินจากคุณ! ติดต่อเราและบอกเราว่าเราจะทำให้ LensClear.net ดีขึ้นได้อย่างไร',
+        
+        // Footer
+        'footer_about': 'เกี่ยวกับเรา',
+        'footer_privacy': 'นโยบายความเป็นส่วนตัว',
+        'footer_terms': 'เงื่อนไขการให้บริการ',
+        'footer_contact': 'ติดต่อ',
+        'footer_support': 'สนับสนุน',
+        'footer_blog': 'บล็อก',
+        'footer_news': 'ข่าวสาร',
+        'footer_updates': 'อัปเดต',
+        'footer_social': 'โซเชียล',
+        'footer_twitter': 'Twitter',
+        'footer_facebook': 'Facebook',
+        'footer_instagram': 'Instagram',
+        'footer_linkedin': 'LinkedIn',
+        'footer_tools': 'เครื่องมือ',
+        'footer_jpg_webp': 'JPG เป็น WebP',
+        'footer_jpg_avif': 'JPG เป็น AVIF',
+        'footer_jpg_png': 'JPG เป็น PNG',
+        'footer_jpg_tiff': 'JPG เป็น TIFF',
+        'footer_copyright': '© 2024 LensClear.net สงวนลิขสิทธิ์ทั้งหมด',
+        
         // Email
         'email': 'อีเมล:'
     };

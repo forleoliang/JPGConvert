@@ -108,6 +108,48 @@ window.translations['id'] = {
         'faq6_q': 'Apakah gambar WebP didukung di semua browser?',
         'faq6_a': 'WebP sekarang didukung di semua browser modern utama termasuk Chrome, Firefox, Edge, Safari, dan Opera. Namun, versi browser yang lebih lama mungkin tidak mendukung WebP. Untuk situs web, disarankan untuk menyediakan format fallback menggunakan elemen picture.',
         
+        // About Us Page
+        'about_nav': 'Tentang Kami',
+        'about_title': 'Tentang Kami',
+        'our_mission': 'Misi Kami',
+        'mission_content': 'Di LensClear.net, misi kami adalah menyediakan alat konversi gambar yang kuat, aman, dan mudah digunakan untuk pengguna. Kami percaya bahwa pemrosesan gambar berkualitas tinggi harus dapat diakses oleh semua orang, tanpa mengorbankan privasi atau keamanan.',
+        'our_story': 'Cerita Kami',
+        'story_content': 'LensClear.net didirikan sebagai respons terhadap kebutuhan yang berkembang dari pengembang web dan desainer yang memerlukan solusi konversi gambar yang cepat dan dapat diandalkan. Kami melihat bahwa alat yang ada lambat, memiliki masalah privasi, atau kurang fitur yang diperlukan. Jadi kami memutuskan untuk membangun solusi yang lebih baik.',
+        'about_lensclear': 'Tentang LensClear.net',
+        'lensclear_content': 'LensClear.net adalah pelopor dalam teknologi konversi gambar modern. Platform kami sepenuhnya berbasis browser, yang berarti gambar Anda tidak pernah meninggalkan perangkat Anda. Kami mendukung format gambar terbaru termasuk WebP, AVIF, PNG, dan TIFF, memberi Anda fleksibilitas untuk memilih format yang tepat untuk kebutuhan spesifik Anda.',
+        'our_values': 'Nilai-Nilai Kami',
+        'privacy_title': 'Privasi',
+        'privacy_content': 'Gambar Anda adalah milik Anda. Semua pemrosesan kami dilakukan secara lokal di browser Anda.',
+        'speed_title': 'Kecepatan',
+        'speed_content': 'Kami dioptimalkan untuk waktu konversi yang cepat dan pemrosesan batch yang efisien.',
+        'quality_title': 'Kualitas',
+        'quality_content': 'Algoritma kami memastikan keseimbangan terbaik antara ukuran file dan kualitas gambar.',
+        'accessibility_title': 'Aksesibilitas',
+        'accessibility_content': 'Alat kami dirancang untuk semua orang, terlepas dari keahlian teknis.',
+        'get_in_touch': 'Hubungi Kami',
+        'contact_content': 'Punya pertanyaan atau saran? Kami ingin mendengar dari Anda! Hubungi kami dan beri tahu kami bagaimana kami dapat membuat LensClear.net menjadi lebih baik.',
+        
+        // Footer
+        'footer_about': 'Tentang Kami',
+        'footer_privacy': 'Kebijakan Privasi',
+        'footer_terms': 'Syarat Layanan',
+        'footer_contact': 'Kontak',
+        'footer_support': 'Dukungan',
+        'footer_blog': 'Blog',
+        'footer_news': 'Berita',
+        'footer_updates': 'Pembaruan',
+        'footer_social': 'Sosial',
+        'footer_twitter': 'Twitter',
+        'footer_facebook': 'Facebook',
+        'footer_instagram': 'Instagram',
+        'footer_linkedin': 'LinkedIn',
+        'footer_tools': 'Alat',
+        'footer_jpg_webp': 'JPG ke WebP',
+        'footer_jpg_avif': 'JPG ke AVIF',
+        'footer_jpg_png': 'JPG ke PNG',
+        'footer_jpg_tiff': 'JPG ke TIFF',
+        'footer_copyright': '© 2024 LensClear.net. Semua hak dilindungi.',
+        
         // Email
         'email': 'Email:'
     };

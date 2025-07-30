@@ -105,6 +105,48 @@ window.translations['ja'] = {
         'faq6_q': 'WebP画像はすべてのブラウザでサポートされていますか？',
         'faq6_a': 'WebPは現在、Chrome、Firefox、Edge、Safari、Operaなどのすべての主要な最新ブラウザでサポートされています。ただし、古いバージョンのブラウザではWebPをサポートしていない場合があります。ウェブサイトでは、pictureエレメントを使用してフォールバック形式を提供することをお勧めします。',
         
+        // About Us Page
+        'about_nav': '私たちについて',
+        'about_title': '私たちについて',
+        'our_mission': '私たちのミッション',
+        'mission_content': 'LensClear.netでは、ユーザーに強力で安全、使いやすい画像変換ツールを提供することが私たちのミッションです。高品質な画像処理は、プライバシーやセキュリティを犠牲にすることなく、すべての人がアクセスできるべきだと信じています。',
+        'our_story': '私たちのストーリー',
+        'story_content': 'LensClear.netは、高速で信頼性の高い画像変換ソリューションを必要とするウェブ開発者やデザイナーの増大するニーズに応えて設立されました。既存のツールは遅い、プライバシーの問題がある、または必要な機能が不足していることがわかりました。そこで、より良いソリューションを構築することにしました。',
+        'about_lensclear': 'LensClear.netについて',
+        'lensclear_content': 'LensClear.netは現代的な画像変換技術のパイオニアです。私たちのプラットフォームは完全にブラウザベースで、画像がデバイスから出ることはありません。WebP、AVIF、PNG、TIFFなどの最新の画像形式をサポートし、特定のニーズに適した形式を選択する柔軟性を提供します。',
+        'our_values': '私たちの価値観',
+        'privacy_title': 'プライバシー',
+        'privacy_content': 'あなたの画像はあなたのものです。すべての処理はブラウザ内でローカルに行われます。',
+        'speed_title': 'スピード',
+        'speed_content': '高速な変換時間と効率的なバッチ処理のために最適化されています。',
+        'quality_title': '品質',
+        'quality_content': '私たちのアルゴリズムは、ファイルサイズと画像品質の最適なバランスを保証します。',
+        'accessibility_title': 'アクセシビリティ',
+        'accessibility_content': '私たちのツールは、技術的専門知識に関係なく、すべての人のために設計されています。',
+        'get_in_touch': 'お問い合わせ',
+        'contact_content': 'ご質問やご提案はありますか？ぜひお聞かせください！お問い合わせいただき、LensClear.netをより良くする方法をお教えください。',
+        
+        // Footer
+        'footer_about': '私たちについて',
+        'footer_privacy': 'プライバシーポリシー',
+        'footer_terms': '利用規約',
+        'footer_contact': 'お問い合わせ',
+        'footer_support': 'サポート',
+        'footer_blog': 'ブログ',
+        'footer_news': 'ニュース',
+        'footer_updates': 'アップデート',
+        'footer_social': 'ソーシャル',
+        'footer_twitter': 'Twitter',
+        'footer_facebook': 'Facebook',
+        'footer_instagram': 'Instagram',
+        'footer_linkedin': 'LinkedIn',
+        'footer_tools': 'ツール',
+        'footer_jpg_webp': 'JPGからWebP',
+        'footer_jpg_avif': 'JPGからAVIF',
+        'footer_jpg_png': 'JPGからPNG',
+        'footer_jpg_tiff': 'JPGからTIFF',
+        'footer_copyright': '© 2024 LensClear.net. 全著作権所有。',
+        
         // Email
         'email': 'メール:'
     };

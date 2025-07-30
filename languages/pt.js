@@ -104,6 +104,48 @@ window.translations['pt'] = {
         'faq6_q': 'As imagens WebP são suportadas em todos os navegadores?',
         'faq6_a': 'WebP agora é suportado em todos os principais navegadores modernos, incluindo Chrome, Firefox, Edge, Safari, y Opera. No entanto, versões mais antigas de navegadores podem não suportar WebP. Para sitios web, se recomenda fornecer formatos alternativos utilizando o elemento picture.',
         
+        // About Us Page
+        'about_nav': 'Sobre Nós',
+        'about_title': 'Sobre Nós',
+        'our_mission': 'Nossa Missão',
+        'mission_content': 'Na LensClear.net, nossa missão é fornecer aos usuários ferramentas de conversão de imagem poderosas, seguras e fáceis de usar. Acreditamos que o processamento de imagem de alta qualidade deve ser acessível a todos, sem comprometer a privacidade ou segurança.',
+        'our_story': 'Nossa História',
+        'story_content': 'A LensClear.net foi fundada em resposta às crescentes necessidades de desenvolvedores web e designers que precisavam de soluções de conversão de imagem rápidas e confiáveis. Vimos que as ferramentas existentes eram lentas, tinham problemas de privacidade ou faltavam recursos necessários. Então decidimos construir uma solução melhor.',
+        'about_lensclear': 'Sobre a LensClear.net',
+        'lensclear_content': 'A LensClear.net é pioneira em tecnologia moderna de conversão de imagem. Nossa plataforma é totalmente baseada em navegador, o que significa que suas imagens nunca saem do seu dispositivo. Suportamos os formatos de imagem mais recentes, incluindo WebP, AVIF, PNG e TIFF, dando-lhe a flexibilidade para escolher o formato certo para suas necessidades específicas.',
+        'our_values': 'Nossos Valores',
+        'privacy_title': 'Privacidade',
+        'privacy_content': 'Suas imagens são suas. Todo nosso processamento é feito localmente no seu navegador.',
+        'speed_title': 'Velocidade',
+        'speed_content': 'Somos otimizados para tempos de conversão rápidos e processamento em lote eficiente.',
+        'quality_title': 'Qualidade',
+        'quality_content': 'Nossos algoritmos garantem o melhor equilíbrio entre tamanho de arquivo e qualidade de imagem.',
+        'accessibility_title': 'Acessibilidade',
+        'accessibility_content': 'Nossas ferramentas são projetadas para todos, independentemente da expertise técnica.',
+        'get_in_touch': 'Entre em Contato',
+        'contact_content': 'Tem perguntas ou sugestões? Adoraríamos ouvir de você! Entre em contato conosco e nos diga como podemos tornar a LensClear.net ainda melhor.',
+        
         // Footer
+        'footer_about': 'Sobre Nós',
+        'footer_privacy': 'Política de Privacidade',
+        'footer_terms': 'Termos de Serviço',
+        'footer_contact': 'Contato',
+        'footer_support': 'Suporte',
+        'footer_blog': 'Blog',
+        'footer_news': 'Notícias',
+        'footer_updates': 'Atualizações',
+        'footer_social': 'Social',
+        'footer_twitter': 'Twitter',
+        'footer_facebook': 'Facebook',
+        'footer_instagram': 'Instagram',
+        'footer_linkedin': 'LinkedIn',
+        'footer_tools': 'Ferramentas',
+        'footer_jpg_webp': 'JPG para WebP',
+        'footer_jpg_avif': 'JPG para AVIF',
+        'footer_jpg_png': 'JPG para PNG',
+        'footer_jpg_tiff': 'JPG para TIFF',
+        'footer_copyright': '© 2024 LensClear.net. Todos os direitos reservados.',
+        
+        // Email
         'email': 'Email:'
     };

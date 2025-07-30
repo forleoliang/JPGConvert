@@ -108,6 +108,48 @@ window.translations['ko'] = {
         'faq6_q': 'WebP 이미지는 모든 브라우저에서 지원되나요?',
         'faq6_a': 'WebP는 이제 Chrome, Firefox, Edge, Safari, Opera 등 모든 주요 최신 브라우저에서 지원됩니다. 그러나 오래된 브라우저 버전은 WebP를 지원하지 않을 수 있습니다. 웹사이트에서는 picture 요소를 사용하여 백업 형식을 제공하는 것을 권장합니다.',
         
+        // About Us Page
+        'about_nav': '회사 소개',
+        'about_title': '회사 소개',
+        'our_mission': '우리의 미션',
+        'mission_content': 'LensClear.net에서 우리의 미션은 사용자에게 강력하고 안전하며 사용하기 쉬운 이미지 변환 도구를 제공하는 것입니다. 우리는 고품질 이미지 처리가 개인정보나 보안을 희생하지 않고 모든 사람이 접근할 수 있어야 한다고 믿습니다.',
+        'our_story': '우리의 이야기',
+        'story_content': 'LensClear.net은 빠르고 신뢰할 수 있는 이미지 변환 솔루션이 필요한 웹 개발자와 디자이너들의 증가하는 요구에 응답하여 설립되었습니다. 기존 도구들이 느리거나, 개인정보 문제가 있거나, 필요한 기능이 부족하다는 것을 발견했습니다. 그래서 더 나은 솔루션을 구축하기로 결정했습니다.',
+        'about_lensclear': 'LensClear.net 소개',
+        'lensclear_content': 'LensClear.net은 현대적인 이미지 변환 기술의 선구자입니다. 우리의 플랫폼은 완전히 브라우저 기반으로, 이미지가 기기를 떠나지 않는다는 의미입니다. WebP, AVIF, PNG, TIFF를 포함한 최신 이미지 형식을 지원하여 특정 요구사항에 맞는 올바른 형식을 선택할 수 있는 유연성을 제공합니다.',
+        'our_values': '우리의 가치',
+        'privacy_title': '개인정보 보호',
+        'privacy_content': '귀하의 이미지는 귀하의 것입니다. 모든 처리는 브라우저에서 로컬로 수행됩니다.',
+        'speed_title': '속도',
+        'speed_content': '빠른 변환 시간과 효율적인 일괄 처리를 위해 최적화되었습니다.',
+        'quality_title': '품질',
+        'quality_content': '우리의 알고리즘은 파일 크기와 이미지 품질 사이의 최적의 균형을 보장합니다.',
+        'accessibility_title': '접근성',
+        'accessibility_content': '우리의 도구는 기술적 전문 지식에 관계없이 모든 사람을 위해 설계되었습니다.',
+        'get_in_touch': '연락하기',
+        'contact_content': '질문이나 제안이 있으신가요? 여러분의 의견을 듣고 싶습니다! 연락해 주시고 LensClear.net을 더 좋게 만들 수 있는 방법을 알려주세요.',
+        
+        // Footer
+        'footer_about': '회사 소개',
+        'footer_privacy': '개인정보 처리방침',
+        'footer_terms': '서비스 약관',
+        'footer_contact': '연락처',
+        'footer_support': '지원',
+        'footer_blog': '블로그',
+        'footer_news': '뉴스',
+        'footer_updates': '업데이트',
+        'footer_social': '소셜',
+        'footer_twitter': '트위터',
+        'footer_facebook': '페이스북',
+        'footer_instagram': '인스타그램',
+        'footer_linkedin': '링크드인',
+        'footer_tools': '도구',
+        'footer_jpg_webp': 'JPG에서 WebP로',
+        'footer_jpg_avif': 'JPG에서 AVIF로',
+        'footer_jpg_png': 'JPG에서 PNG로',
+        'footer_jpg_tiff': 'JPG에서 TIFF로',
+        'footer_copyright': '© 2024 LensClear.net. 모든 권리 보유.',
+        
         // Email
         'email': '이메일:'
     };

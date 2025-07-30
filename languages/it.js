@@ -105,5 +105,33 @@ window.translations['it'] = {
         'faq6_a': 'WebP è ora supportato in tutti i principali browser moderni tra cui Chrome, Firefox, Edge, Safari e Opera. Tuttavia, le versioni più vecchie dei browser potrebbero non supportare WebP. Per i siti web, si consiglia di fornire formati alternativi utilizzando l\'elemento picture.',
         
         // Footer
-        'email': 'Email:'
+        'email': 'Email:',
+        
+        // About Page
+        'about_us': 'Chi Siamo',
+        'our_mission': 'La Nostra Missione',
+        'mission_content': 'Crediamo che l\'elaborazione delle immagini non dovrebbe dipendere da software complessi o flussi di lavoro ingombranti. La nostra missione su JPG Convert è semplice: rendere la conversione e compressione JPG facile, efficiente e sicura per tutti. Che tu stia lavorando su desktop, tablet, dispositivi mobili o integrando i nostri strumenti nel tuo flusso di lavoro, forniamo soluzioni veloci, affidabili e user-friendly.',
+        'our_story': 'La Nostra Storia',
+        'story_content': 'JPG Convert è lanciato da LensClear.net — una piattaforma indipendente focalizzata sull\'educazione fotografica e recensioni di attrezzature. Dopo anni di creazione di contenuti e interazione con gli utenti, abbiamo compreso i punti dolenti comuni che i fotografi affrontano quando gestiscono immagini JPG: compatibilità dei formati, file troppo grandi, perdita di qualità e altro ancora.',
+        'story_content2': 'Per soddisfare le nostre esigenze pratiche di ottimizzazione delle immagini e quelle del nostro pubblico, abbiamo creato JPG Convert — uno strumento costruito con una mentalità "immagine-prima". L\'obiettivo era chiaro fin dall\'inizio: concentrarsi sulla conversione, compressione e ottimizzazione del formato JPG — niente funzioni extra, niente distrazioni.',
+        'story_content3': 'Dalla conversione base JPG a WebP e AVIF, alle funzionalità avanzate come compressione lossless, elaborazione batch, rimozione dati Exif e gestione sfondi trasparenti, manteniamo sempre un principio: costruire strumenti di cui i fotografi hanno realmente bisogno, dalla prospettiva di un fotografo.',
+        'about_lensclear': 'Informazioni su LensClear.net',
+        'lensclear_content': 'LensClear.net è una piattaforma di contenuti indipendente per appassionati di fotografia in tutto il mondo. Si concentra su risorse educative, guide all\'uso delle attrezzature e prospettive originali sulla fotografia. JPG Convert è un\'estensione della nostra filosofia "fotografia + tecnologia" — segnando il nostro primo passo nel mondo degli strumenti di elaborazione immagini.',
+        'visit_lensclear': 'Visita LensClear.net →',
+        'our_values': 'I Nostri Valori',
+        'privacy_title': 'Privacy Prima di Tutto',
+        'privacy_content': 'Tutta l\'elaborazione delle immagini avviene localmente nel tuo browser. Le tue immagini non lasciano mai il tuo dispositivo, garantendo completa privacy e sicurezza.',
+        'speed_title': 'Velocità Fulminea',
+        'speed_content': 'Algoritmi ottimizzati ed elaborazione locale garantiscono conversioni rapide senza necessità di upload o download su server.',
+        'quality_title': 'Focalizzato sulla Qualità',
+        'quality_content': 'Tecniche di compressione avanzate mantengono la qualità visiva riducendo significativamente le dimensioni dei file per prestazioni web ottimali.',
+        'accessibility_title': 'Accesso Universale',
+        'accessibility_content': 'Funziona perfettamente su tutti i dispositivi e piattaforme — desktop, tablet e mobile — senza installazione di software.',
+        'get_in_touch': 'Contattaci',
+        'contact_content': 'Hai domande, suggerimenti o feedback? Ci piacerebbe sentirti. Contattaci per aiutarci a rendere JPG Convert ancora migliore.',
+        'footer_navigation': 'Navigazione',
+        'footer_operated_by': 'JPG Convert è gestito da LensClear.net',
+        'footer_visit_lensclear': 'Visita LensClear.net',
+        'footer_privacy_note': 'Rispettiamo la tua privacy. Tutte le conversioni sono elaborate localmente nel tuo browser.',
+        'footer_copyright': '© 2025 JPG Convert. Tutti i diritti riservati.'
     };

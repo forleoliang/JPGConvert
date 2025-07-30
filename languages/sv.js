@@ -108,6 +108,48 @@ window.translations['sv'] = {
         'faq6_q': 'Stöds WebP-bilder i alla webbläsare?',
         'faq6_a': 'WebP stöds nu i alla större moderna webbläsare inklusive Chrome, Firefox, Edge, Safari och Opera. Äldre webbläsarversioner kanske dock inte stöder WebP. För webbplatser rekommenderas att tillhandahålla reservformat med hjälp av picture-elementet.',
         
+        // About Us Page
+        'about_nav': 'Om oss',
+        'about_title': 'Om oss',
+        'our_mission': 'Vårt uppdrag',
+        'mission_content': 'På LensClear.net är vårt uppdrag att förse användare med kraftfulla, säkra och lättanvända bildkonverteringsverktyg. Vi tror att högkvalitativ bildbehandling ska vara tillgänglig för alla utan att kompromissa med integritet eller säkerhet.',
+        'our_story': 'Vår historia',
+        'story_content': 'LensClear.net grundades som svar på de växande behoven hos webbutvecklare och designers som behövde snabba och pålitliga bildkonverteringslösningar. Vi såg att befintliga verktyg var långsamma, hade integritetsproblem eller saknade nödvändiga funktioner. Så vi bestämde oss för att bygga en bättre lösning.',
+        'about_lensclear': 'Om LensClear.net',
+        'lensclear_content': 'LensClear.net är pionjär inom modern bildkonverteringsteknik. Vår plattform är helt webbläsarbaserad, vilket betyder att dina bilder aldrig lämnar din enhet. Vi stöder de senaste bildformaten inklusive WebP, AVIF, PNG och TIFF, vilket ger dig flexibiliteten att välja rätt format för dina specifika behov.',
+        'our_values': 'Våra värderingar',
+        'privacy_title': 'Integritet',
+        'privacy_content': 'Dina bilder är dina. All vår bearbetning görs lokalt i din webbläsare.',
+        'speed_title': 'Hastighet',
+        'speed_content': 'Vi är optimerade för snabba konverteringstider och effektiv batchbearbetning.',
+        'quality_title': 'Kvalitet',
+        'quality_content': 'Våra algoritmer säkerställer den bästa balansen mellan filstorlek och bildkvalitet.',
+        'accessibility_title': 'Tillgänglighet',
+        'accessibility_content': 'Våra verktyg är designade för alla, oavsett teknisk expertis.',
+        'get_in_touch': 'Kontakta oss',
+        'contact_content': 'Har du frågor eller förslag? Vi skulle älska att höra från dig! Kontakta oss och berätta hur vi kan göra LensClear.net ännu bättre.',
+        
+        // Footer
+        'footer_about': 'Om oss',
+        'footer_privacy': 'Integritetspolicy',
+        'footer_terms': 'Användarvillkor',
+        'footer_contact': 'Kontakt',
+        'footer_support': 'Support',
+        'footer_blog': 'Blogg',
+        'footer_news': 'Nyheter',
+        'footer_updates': 'Uppdateringar',
+        'footer_social': 'Sociala medier',
+        'footer_twitter': 'Twitter',
+        'footer_facebook': 'Facebook',
+        'footer_instagram': 'Instagram',
+        'footer_linkedin': 'LinkedIn',
+        'footer_tools': 'Verktyg',
+        'footer_jpg_webp': 'JPG till WebP',
+        'footer_jpg_avif': 'JPG till AVIF',
+        'footer_jpg_png': 'JPG till PNG',
+        'footer_jpg_tiff': 'JPG till TIFF',
+        'footer_copyright': '© 2024 LensClear.net. Alla rättigheter förbehållna.',
+        
         // Email
         'email': 'E-post:'
     };

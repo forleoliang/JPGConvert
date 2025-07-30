@@ -109,5 +109,33 @@ window.translations['pl'] = {
         'faq6_a': 'WebP jest teraz obsługiwany we wszystkich głównych nowoczesnych przeglądarkach, w tym Chrome, Firefox, Edge, Safari i Opera. Jednak starsze wersje przeglądarek mogą nie obsługiwać WebP. W przypadku stron internetowych zaleca się zapewnienie formatów zapasowych za pomocą elementu picture.',
         
         // Email
-        'email': 'E-mail:'
+        'email': 'E-mail:',
+        
+        // About Page
+        'nav_home': 'Strona główna',
+        'nav_about': 'O nas',
+        'about_title': 'O JPG Convert',
+        'about_subtitle': 'Twoje niezawodne narzędzie do konwersji obrazów',
+        'mission_title': 'Nasza Misja',
+        'mission_text': 'W JPG Convert dedykujemy się dostarczaniu szybkich, bezpiecznych i łatwych w użyciu narzędzi do konwersji obrazów. Wierzymy, że wysokiej jakości konwersja obrazów powinna być dostępna dla wszystkich, bez kompromisów w zakresie prywatności czy bezpieczeństwa.',
+        'story_title': 'Nasza Historia',
+        'story_text': 'JPG Convert powstał z potrzeby prostego, ale potężnego rozwiązania do konwersji obrazów. Nasz zespół programistów i projektantów połączył siły, aby stworzyć narzędzie, które priorytetowo traktuje prywatność użytkowników, wydajność i łatwość użytkowania.',
+        'lensclear_title': 'O LensClear.net',
+        'lensclear_text': 'JPG Convert jest rozwijany i utrzymywany przez LensClear.net, firmę technologiczną specjalizującą się w narzędziach do przetwarzania obrazów i rozwiązaniach webowych. LensClear.net zobowiązuje się do tworzenia innowacyjnego oprogramowania, które wzmacnia użytkowników, jednocześnie chroniąc ich prywatność.',
+        'values_title': 'Nasze Wartości',
+        'privacy_first': 'Prywatność przede wszystkim',
+        'privacy_first_desc': 'Wszystkie konwersje są wykonywane lokalnie w Twojej przeglądarce. Twoje obrazy nigdy nie opuszczają Twojego urządzenia.',
+        'user_friendly': 'Przyjazny użytkownikowi',
+        'user_friendly_desc': 'Prosty i intuicyjny interfejs, który sprawia, że konwersja obrazów jest dostępna dla wszystkich.',
+        'high_quality': 'Wysoka jakość',
+        'high_quality_desc': 'Zaawansowane algorytmy konwersji, które zachowują jakość obrazu przy jednoczesnej optymalizacji rozmiaru pliku.',
+        'open_source': 'Open Source',
+        'open_source_desc': 'Zobowiązani do przejrzystości i ciągłego doskonalenia poprzez rozwój open source.',
+        'contact_title': 'Skontaktuj się z nami',
+        'contact_text': 'Masz pytania, sugestie lub uwagi? Chcielibyśmy Cię usłyszeć.',
+        'footer_home': 'Strona główna',
+        'footer_about': 'O nas',
+        'footer_company': 'Firma',
+        'footer_lensclear': 'LensClear.net',
+        'footer_rights': 'Wszystkie prawa zastrzeżone.'
     };

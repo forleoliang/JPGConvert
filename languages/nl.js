@@ -108,6 +108,48 @@ window.translations['nl'] = {
         'faq6_q': 'Worden WebP-afbeeldingen ondersteund in alle browsers?',
         'faq6_a': 'WebP wordt nu ondersteund in alle belangrijkste moderne browsers, inclusief Chrome, Firefox, Edge, Safari en Opera. Echter, oudere browserversies zouden WebP mogelijk niet ondersteunen. Voor websites wordt aangeraden om fallback-indelingen te leveren met behulp van het picture-element.',
         
+        // About Us Page
+        'about_nav': 'Over Ons',
+        'about_title': 'Over Ons',
+        'our_mission': 'Onze Missie',
+        'mission_content': 'Bij LensClear.net is onze missie om gebruikers krachtige, veilige en gebruiksvriendelijke beeldconversietools te bieden. Wij geloven dat hoogwaardige beeldverwerking toegankelijk moet zijn voor iedereen, zonder privacy of veiligheid op te offeren.',
+        'our_story': 'Ons Verhaal',
+        'story_content': 'LensClear.net werd opgericht als reactie op de groeiende behoeften van webontwikkelaars en ontwerpers die snelle, betrouwbare beeldconversieoplossingen nodig hadden. We zagen dat bestaande tools traag waren, privacyproblemen hadden, of de benodigde functies misten. Dus besloten we een betere oplossing te bouwen.',
+        'about_lensclear': 'Over LensClear.net',
+        'lensclear_content': 'LensClear.net is een pionier in moderne beeldconversietechnologie. Ons platform is volledig browsergebaseerd, wat betekent dat uw afbeeldingen nooit uw apparaat verlaten. We ondersteunen de nieuwste beeldformaten inclusief WebP, AVIF, PNG en TIFF, waardoor u de flexibiliteit krijgt om het juiste formaat voor uw specifieke behoeften te kiezen.',
+        'our_values': 'Onze Waarden',
+        'privacy_title': 'Privacy',
+        'privacy_content': 'Uw afbeeldingen zijn van u. Al onze verwerking gebeurt lokaal in uw browser.',
+        'speed_title': 'Snelheid',
+        'speed_content': 'We zijn geoptimaliseerd voor snelle conversietijden en efficiënte batchverwerking.',
+        'quality_title': 'Kwaliteit',
+        'quality_content': 'Onze algoritmen zorgen voor de beste balans tussen bestandsgrootte en beeldkwaliteit.',
+        'accessibility_title': 'Toegankelijkheid',
+        'accessibility_content': 'Onze tools zijn ontworpen voor iedereen, ongeacht technische expertise.',
+        'get_in_touch': 'Neem Contact Op',
+        'contact_content': 'Heeft u vragen of suggesties? We horen graag van u! Neem contact met ons op en vertel ons hoe we LensClear.net nog beter kunnen maken.',
+        
+        // Footer
+        'footer_about': 'Over Ons',
+        'footer_privacy': 'Privacybeleid',
+        'footer_terms': 'Servicevoorwaarden',
+        'footer_contact': 'Contact',
+        'footer_support': 'Ondersteuning',
+        'footer_blog': 'Blog',
+        'footer_news': 'Nieuws',
+        'footer_updates': 'Updates',
+        'footer_social': 'Sociaal',
+        'footer_twitter': 'Twitter',
+        'footer_facebook': 'Facebook',
+        'footer_instagram': 'Instagram',
+        'footer_linkedin': 'LinkedIn',
+        'footer_tools': 'Tools',
+        'footer_jpg_webp': 'JPG naar WebP',
+        'footer_jpg_avif': 'JPG naar AVIF',
+        'footer_jpg_png': 'JPG naar PNG',
+        'footer_jpg_tiff': 'JPG naar TIFF',
+        'footer_copyright': '© 2024 LensClear.net. Alle rechten voorbehouden.',
+        
         // Email
         'email': 'E-mail:'
     };

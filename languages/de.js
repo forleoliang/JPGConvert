@@ -28,15 +28,15 @@ window.translations['de'] = {
         'jpg_to_tiff_desc': 'Konvertieren Sie in das professionelle TIFF-Format, geeignet für Druck, Veröffentlichung und professionelle Bearbeitungsabläufe.',
         
         // Format descriptions
-        'webp_desc': 'WebP - Good compression, wide support',
-        'avif_desc': 'AVIF - Best compression, newer format',
+        'webp_desc': 'WebP - Gute Komprimierung, breite Unterstützung',
+        'avif_desc': 'AVIF - Beste Komprimierung, neueres Format',
         
         // AVIF specific messages
-        'avif_processing': 'Processing AVIF (may take longer)...',
-        'avif_not_supported': 'AVIF encoding not supported in your browser',
-        'using_avif_encoder': 'Using Squoosh for AVIF conversion...',
-        'avif_conversion_failed': 'AVIF conversion failed',
-        'avif_not_available': 'AVIF encoder not available, try another format',
+        'avif_processing': 'AVIF wird verarbeitet (kann länger dauern)...',
+        'avif_not_supported': 'AVIF-Kodierung wird in Ihrem Browser nicht unterstützt',
+        'using_avif_encoder': 'Verwende Squoosh für AVIF-Konvertierung...',
+        'avif_conversion_failed': 'AVIF-Konvertierung fehlgeschlagen',
+        'avif_not_available': 'AVIF-Encoder nicht verfügbar, versuchen Sie ein anderes Format',
         
         // Preview Area
         'original': 'Original',
@@ -98,7 +98,6 @@ window.translations['de'] = {
         'faq3_q': 'Was ist WebP und warum sollte ich es verwenden?',
         'faq3_a': 'WebP ist ein modernes Bildformat, das von Google entwickelt wurde und überlegene verlustfreie und verlustbehaftete Komprimierung für Webbilder bietet. WebP-Bilder sind typischerweise 25-35% kleiner als vergleichbare JPEG- oder PNG-Dateien bei ähnlicher visueller Qualität, was zu schnelleren Website-Ladezeiten und reduzierter Bandbreitennutzung führt.',
         'faq4_q': 'Welche Qualitätseinstellung sollte ich verwenden?',
-        'faq4_a': 'Für die meisten Web-Anwendungen bietet eine Qualitätseinstellung zwischen 70-85% die beste Balance zwischen Dateigröße und Bildqualität. Niedrigere Werte (unter 70%) erzeugen kleinere Dateien, können aber mehr Kompressionsartefakte zeigen. Höhere Werte (über 85%) will maintain higher quality but with diminishing returns on file size reduction.',
         'faq4_a': 'Für die meisten Web-Anwendungen bietet eine Qualitätseinstellung zwischen 70-85% die beste Balance zwischen Dateigröße und Bildqualität. Niedrigere Werte (unter 70%) erzeugen kleinere Dateien, können aber mehr Kompressionsartefakte zeigen. Höhere Werte (über 85%) behalten eine höhere Qualität bei, jedoch mit abnehmenden Erträgen bei der Reduzierung der Dateigröße.',
         'faq5_q': 'Gibt es eine Begrenzung für die Anzahl der Bilder, die ich gleichzeitig konvertieren kann?',
         'faq5_a': 'Es gibt keine feste Grenze, aber die Leistung hängt von den Fähigkeiten Ihres Geräts ab. Für optimale Leistung empfehlen wir, Stapel von 20-30 Bildern auf einmal zu konvertieren. Größere Stapel können dazu führen, dass Ihr Browser langsamer wird.',
@@ -106,5 +105,33 @@ window.translations['de'] = {
         'faq6_a': 'WebP wird jetzt in allen wichtigen modernen Browsern unterstützt, einschließlich Chrome, Firefox, Edge, Safari und Opera. Ältere Browser-Versionen unterstützen WebP möglicherweise nicht. Für Websites wird empfohlen, Fallback-Formate mit dem picture-Element bereitzustellen.',
         
         // Footer
-        'email': 'E-Mail:'
+        'email': 'E-Mail:',
+        
+        // About Us Page
+        'nav_home': 'Startseite',
+        'nav_about': 'Über uns',
+        'about_title': 'Über JPG Convert',
+        'about_subtitle': 'Ihr zuverlässiges Tool für Bildkonvertierung',
+        'mission_title': 'Unsere Mission',
+        'mission_text': 'Bei JPG Convert widmen wir uns der Bereitstellung schneller, sicherer und benutzerfreundlicher Bildkonvertierungstools. Wir glauben, dass hochwertige Bildkonvertierung für alle zugänglich sein sollte, ohne Kompromisse bei Privatsphäre oder Sicherheit.',
+        'story_title': 'Unsere Geschichte',
+        'story_text': 'JPG Convert entstand aus dem Bedarf nach einer einfachen, aber leistungsstarken Bildkonvertierungslösung. Unser Team aus Entwicklern und Designern kam zusammen, um ein Tool zu schaffen, das Benutzerprivatsphäre, Leistung und Benutzerfreundlichkeit priorisiert.',
+        'lensclear_title': 'Über LensClear.net',
+        'lensclear_text': 'JPG Convert wird von LensClear.net entwickelt und gepflegt, einem Technologieunternehmen, das sich auf Bildverarbeitungstools und Weblösungen spezialisiert hat. LensClear.net verpflichtet sich zur Entwicklung innovativer Software, die Benutzer stärkt und gleichzeitig ihre Privatsphäre schützt.',
+        'values_title': 'Unsere Werte',
+        'privacy_first': 'Privatsphäre zuerst',
+        'privacy_first_desc': 'Alle Konvertierungen werden lokal in Ihrem Browser durchgeführt. Ihre Bilder verlassen niemals Ihr Gerät.',
+        'user_friendly': 'Benutzerfreundlich',
+        'user_friendly_desc': 'Einfache und intuitive Benutzeroberfläche, die Bildkonvertierung für alle zugänglich macht.',
+        'high_quality': 'Hohe Qualität',
+        'high_quality_desc': 'Fortschrittliche Konvertierungsalgorithmen, die Bildqualität erhalten und gleichzeitig die Dateigröße optimieren.',
+        'open_source': 'Open Source',
+        'open_source_desc': 'Verpflichtet zu Transparenz und kontinuierlicher Verbesserung durch Open-Source-Entwicklung.',
+        'contact_title': 'Kontaktieren Sie uns',
+        'contact_text': 'Haben Sie Fragen, Vorschläge oder Feedback? Wir würden gerne von Ihnen hören.',
+        'footer_home': 'Startseite',
+        'footer_about': 'Über uns',
+        'footer_company': 'Unternehmen',
+        'footer_lensclear': 'LensClear.net',
+        'footer_rights': 'Alle Rechte vorbehalten.'
     };
