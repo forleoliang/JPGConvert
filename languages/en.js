@@ -110,5 +110,18 @@ window.translations['en'] = {
         'faq6_a': 'WebP is now supported in all major modern browsers including Chrome, Firefox, Edge, Safari, and Opera. However, older browser versions might not support WebP. For websites, it\'s recommended to provide fallback formats using the picture element.',
         
         // Email
-        'email': 'Email:'
+        'email': 'Email:',
+        
+        // AVIF Page Specific
+        'avif_page_title': 'JPG to AVIF Converter',
+        'avif_benefits_title': 'Why Choose AVIF?',
+        'avif_superior_compression': 'Superior Compression',
+        'avif_compression_desc': 'Up to 50% smaller files than JPEG with better quality',
+        'avif_high_quality': 'High Quality',
+        'avif_quality_desc': 'Better quality at same file size compared to other formats',
+        'avif_modern_standard': 'Modern Standard',
+        'avif_standard_desc': 'Next-generation image format for the modern web',
+        'avif_browser_support': 'Browser Support',
+        'avif_compatibility_note': 'AVIF is supported in Chrome 85+, Firefox 93+, Safari 16+, and Edge 85+. For older browsers, consider using WebP as a fallback.',
+        'current_page': 'Current Page'
     };
