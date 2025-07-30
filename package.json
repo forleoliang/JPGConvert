@@ -1,0 +1,16 @@
+{
+  "name": "jpgconvert-local-server",
+  "version": "1.0.0",
+  "description": "Local development server with URL rewriting for JPGConvert",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "keywords": ["jpg", "converter", "local", "server"],
+  "author": "",
+  "license": "MIT"
+}
