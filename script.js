@@ -58,6 +58,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // 根据页面URL自动设置默认格式
+    function initializeDefaultFormat() {
+        const currentPage = window.location.pathname.split('/').pop() || window.location.pathname;
+        let defaultFormat = 'webp'; // 默认格式
+        
+        // 根据页面文件名设置默认格式
+        if (currentPage.includes('jpg2webp')) {
+            defaultFormat = 'webp';
+        } else if (currentPage.includes('jpg2avif')) {
+            defaultFormat = 'avif';
+        } else if (currentPage.includes('jpg2png')) {
+            defaultFormat = 'png';
+        } else if (currentPage.includes('jpg2tiff')) {
+            defaultFormat = 'tiff';
+        }
+        
+        // 设置选中的格式
+        selectedFormat = defaultFormat;
+        
+        // 更新UI显示
+        formatButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.format === defaultFormat) {
+                btn.classList.add('active');
+            }
+        });
+        
+        console.log('页面初始化，默认格式设置为:', defaultFormat);
+    }
+    
+    // 页面加载时初始化默认格式
+    initializeDefaultFormat();
+
     // Drag and drop handling
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropZone.addEventListener(eventName, preventDefaults, false);
@@ -198,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return window.getTranslation ? window.getTranslation(key) : key;
     }
 
-    // 修改convertImage函数以支持AVIF转换
+    // 修改convertImage函数以支持AVIF和PNG转换
     async function convertImage(file, index) {
         const quality = parseInt(qualitySlider.value);
         const fileItem = document.querySelector(`.file-item[data-index="${index}"]`);
@@ -230,6 +263,12 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (selectedFormat === 'webp') {
                 // 使用现有的WebP转换方法
                 result = await convertToWebP(file, quality);
+            } else if (selectedFormat === 'png') {
+                // 使用PNG转换方法
+                result = await convertToPNG(file, quality);
+            } else if (selectedFormat === 'tiff') {
+                // 使用TIFF转换方法
+                result = await convertToTIFF(file, quality);
             }
             
             // 这里处理转换结果，和原来的逻辑一致
@@ -263,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else if (e.data.needFallback) {
                         // 使用回退方法
                         console.log('使用回退方法处理WebP转换');
-                        convertWithFallbackMethod(file, quality).then(resolve).catch(reject);
+                        convertWithFallbackMethod(file, quality, 'webp').then(resolve).catch(reject);
                     } else {
                         reject(new Error(e.data.error || '转换失败'));
                     }
@@ -274,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Worker错误:', error);
                     
                     // 尝试使用回退方法
-                    convertWithFallbackMethod(file, quality).then(resolve).catch(reject);
+                    convertWithFallbackMethod(file, quality, 'webp').then(resolve).catch(reject);
                 };
                 
                 // 将文件和设置发送到Worker
@@ -286,14 +325,24 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (error) {
                 console.error('创建Worker失败:', error);
                 // 尝试使用回退方法
-                convertWithFallbackMethod(file, quality).then(resolve).catch(reject);
+                convertWithFallbackMethod(file, quality, 'webp').then(resolve).catch(reject);
             }
         });
     }
 
+    // 添加PNG转换函数
+    async function convertToPNG(file, quality) {
+        return convertWithFallbackMethod(file, quality, 'png');
+    }
+
+    // 添加TIFF转换函数
+    async function convertToTIFF(file, quality) {
+        return convertWithFallbackMethod(file, quality, 'tiff');
+    }
+
     // 添加回退方法转换函数
-    async function convertWithFallbackMethod(file, quality) {
-        console.log('使用回退方法处理图像转换');
+    async function convertWithFallbackMethod(file, quality, format) {
+        console.log(`使用回退方法处理${format.toUpperCase()}转换`);
         return new Promise((resolve, reject) => {
             try {
                 const img = new Image();
@@ -305,7 +354,35 @@ document.addEventListener('DOMContentLoaded', function() {
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0);
                         
-                        const mimeType = `image/${selectedFormat}`;
+                        // 特殊处理TIFF格式
+                        if (format === 'tiff') {
+                            // 使用自定义TIFF编码器
+                            if (window.TIFFEncoder) {
+                                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                                const tiffEncoder = new window.TIFFEncoder();
+                                const blob = tiffEncoder.encode(imageData, canvas.width, canvas.height);
+                                
+                                URL.revokeObjectURL(img.src);
+                                
+                                resolve({
+                                    success: true,
+                                    blob: blob,
+                                    fileName: file.name,
+                                    size: blob.size,
+                                    originalSize: file.size,
+                                    sizeIncreased: blob.size > file.size
+                                });
+                                return;
+                            } else {
+                                throw new Error('TIFF encoder not available');
+                            }
+                        }
+                        
+                        // 处理其他格式
+                        const mimeType = `image/${format}`;
+                        // PNG是无损格式，质量参数对PNG格式无效
+                        const qualityValue = (format === 'png') ? undefined : quality / 100;
+                        
                         canvas.toBlob(
                             function(blob) {
                                 // 释放URL对象
@@ -327,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 });
                             },
                             mimeType,
-                            quality / 100
+                            qualityValue
                         );
                     } catch (err) {
                         URL.revokeObjectURL(img.src);

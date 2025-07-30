@@ -1,6 +1,6 @@
-# JPG/PNG to WebP Converter
+# JPG/PNG Image Format Converter
 
-A simple, user-friendly web tool that converts JPG and PNG images to WebP format. WebP images are smaller but keep good quality, making your website faster.
+A comprehensive, user-friendly web tool that converts JPG and PNG images to multiple modern formats including WebP, AVIF, TIFF, and PNG. Optimize your images for web performance or professional use with our browser-based converter.
 
 ## Latest Updates
 
@@ -9,7 +9,10 @@ A simple, user-friendly web tool that converts JPG and PNG images to WebP format
   - English, Spanish, Portuguese, French, German, Italian, Greek, Chinese, Japanese, Korean
   - Russian, Arabic, Dutch, Polish, Turkish, Thai, Vietnamese, Indonesian, Swedish, Hindi
 - **AVIF Support**: Convert images to AVIF format for even smaller file sizes
-- **Improved SEO**: Updated sitemap.xml with all language versions
+- **TIFF Support**: Convert images to high-quality TIFF format for professional printing and archival
+- **PNG Support**: Convert JPG images to lossless PNG format
+- **Improved SEO**: Updated sitemap.xml with all conversion pages and language versions
+- **Enhanced Crawler Support**: Optimized robots.txt for major search engines and AI assistants
 
 ## Features
 
@@ -22,7 +25,9 @@ A simple, user-friendly web tool that converts JPG and PNG images to WebP format
 - **No Server Upload**: All processing happens in your browser for privacy
 - **Modern UI**: Clean, macOS-style interface
 - **Multi-language**: Support for 20 different languages
-- **Multiple Formats**: Convert to WebP or AVIF
+- **Multiple Formats**: Convert to WebP, AVIF, TIFF, or PNG formats
+- **Format-Specific Pages**: Dedicated conversion pages for each output format
+- **Professional Quality**: TIFF conversion maintains full image quality for professional use
 
 ## How to Deploy
 
