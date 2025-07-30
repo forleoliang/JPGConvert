@@ -56,6 +56,21 @@ document.addEventListener('DOMContentLoaded', function() {
             button.classList.add('active');
             selectedFormat = button.dataset.format;
         });
+
+// Auto-update copyright year
+function updateCopyrightYear() {
+    const currentYear = new Date().getFullYear();
+    const copyrightElements = document.querySelectorAll('[data-i18n="footer_copyright"]');
+    copyrightElements.forEach(element => {
+        const text = element.textContent || element.innerText;
+        // Replace any 4-digit year with current year
+        const updatedText = text.replace(/\d{4}/, currentYear);
+        element.textContent = updatedText;
+    });
+}
+
+// Update copyright year when page loads
+document.addEventListener('DOMContentLoaded', updateCopyrightYear);
     });
 
     // 根据页面URL自动设置默认格式

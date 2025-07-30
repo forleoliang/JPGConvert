@@ -230,4 +230,33 @@
     <xhtml:link rel="alternate" hreflang="sv" href="https://www.jpgconvert.org/contact?lang=sv" />
     <xhtml:link rel="alternate" hreflang="hi" href="https://www.jpgconvert.org/contact?lang=hi" />
   </url>
+
+  <!-- About页面 -->
+  <url>
+    <loc>https://www.jpgconvert.org/about</loc>
+    <lastmod>2025-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jpgconvert.org/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jpgconvert.org/about?lang=en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jpgconvert.org/about?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.jpgconvert.org/about?lang=pt" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.jpgconvert.org/about?lang=fr" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.jpgconvert.org/about?lang=de" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.jpgconvert.org/about?lang=it" />
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.jpgconvert.org/about?lang=el" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.jpgconvert.org/about?lang=zh" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.jpgconvert.org/about?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.jpgconvert.org/about?lang=ko" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.jpgconvert.org/about?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.jpgconvert.org/about?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://www.jpgconvert.org/about?lang=nl" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://www.jpgconvert.org/about?lang=pl" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.jpgconvert.org/about?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="th" href="https://www.jpgconvert.org/about?lang=th" />
+    <xhtml:link rel="alternate" hreflang="vi" href="https://www.jpgconvert.org/about?lang=vi" />
+    <xhtml:link rel="alternate" hreflang="id" href="https://www.jpgconvert.org/about?lang=id" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.jpgconvert.org/about?lang=sv" />
+    <xhtml:link rel="alternate" hreflang="hi" href="https://www.jpgconvert.org/about?lang=hi" />
+  </url>
 </urlset>
