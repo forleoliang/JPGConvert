@@ -96,7 +96,7 @@ window.translations['tr'] = {
         // FAQ Section
         'faq': 'Sıkça Sorulan Sorular',
         'faq1_q': 'Hangileri WebP formatına dönüştürebilirim?',
-        'faq1_a': 'Bu araç, özel olarak JPG/JPEG 및 PNG 이미지를 WebP 형식으로 변환하도록 설계되었습니다. 현재 다른 형식은 지원되지 않습니다.',
+        'faq1_a': 'Bu araç, özel olarak JPG/JPEG ve PNG görüntülerini WebP formatına dönüştürmek için tasarlanmıştır. Diğer formatlar şu anda desteklenmemektedir.',
         'faq2_q': 'Bu araç kullanırken verilerim güvenli mi?',
         'faq2_a': 'Tabii! Tüm işlemler, tarayıcınızda yerel olarak gerçekleştirilir. Görüntünüz, cihazınızdan hiç ayrılmaz ve hiçbir veri sunucuya gönderilmez, böylece tam bir gizlilik ve güvenlik sağlar.',
         'faq3_q': 'WebP nedir ve neden kullanmalıyım?',

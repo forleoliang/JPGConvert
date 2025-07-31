@@ -106,7 +106,7 @@ window.translations['th'] = {
         'faq5_q': 'มีข้อจำกัดในการแปลงรูปภาพพร้อมกันกี่รูปหรือไม่?',
         'faq5_a': 'ไม่มีข้อจำกัดที่แน่นอน แต่ประสิทธิภาพขึ้นอยู่กับความสามารถของอุปกรณ์ของคุณ สำหรับประสิทธิภาพที่ดีที่สุด เราแนะนำให้แปลงเป็นชุดครั้งละ 20-30 รูป ชุดที่ใหญ่กว่าอาจทำให้เบราว์เซอร์ของคุณช้าลง',
         'faq6_q': 'รูปภาพ WebP ได้รับการสนับสนุนในทุกเบราว์เซอร์หรือไม่?',
-        'faq6_a': 'WebP, artık Chrome, Firefox, Edge, Safari และ Opera gibi tüm önemli modern tarayıcılarda destekleniyor. Ancak, eski tarayıcı versiyonları WebP desteklemeyebilir. Web siteleri için, picture öğesini kullanarak yedek formatlar sağlamayı öneririz.',
+        'faq6_a': 'WebP ปัจจุบันได้รับการสนับสนุนในเบราว์เซอร์สมัยใหม่หลักทั้งหมด รวมถึง Chrome, Firefox, Edge, Safari และ Opera อย่างไรก็ตาม เบราว์เซอร์รุ่นเก่าอาจไม่รองรับ WebP สำหรับเว็บไซต์ เราแนะนำให้ใช้องค์ประกอบ picture เพื่อให้รูปแบบสำรอง',
         
         // About Us Page
         'about_nav': 'เกี่ยวกับเรา',

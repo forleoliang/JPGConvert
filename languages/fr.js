@@ -28,15 +28,15 @@ window.translations['fr'] = {
         'jpg_to_tiff_desc': 'Convertissez au format professionnel TIFF, adapté à l\'impression, à la publication et aux flux de travail d\'édition professionnels.',
         
         // Format descriptions
-        'webp_desc': 'WebP - Good compression, wide support',
-        'avif_desc': 'AVIF - Best compression, newer format',
+        'webp_desc': 'WebP - Bonne compression, support étendu',
+        'avif_desc': 'AVIF - Meilleure compression, format plus récent',
         
         // AVIF specific messages
-        'avif_processing': 'Processing AVIF (may take longer)...',
-        'avif_not_supported': 'AVIF encoding not supported in your browser',
-        'using_avif_encoder': 'Using Squoosh for AVIF conversion...',
-        'avif_conversion_failed': 'AVIF conversion failed',
-        'avif_not_available': 'AVIF encoder not available, try another format',
+        'avif_processing': 'Traitement AVIF (peut prendre plus de temps)...',
+        'avif_not_supported': 'L\'encodage AVIF n\'est pas pris en charge par votre navigateur',
+        'using_avif_encoder': 'Utilisation de Squoosh pour la conversion AVIF...',
+        'avif_conversion_failed': 'Échec de la conversion AVIF',
+        'avif_not_available': 'Encodeur AVIF non disponible, essayez un autre format',
         
         // Preview Area
         'original': 'Original',

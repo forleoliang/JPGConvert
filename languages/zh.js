@@ -146,26 +146,5 @@ window.translations['zh'] = {
         'footer_visit_lensclear': '访问LensClear.net',
         'footer_contact': '联系方式',
         'footer_privacy_note': '我们尊重您的隐私。所有转换都在您的浏览器中本地处理。',
-        'footer_copyright': '© 2025 JPGConvert.org. 保留所有权利。',
-        
-        // Additional About Page Keys
-        'mission_content': '我们相信图像处理不应该依赖复杂的软件或臃肿的工作流程。JPGConvert.org的使命很简单：让JPG转换和压缩对每个人来说都变得简单、高效和安全。无论您是在桌面、平板电脑、移动设备上工作，还是将我们的工具集成到您的工作流程中，我们都提供快速、稳定和用户友好的解决方案。',
-        'story_content': 'JPGConvert.org由LensClear.net推出——一个专注于摄影教育和器材评测的独立平台。经过多年的内容创作和用户互动，我们了解了摄影师在处理JPG图像时面临的常见痛点：格式兼容性、文件过大、质量损失等等。',
-        'story_content2': '为了满足我们自己和受众的实际图像优化需求，我们创建了JPGConvert.org——一个以"图像优先"理念构建的工具。从一开始目标就很明确：专注于JPG图像转换、压缩和格式优化——没有多余的功能，没有干扰。',
-        'story_content3': '从基本的JPG到WebP和AVIF转换，到无损压缩、批处理、Exif数据移除和透明背景处理等高级功能，我们始终秉承一个原则：从摄影师的角度构建摄影师真正需要的工具。',
-        'lensclear_content': 'LensClear.net是一个面向全球摄影爱好者的独立内容平台。它专注于教育资源、器材使用指南和摄影的原创观点。JPGConvert.org是我们"摄影+技术"理念的延伸——标志着我们进入图像处理工具世界的第一步。',
-        'visit_lensclear': '访问LensClear.net →',
-        'privacy_title': '隐私优先',
-        'privacy_content': '所有图像处理都在您的浏览器中本地进行。您的图像永远不会离开您的设备，确保完全的隐私和安全。',
-        'speed_title': '闪电般快速',
-        'speed_content': '优化的算法和本地处理确保快速转换，无需服务器上传或下载。',
-        'quality_title': '专注质量',
-        'quality_content': '先进的压缩技术在显著减少文件大小的同时保持视觉质量，实现最佳的网络性能。',
-        'accessibility_title': '通用访问',
-        'accessibility_content': '在所有设备和平台上无缝工作——桌面、平板和移动设备——无需安装软件。',
-        'contact_content': '有问题、建议或反馈吗？我们很乐意听到您的声音。联系我们，帮助我们让JPGConvert.org变得更好。',
-        'footer_navigation': '导航',
-        'footer_operated_by': 'JPGConvert.org由LensClear.net运营',
-        'footer_visit_lensclear': '访问LensClear.net',
-        'footer_privacy_note': '我们尊重您的隐私。所有转换都在您的浏览器中本地处理。'
+        'footer_copyright': '© 2025 JPGConvert.org. 保留所有权利。'
     };

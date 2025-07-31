@@ -71,8 +71,8 @@ window.translations['pt'] = {
         'performance_desc': 'Melhor desempenho da categoria para conversores de imagem locais.',
         'batch_processing': 'Processamento em Lote',
         'batch_desc': 'Converta várias imagens de uma só vez com processamento em massa.',
-        'size_reduction': 'Riduzione di Tamanho',
-        'size_desc': 'Riduce significativamente la dimensione del file mantenendo la qualità.',
+        'size_reduction': 'Redução de Tamanho',
+        'size_desc': 'Reduz significativamente o tamanho do arquivo mantendo a qualidade.',
         
         // Reviews Section
         'user_reviews': 'Depoimentos dos Usuários',
@@ -98,11 +98,11 @@ window.translations['pt'] = {
         'faq3_q': 'O que é WebP e por que devo usá-lo?',
         'faq3_a': 'WebP é um formato de imagem moderno desenvolvido pelo Google que fornece compressão superior com ou sem perdas para imagens web. As imagens WebP são tipicamente 25-35% menores que arquivos JPEG ou PNG comparáveis, mantendo qualidade visual similar, resultando em tempos de carregamento de sites mais rápidos e uso reduzido de largura de banda.',
         'faq4_q': 'Qual configuração de qualidade devo usar?',
-        'faq4_a': 'Para a maioria dos usos na web, um\'impostação de qualidade entre 70-85% oferece o melhor equilíbrio entre tamanho de arquivo e qualité de imagem. Valores mais baixos (abaixo de 70%) produrrão arquivos menores, mas podem mostrar mais artefaitos de compressão. Valores mais altos (acima de 85%) manterão uma qualité mais elevado mas com rendimentos decrescentes na redução do tamanho do arquivo.',
+        'faq4_a': 'Para a maioria dos usos na web, uma configuração de qualidade entre 70-85% oferece o melhor equilíbrio entre tamanho de arquivo e qualidade de imagem. Valores mais baixos (abaixo de 70%) produzirão arquivos menores, mas podem mostrar mais artefatos de compressão. Valores mais altos (acima de 85%) manterão uma qualidade mais elevada mas com rendimentos decrescentes na redução do tamanho do arquivo.',
         'faq5_q': 'Existe um limite de quantas imagens posso converter de uma vez?',
         'faq5_a': 'Não há um limite fixo, mas o desempenho depende das capacidades do seu dispositivo. Para um desempenho ideal, recomendamos converter lotes de 20-30 imagens por vez. Lotes maiores podem fazer com que seu navegador fique lento.',
         'faq6_q': 'As imagens WebP são suportadas em todos os navegadores?',
-        'faq6_a': 'WebP agora é suportado em todos os principais navegadores modernos, incluindo Chrome, Firefox, Edge, Safari, y Opera. No entanto, versões mais antigas de navegadores podem não suportar WebP. Para sitios web, se recomenda fornecer formatos alternativos utilizando o elemento picture.',
+        'faq6_a': 'WebP agora é suportado em todos os principais navegadores modernos, incluindo Chrome, Firefox, Edge, Safari e Opera. No entanto, versões mais antigas de navegadores podem não suportar WebP. Para sites web, recomenda-se fornecer formatos alternativos utilizando o elemento picture.',
         
         // About Us Page
         'about_nav': 'Sobre Nós',

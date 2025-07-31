@@ -108,20 +108,8 @@ window.translations['vi'] = {
         'faq6_q': 'Hình ảnh WebP có được hỗ trợ trong tất cả các trình duyệt không?',
         'faq6_a': 'WebP hiện được hỗ trợ trong tất cả các trình duyệt hiện đại chính bao gồm Chrome, Firefox, Edge, Safari và Opera. Tuy nhiên, các phiên bản trình duyệt cũ hơn có thể không hỗ trợ WebP. Đối với các trang web, khuyến nghị cung cấp các định dạng dự phòng bằng cách sử dụng phần tử picture.',
         
-        // Reviews section
-        'user_reviews': 'Lời chứng thực của người dùng',
-        'review1_name': 'Robert Thompson',
-        'review1_text': 'Công cụ chuyển đổi hình ảnh này là một bước đột phá cho doanh nghiệp nhiếp ảnh của tôi. Tính năng xử lý hàng loạt tiết kiệm cho tôi hàng giờ làm việc, và việc kiểm soát chất lượng thì xuất sắc.',
-        'review2_name': 'Jennifer Parker',
-        'review2_text': 'Là một nhà thiết kế đồ họa, tôi đánh giá cao độ chính xác và độ tin cậy của công cụ này. Giao diện trực quan và chất lượng chuyển đổi luôn xuất sắc.',
-        'review3_name': 'William Chen',
-        'review3_text': 'Tính năng xử lý cục bộ mang lại cho tôi sự yên tâm khi xử lý hình ảnh nhạy cảm của khách hàng. Nhanh, an toàn và chuyên nghiệp - chính xác những gì tôi cần.',
-        'review4_name': 'Emily Rodriguez',
-        'review4_text': 'Tôi sử dụng công cụ này hàng ngày cho nội dung mạng xã hội của mình. Khả năng duy trì chất lượng hình ảnh trong khi giảm kích thước tệp là vô giá cho công việc của tôi.',
-        'review5_name': 'Daniel Martinez',
-        'review5_text': 'Hoàn hảo cho các dự án phát triển web của tôi. Tính năng chuyển đổi hàng loạt và tính linh hoạt của định dạng làm cho công cụ này trở thành một phần thiết yếu trong quy trình làm việc của tôi.',
-        'review6_name': 'Sophie Anderson',
-        'review6_text': 'Tốc độ và hiệu quả của bộ chuyển đổi này thật đáng kinh ngạc. Nó xử lý các lô hình ảnh lớn một cách liền mạch, tiết kiệm thời gian quý báu trong công việc thiết kế của tôi.',
+        // Email
+        'email': 'Email:',
         
         // FAQ Section
         
