@@ -118,6 +118,9 @@
     <title data-i18n-head="title">JPG Convert</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="/logo/logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
@@ -126,6 +129,33 @@
       window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
+    <style>
+      /* 关键CSS内联以避免渲染阻塞 */
+      .upload-area {
+        min-height: 200px;
+        border: 2px dashed #e5e7eb;
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        position: relative;
+        background: #fafafa;
+      }
+      .upload-text {
+        font-size: 1.125rem;
+        color: #374151;
+        font-weight: 500;
+        margin: 0;
+        line-height: 1.5;
+      }
+      .upload-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+        opacity: 0.7;
+      }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -288,8 +318,12 @@
         <main>
             <div class="upload-area" id="dropZone">
                 <div class="upload-content">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yMSAxNXY0YTIgMiAwIDAgMS0yIDJINWEyIDIgMCAwIDEtMi0ydi00Ii8+PHBvbHlsaW5lIHBvaW50cz0iMTcgOCAxMiAzIDcgOCIvPjxsaW5lIHgxPSIxMiIgeTE9IjMiIHgyPSIxMiIgeTI9IjE1Ii8+PC9zdmc+" alt="Upload Icon" class="upload-icon">
-                    <p><span data-i18n="drag_drop">Drag and drop your image here or</span> <label for="fileInput" class="upload-button" data-i18n="browse">browse</label></p>
+                    <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <p class="upload-text"><span data-i18n="drag_drop">Drag and drop your image here or</span> <label for="fileInput" class="upload-button" data-i18n="browse">browse</label></p>
                     <input type="file" id="fileInput" accept="image/jpeg,image/png" hidden>
                 </div>
             </div>
@@ -595,6 +629,6 @@
     <script type="module" src="languages/languages_main.js"></script>
     <script src="squoosh-avif.js"></script>
     <script src="tiff-encoder.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
